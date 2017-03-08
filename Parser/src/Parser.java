@@ -88,14 +88,7 @@ public class Parser {
             NodeList extentList = valueNodesList.item(3).getChildNodes();
             if (extentList != null) {
                 for (int extentIdx = 0; extentIdx < extentList.getLength(); extentIdx+=2) {
-                    Double xCoord = Double.parseDouble(extentList.item(extentIdx).getTextContent());
-                    Double yCoord = Double.parseDouble(extentList.item(extentIdx+1).getTextContent());
-
-                    // Convert coordinates from CH1903 to GWC
-                    Double latitude = Converter.CHtoWGSlat(xCoord, yCoord);
-                    Double longitude = Converter.CHtoWGSlng(xCoord, yCoord);
-
-                    Pair<Double, Double> xyCoord = new Pair<Double, Double>(latitude, longitude);
+                    Pair<Double, Double> xyCoord = this.createPair(extentList.item(extentIdx), extentList.item(extentIdx+1));
                     building.addEnvelopeList(xyCoord);
                 }
             }
@@ -103,16 +96,7 @@ public class Parser {
             NodeList ringList = valueNodesList.item(4).getFirstChild().getFirstChild().getChildNodes();
             if (ringList != null) {
                 for (int ringIdx = 0; ringIdx < ringList.getLength(); ringIdx++) {
-                    // Get coordinates from xml node
-                    Double xCoord = Double.parseDouble(ringList.item(ringIdx).getFirstChild().getTextContent());
-                    Double yCoord = Double.parseDouble(ringList.item(ringIdx).getLastChild().getTextContent());
-
-                    // Convert coordinates from CH1903 to GWC
-                    Double latitude = Converter.CHtoWGSlat(xCoord, yCoord);
-                    Double longitude = Converter.CHtoWGSlng(xCoord, yCoord);
-
-                    // Create a pair of coordinates latitude-longitude to put in the RingList of the Building
-                    Pair<Double, Double> xyCoord = new Pair<Double, Double>(latitude, longitude);
+                    Pair<Double, Double> xyCoord = this.createPair(ringList.item(ringIdx).getFirstChild(), ringList.item(ringIdx).getLastChild());
                     building.addPairRingList(xyCoord);
                 }
             }
@@ -130,5 +114,16 @@ public class Parser {
         }
         System.out.println();
         System.out.println(i + " buildings!");
+    }
+
+    private Pair<Double, Double> createPair(Node value1, Node value2){
+
+        Double xCoord = Double.parseDouble(value1.getTextContent());
+        Double yCoord = Double.parseDouble(value2.getTextContent());
+
+        // Convert coordinates from CH1903 to GWC
+        Double latitude = Converter.CHtoWGSlat(xCoord, yCoord);
+        Double longitude = Converter.CHtoWGSlng(xCoord, yCoord);
+        return new Pair<Double, Double>(latitude, longitude);
     }
 }

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ExampleController {
 
-    @RequestMapping("/")
+    @RequestMapping("/ex")
     public ResponseEntity example(){
         return new ResponseEntity(HttpStatus.OK);
     }

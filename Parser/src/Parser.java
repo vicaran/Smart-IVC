@@ -58,6 +58,9 @@ public class Parser {
                     case 4:
                         building.setDescription(value);
                         break;
+                    case 6:
+                        building.setCivicAddress(getCivicNumber(value));
+                        break;
                     case 10:
                         building.setFloors(Integer.parseInt(value));
                         break;
@@ -103,19 +106,6 @@ public class Parser {
         }
     }
 
-    public void printCity() {
-        int i = 0;
-        for (Building build : city) {
-            i++;
-            System.out.println("Building " + i + " is an " + build + " with " + build.getFloors() + " floors.");
-            System.out.println("Coordinates of perimeter are: ");
-            build.printList();
-            System.out.println();
-        }
-        System.out.println();
-        System.out.println(i + " buildings!");
-    }
-
     private Pair<Double, Double> createPair(Node value1, Node value2){
 
         Double xCoord = Double.parseDouble(value1.getTextContent());
@@ -125,5 +115,34 @@ public class Parser {
         Double latitude = Converter.CHtoWGSlat(xCoord, yCoord);
         Double longitude = Converter.CHtoWGSlng(xCoord, yCoord);
         return new Pair<Double, Double>(latitude, longitude);
+    }
+
+    private String getCivicNumber(String value){
+        String civicAddress;
+        if (value.length() == 9){
+            civicAddress = value.substring(5);
+        } else {
+            civicAddress = value.substring(4);
+        }
+        return civicAddress.replaceFirst("^0+(?!$)", "");
+    }
+
+    public void printCity() {
+        int i = 0;
+        for (Building build : city) {
+            i++;
+//            if (build.getCivicAddress() != null) {
+                String civic = build.getCivicAddress();
+//                if (civic.substring(0, Math.min(civic.length(), 4)).equals("0082")) {
+                    System.out.println("Building " + i + " is an " + build + " with " + build.getFloors() + " floors.  Civic Address: " + build.getCivicAddress());
+                    System.out.println("Coordinates of perimeter are: ");
+
+                    build.printList();
+                    System.out.println();
+//                }
+//            }
+        }
+        System.out.println();
+        System.out.println(i + " buildings!");
     }
 }

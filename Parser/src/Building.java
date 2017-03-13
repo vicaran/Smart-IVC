@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.crypto.dom.DOMCryptoContext;
+
 /**
  * Created by Andrea on 26/02/2017.
  */
@@ -10,6 +12,7 @@ public class Building {
     private int floors;
     private Double shapeLength;
     private Double shapeArea;
+    private String civicAddress;
     private List<Pair<Double, Double>> envelopeList;
     private List<Pair<Double, Double>> ringList;
 
@@ -86,5 +89,13 @@ public class Building {
         }
 
 
+    }
+
+    public void setCivicAddress(String civicAddress) {
+        this.civicAddress = civicAddress;
+    }
+
+    public String getCivicAddress() {
+        return civicAddress;
     }
 }

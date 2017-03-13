@@ -1,5 +1,7 @@
 package com.app.utils;
 
+import com.app.models.Building;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -35,7 +37,7 @@ public class Parser {
         return doc;
     }
 
-    public void createCity() throws Exception {
+    public List<Building> createCity() throws Exception {
         NodeList recordsList = this.getCityDocument().getElementsByTagName("Record");
         if (recordsList != null) {
             for (int recordIdx = 0; recordIdx < recordsList.getLength(); recordIdx++) {
@@ -45,6 +47,7 @@ public class Parser {
                 }
             }
         }
+        return city;
     }
 
     private Building createBuilding(NodeList valuesList) {
@@ -61,7 +64,7 @@ public class Parser {
                         building.setDescription(value);
                         break;
                     case 6:
-                        building.setCivicAddress(getCivicNumber(value));
+                        building.setCivicNumber(getCivicNumber(value));
                         break;
                     case 10:
                         building.setFloors(Integer.parseInt(value));
@@ -88,25 +91,25 @@ public class Parser {
     }
 
     private void getBuildingCoordinates(Node node, Building building) {
-
-
         NodeList valueNodesList = node.getChildNodes();
         if (valueNodesList != null) {
             NodeList extentList = valueNodesList.item(3).getChildNodes();
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             if (extentList != null) {
-                for (int extentIdx = 0; extentIdx < extentList.getLength(); extentIdx+=2) {
-                    Pair<Double, Double> xyCoord = this.createPair(extentList.item(extentIdx), extentList.item(extentIdx+1));
-                    building.addEnvelopeList(xyCoord);
+                List<Pair<Double, Double>> xyCoord = new ArrayList<>();
+                for (int extentIdx = 0; extentIdx < extentList.getLength(); extentIdx += 2) {
+                    xyCoord.add(this.createPair(extentList.item(extentIdx), extentList.item(extentIdx+1)));
                 }
+                this.computeCentroid(xyCoord, building);
             }
 
-            NodeList ringList = valueNodesList.item(4).getFirstChild().getFirstChild().getChildNodes();
-            if (ringList != null) {
-                for (int ringIdx = 0; ringIdx < ringList.getLength(); ringIdx++) {
-                    Pair<Double, Double> xyCoord = this.createPair(ringList.item(ringIdx).getFirstChild(), ringList.item(ringIdx).getLastChild());
-                    building.addPairRingList(xyCoord);
-                }
-            }
+//                NodeList ringList = valueNodesList.item(4).getFirstChild().getFirstChild().getChildNodes();
+//                if (ringList != null) {
+//                    for (int ringIdx = 0; ringIdx < ringList.getLength(); ringIdx++) {
+//                        Pair<Double, Double> xyCoord = this.createPair(ringList.item(ringIdx).getFirstChild(), ringList.item(ringIdx).getLastChild());
+////                    building.addPairRingList(xyCoord);
+//                    }
+//                }
         }
     }
 
@@ -121,6 +124,19 @@ public class Parser {
         return new Pair<Double, Double>(latitude, longitude);
     }
 
+    private void computeCentroid(List<Pair<Double, Double>> xyCoord, Building building){
+        Double lat = 0.0;
+        Double lon = 0.0;
+
+        for(Pair<Double, Double> point : xyCoord){
+            lat+= point.getL();
+            lon+= point.getR();
+        }
+
+        building.setCentroidLat(String.valueOf(lat/2));
+        building.setCentroidLon(String.valueOf(lon/2));
+    }
+
     private String getCivicNumber(String value){
         String civicAddress;
         if (value.length() == 9){
@@ -131,21 +147,21 @@ public class Parser {
         return civicAddress.replaceFirst("^0+(?!$)", "");
     }
 
-    public void printCity() {
-        int i = 0;
-        for (Building build : city) {
-            i++;
-//            if (build.getCivicAddress() != null) {
-//                String civic = build.getCivicAddress();
-//                if (civic.substring(0, Math.min(civic.length(), 4)).equals("0082")) {
-                    System.out.println("Building " + i + " is an " + build + " with " + build.getFloors() + " floors.  Civic Address: " + build.getCivicAddress());
-                    System.out.println("Coordinates of perimeter are: ");
-                    build.printList();
-                    System.out.println();
-//                }
-//            }
-        }
-        System.out.println();
-        System.out.println(i + " buildings!");
-    }
+//    public void printCity() {
+//        int i = 0;
+//        for (Building build : city) {
+//            i++;
+////            if (build.getCivicAddress() != null) {
+////                String civic = build.getCivicAddress();
+////                if (civic.substring(0, Math.min(civic.length(), 4)).equals("0082")) {
+//                    System.out.println("Building " + i + " is an " + build + " with " + build.getFloors() + " floors.  Civic Address: " + build.getCivicNumber());
+//                    System.out.println("Coordinates of perimeter are: ");
+//                    build.printList();
+//                    System.out.println();
+////                }
+////            }
+//        }
+//        System.out.println();
+//        System.out.println(i + " buildings!");
+//    }
 }

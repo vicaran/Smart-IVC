@@ -26,11 +26,19 @@ public class City {
     private String name;
     @Column(name = "ZIP")
     private String zip;
-    @OneToMany(mappedBy="owner")
+    @Column(name = "COUNTRY")
+    private String country;
+    @OneToMany(mappedBy="ownCity")
     private List<Building> buildings;
 
     // JPA REQUIRES IT!
     public City() {
+    }
+
+    public City(String name, String zip, String country) {
+        this.name = name;
+        this.zip = zip;
+        this.country = country;
     }
 
     public String getName() {
@@ -62,6 +70,13 @@ public class City {
         if (building.getCity() != this) {
             building.setCity(this);
         }
+    }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 }

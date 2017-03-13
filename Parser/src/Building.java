@@ -87,8 +87,6 @@ public class Building {
         for (Pair<Double, Double> p : this.envelopeList) {
             System.out.println("\t"+p.getL() + ", " + p.getR());
         }
-
-
     }
 
     public void setCivicAddress(String civicAddress) {

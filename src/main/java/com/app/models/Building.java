@@ -50,6 +50,10 @@ public class Building {
     public Building() {
     }
 
+    public Building(City city) {
+        this.setCity(city);
+    }
+
     public String getDescription() {
         return description;
     }

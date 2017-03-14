@@ -1,5 +1,6 @@
 package com.app.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -39,6 +40,7 @@ public class City {
         this.name = name;
         this.zip = zip;
         this.country = country;
+        this.buildings = new ArrayList<>();
     }
 
     public String getName() {

@@ -32,8 +32,12 @@ public class SmartIvcApplication implements CommandLineRunner{
 	public void run(String... var1) throws Exception {
 		Parser parser = new Parser("src/main/resources/city_data/lugano.xml");
 		City luganoCity = new City("Lugano", "6900", "Switzerland");
+
+		List<Building> city = parser.createCity(luganoCity);
 		this.cityRepository.save(luganoCity);
-		List<Building> city = parser.createCity();
-		this.buildingRepository.save(city.get(0));
+		for (Building building: city) {
+			System.out.println(building.getCity());
+			this.buildingRepository.save(building);
+		}
 	}
 }

@@ -1,6 +1,7 @@
 package com.app.utils;
 
 import com.app.models.Building;
+import com.app.models.City;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -20,12 +21,12 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 public class Parser {
 
-    private List<Building> city;
+    private List<Building> buildingList;
     private Document cityDocument;
 
     public Parser(String filePath) throws Exception {
         this.cityDocument = this.loadFile(filePath);
-        this.city = new ArrayList<>();
+        this.buildingList = new ArrayList<>();
     }
 
     private Document loadFile(String filePath) throws Exception {
@@ -37,21 +38,21 @@ public class Parser {
         return doc;
     }
 
-    public List<Building> createCity() throws Exception {
+    public List<Building> createCity(City city) throws Exception {
         NodeList recordsList = this.getCityDocument().getElementsByTagName("Record");
         if (recordsList != null) {
             for (int recordIdx = 0; recordIdx < recordsList.getLength(); recordIdx++) {
                 NodeList valuesList = recordsList.item(recordIdx).getFirstChild().getChildNodes();
                 if (valuesList != null) {
-                    city.add(this.createBuilding(valuesList));
+                    buildingList.add(this.createBuilding(valuesList, city));
                 }
             }
         }
-        return city;
+        return buildingList;
     }
 
-    private Building createBuilding(NodeList valuesList) {
-        Building building = new Building();
+    private Building createBuilding(NodeList valuesList, City city) {
+        Building building = new Building(city);
         for (int valueIdx = 0; valueIdx < valuesList.getLength(); valueIdx++) {
             Node node = valuesList.item(valueIdx);
 
@@ -149,7 +150,7 @@ public class Parser {
 
 //    public void printCity() {
 //        int i = 0;
-//        for (Building build : city) {
+//        for (Building build : buildingList) {
 //            i++;
 ////            if (build.getCivicAddress() != null) {
 ////                String civic = build.getCivicAddress();

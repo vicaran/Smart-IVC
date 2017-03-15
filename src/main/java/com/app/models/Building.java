@@ -1,7 +1,5 @@
 package com.app.models;
 
-import com.app.utils.Pair;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -32,16 +31,15 @@ public class Building {
     private double shapeLength;
     @Column(name = "SHAPE_AREA")
     private double shapeArea;
-    @Column(name = "BOUND_COORDINATES")
-    private String boundCoords;
-    @Column(name = "PERIMETER_COORDINATES")
-    private String perimeterCoords;
+    @Column(name = "BOUND")
+    private byte[] boundCoords;
+    @Lob
+    @Column(name = "RING")
+    private byte[] ringCoords;
     @Column(name = "CIVIC_NUMBER")
     private String civicNumber;
-    @Column(name = "CENTROID_LAT")
-    private String centroidLat;
-    @Column(name = "CENTROID_LON")
-    private String centroidLon;
+    @Column(name = "CENTROID")
+    private byte[] centroid;
     @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name="OWNCITY_ID")
     private City ownCity;
@@ -86,22 +84,6 @@ public class Building {
         this.shapeArea = shapeArea;
     }
 
-    public String getBoundCoords() {
-        return boundCoords;
-    }
-
-    public void setBoundCoords(String boundCoords) {
-        this.boundCoords = boundCoords;
-    }
-
-    public String getPerimeterCoords() {
-        return perimeterCoords;
-    }
-
-    public void setPerimeterCoords(String perimeterCoords) {
-        this.perimeterCoords = perimeterCoords;
-    }
-
     public City getCity() {
         return ownCity;
     }
@@ -121,32 +103,27 @@ public class Building {
         this.civicNumber = civicNumber;
     }
 
-    public void printList() {
-        System.out.println(this.boundCoords);
-        System.out.println(this.perimeterCoords);
-//        for (Pair<Double, Double> p: this.ringList) {
-//            System.out.println("\t"+p.getL() + ", " + p.getR());
-//        }
-//
-//        System.out.println("Boundaries are: ");
-//        for (Pair<Double, Double> p : this.envelopeList) {
-//            System.out.println("\t"+p.getL() + ", " + p.getR());
-//        }
+    public byte[] getBoundCoords() {
+        return boundCoords;
     }
 
-    public String getCentroidLat() {
-        return centroidLat;
+    public void setBoundCoords(byte[] boundCoords) {
+        this.boundCoords = boundCoords;
     }
 
-    public void setCentroidLat(String centroidLat) {
-        this.centroidLat = centroidLat;
+    public byte[] getRingCoords() {
+        return ringCoords;
     }
 
-    public String getCentroidLon() {
-        return centroidLon;
+    public void setRingCoords(byte[] ringCoords) {
+        this.ringCoords = ringCoords;
     }
 
-    public void setCentroidLon(String centroidLon) {
-        this.centroidLon = centroidLon;
+    public byte[] getCentroid() {
+        return centroid;
+    }
+
+    public void setCentroid(byte[] centroid) {
+        this.centroid = centroid;
     }
 }

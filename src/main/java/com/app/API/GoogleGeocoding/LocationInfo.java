@@ -12,17 +12,21 @@ import com.app.utils.APIKeys;
  */
 public class LocationInfo {
 
-    public void buildingInfo(Double lat, Double lng) throws Exception {
-        GeoApiContext context = new GeoApiContext().setApiKey(APIKeys.GoogleMapsKey);
+    GeoApiContext context;
 
-        GeocodingResult[] results = GeocodingApi.newRequest(context).latlng(new LatLng(lat, lng)).await();
+    public LocationInfo(){
+        this.context = new GeoApiContext().setApiKey(APIKeys.GoogleMapsKey);
+    }
+
+    public void buildingInfo(Double lat, Double lng) throws Exception {
+
+        GeocodingResult[] results = GeocodingApi.newRequest(this.context).latlng(new LatLng(lat, lng)).await();
         System.out.println(results[0].toString());
     }
 
-    public void cityInfo(Double lat, Double lng) throws Exception {
-        GeoApiContext context = new GeoApiContext().setApiKey(APIKeys.GoogleMapsKey);
+    public void cityInfo(String cityName) throws Exception {
 
-        GeocodingResult[] results = GeocodingApi.newRequest(context).latlng(new LatLng(lat, lng)).await();
+        GeocodingResult[] results = GeocodingApi.newRequest(this.context).address(cityName).await();
         System.out.println(results[0].toString());
     }
 }

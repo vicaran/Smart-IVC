@@ -1,7 +1,9 @@
-package com.app.utils;
+package com.app.utils.creators;
 
 import com.app.models.Building;
 import com.app.models.City;
+import com.app.utils.Converter;
+import com.app.utils.dataStructures.Pair;
 
 import org.jetbrains.annotations.Contract;
 import org.w3c.dom.Document;
@@ -141,13 +143,13 @@ public class BuildingCreator {
     private byte[] computeCentroid(List<Pair<Double, Double>> xyCoord) {
         String centroidCoords = "";
         Double lat = 0.0;
-        Double lon = 0.0;
+        Double lng = 0.0;
         for (Pair<Double, Double> point : xyCoord) {
             lat += point.getL();
-            lon += point.getR();
+            lng += point.getR();
         }
 
-        return (String.valueOf(lat / 2) + " " + String.valueOf(lon / 2)).getBytes();
+        return (String.valueOf(lat / 2) + " " + String.valueOf(lng / 2)).getBytes();
     }
 
 

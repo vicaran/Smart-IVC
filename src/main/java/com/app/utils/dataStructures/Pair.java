@@ -1,4 +1,4 @@
-package com.app.utils;
+package com.app.utils.dataStructures;
 
 /**
  * Created by Andrea on 07/03/2017.

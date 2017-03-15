@@ -4,8 +4,7 @@ import com.app.models.Building;
 import com.app.models.City;
 import com.app.repositories.BuildingRepository;
 import com.app.repositories.CityRepository;
-import com.app.utils.BuildingCreator;
-import com.app.utils.CityCreator;
+import com.app.utils.creators.CityCreator;
 import com.app.utils.Parser;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +31,10 @@ public class SmartIvcApplication implements CommandLineRunner{
 	}
 
 	public void run(String... var1) throws Exception {
+//		this.loadLugano();
+	}
+
+	private void loadLugano() throws Exception {
 		City luganoCity = new City("Lugano", "6900", "Switzerland");
 
 		CityCreator luganoCreator = new CityCreator(Parser.loadFile("src/main/resources/city_data/lugano.xml"));
@@ -39,11 +42,8 @@ public class SmartIvcApplication implements CommandLineRunner{
 		List<Building> luganoBuildingList = luganoCreator.create(luganoCity);
 
 		this.cityRepository.save(luganoCity);
-
 		for (Building building: luganoBuildingList) {
-			System.out.println(building.getCity());
 			this.buildingRepository.save(building);
 		}
-
 	}
 }

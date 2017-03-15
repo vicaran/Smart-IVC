@@ -1,4 +1,4 @@
-package com.app.utils;
+package com.app.utils.creators;
 
 import com.app.models.Building;
 import com.app.models.City;

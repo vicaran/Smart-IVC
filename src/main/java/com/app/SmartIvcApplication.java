@@ -29,7 +29,7 @@ public class SmartIvcApplication implements CommandLineRunner{
 	}
 
 	public void run(String... var1) throws Exception {
-		this.loadLugano("src/main/resources/city_data/lugano.xml");
+//		this.loadLugano("src/main/resources/city_data/lugano.xml");
 	}
 
 	private void loadLugano(String cityPath) throws Exception {

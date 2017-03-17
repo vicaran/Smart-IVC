@@ -38,8 +38,10 @@ public class Building {
     private byte[] ringCoords;
     @Column(name = "CIVIC_NUMBER")
     private String civicNumber;
-    @Column(name = "CENTROID")
-    private byte[] centroid;
+    @Column(name = "CENTROID_LAT")
+    private Double centroidLat;
+    @Column(name = "CENTROID_LNG")
+    private Double centroidLng;
     @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name="OWNCITY_ID")
     private City ownCity;
@@ -119,11 +121,19 @@ public class Building {
         this.ringCoords = ringCoords;
     }
 
-    public byte[] getCentroid() {
-        return centroid;
+    public Double getCentroidLat() {
+        return centroidLat;
     }
 
-    public void setCentroid(byte[] centroid) {
-        this.centroid = centroid;
+    public void setCentroidLat(Double centroidLat) {
+        this.centroidLat = centroidLat;
+    }
+
+    public Double getCentroidLng() {
+        return centroidLng;
+    }
+
+    public void setCentroidLng(Double centroidLng) {
+        this.centroidLng = centroidLng;
     }
 }

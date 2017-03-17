@@ -72,7 +72,9 @@ public class BuildingCreator {
                 for (int extentIdx = 0; extentIdx < boundList.getLength(); extentIdx += 2) {
                     coordinates.add(this.createConvertedPair(boundList.item(extentIdx), boundList.item(extentIdx + 1)));
                 }
-                building.setCentroid(this.computeCentroid(coordinates));
+                Pair<Double, Double> centroidCoords = this.computeCentroid(coordinates);
+                building.setCentroidLat(centroidCoords.getL());
+                building.setCentroidLng(centroidCoords.getR());
                 building.setBoundCoords(this.createBinaryPoints(coordinates));
             }
 
@@ -140,7 +142,7 @@ public class BuildingCreator {
         return pointsString.getBytes();
     }
 
-    private byte[] computeCentroid(List<Pair<Double, Double>> xyCoord) {
+    private Pair<Double, Double> computeCentroid(List<Pair<Double, Double>> xyCoord) {
         String centroidCoords = "";
         Double lat = 0.0;
         Double lng = 0.0;
@@ -148,8 +150,7 @@ public class BuildingCreator {
             lat += point.getL();
             lng += point.getR();
         }
-
-        return (String.valueOf(lat / 2) + " " + String.valueOf(lng / 2)).getBytes();
+        return new Pair<>(lat/2, lng/2);
     }
 
 

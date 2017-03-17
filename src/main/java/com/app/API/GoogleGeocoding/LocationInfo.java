@@ -27,7 +27,8 @@ public class LocationInfo implements GoogleAPIServices {
 
         GeocodingResult[] results = GeocodingApi.newRequest(this.context).latlng(new LatLng(lat, lng)).await();
         System.out.println(results[0].toString());
-
+        //TODO
+        
         return new ArrayList<>();
     }
 

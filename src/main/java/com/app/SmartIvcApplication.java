@@ -1,11 +1,9 @@
 package com.app;
 
 import com.app.models.Building;
-import com.app.models.City;
 import com.app.repositories.BuildingRepository;
 import com.app.repositories.CityRepository;
 import com.app.utils.creators.CityCreator;
-import com.app.utils.Parser;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -31,19 +29,19 @@ public class SmartIvcApplication implements CommandLineRunner{
 	}
 
 	public void run(String... var1) throws Exception {
-//		this.loadLugano();
+		this.loadLugano("src/main/resources/city_data/lugano.xml");
 	}
 
-	private void loadLugano() throws Exception {
-		City luganoCity = new City("Lugano", "6900", "Switzerland");
+	private void loadLugano(String cityPath) throws Exception {
+		CityCreator lugano = new CityCreator(cityPath, "Lugano", "6900");
 
-		CityCreator luganoCreator = new CityCreator(Parser.loadFile("src/main/resources/city_data/lugano.xml"));
+		this.cityRepository.save(lugano.getCityModel());
 
-		List<Building> luganoBuildingList = luganoCreator.create(luganoCity);
-
-		this.cityRepository.save(luganoCity);
-		for (Building building: luganoBuildingList) {
+		for (Building building : lugano.getBuildingList()) {
 			this.buildingRepository.save(building);
 		}
 	}
+//	https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=46.007639,8.958633&radius=500&key=AIzaSyCY1ov7-HWE-CahFZyIjaGOQYGYK-T8wls
+
+
 }

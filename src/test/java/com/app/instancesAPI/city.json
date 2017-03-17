@@ -1,0 +1,59 @@
+{
+  "results" : [
+    {
+      "address_components" : [
+        {
+          "long_name" : "Lugano",
+          "short_name" : "Lugano",
+          "types" : [ "locality", "political" ]
+        },
+        {
+          "long_name" : "Lugano",
+          "short_name" : "Lugano",
+          "types" : [ "administrative_area_level_2", "political" ]
+        },
+        {
+          "long_name" : "Ticino",
+          "short_name" : "TI",
+          "types" : [ "administrative_area_level_1", "political" ]
+        },
+        {
+          "long_name" : "Svizzera",
+          "short_name" : "CH",
+          "types" : [ "country", "political" ]
+        }
+      ],
+      "formatted_address" : "Lugano, Svizzera",
+      "geometry" : {
+        "bounds" : {
+          "northeast" : {
+            "lat" : 46.1191401,
+            "lng" : 9.089630099999999
+          },
+          "southwest" : {
+            "lat" : 45.93971,
+            "lng" : 8.893699999999999
+          }
+        },
+        "location" : {
+          "lat" : 46.0036778,
+          "lng" : 8.951051999999999
+        },
+        "location_type" : "APPROXIMATE",
+        "viewport" : {
+          "northeast" : {
+            "lat" : 46.1191401,
+            "lng" : 9.089630099999999
+          },
+          "southwest" : {
+            "lat" : 45.93971,
+            "lng" : 8.899979399999999
+          }
+        }
+      },
+      "place_id" : "ChIJ8RFCavcthEcR4PihLiEEjO8",
+      "types" : [ "locality", "political" ]
+    }
+  ],
+  "status" : "OK"
+}

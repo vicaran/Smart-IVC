@@ -31,7 +31,7 @@ public class Building {
     private double shapeLength;
     @Column(name = "SHAPE_AREA")
     private double shapeArea;
-    @Column(name = "BOUND")
+    @Column(name = "BOUNDS")
     private byte[] boundCoords;
     @Lob
     @Column(name = "RING")

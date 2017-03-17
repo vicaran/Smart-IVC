@@ -1,5 +1,7 @@
 package com.app.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +31,10 @@ public class City {
     private String zip;
     @Column(name = "COUNTRY")
     private String country;
+    @Column(name = "AREA")
+    private String area;
+    @Column(name = "BOUNDS")
+    private byte[] boundCoords;
     @OneToMany(mappedBy="ownCity")
     private List<Building> buildings;
 
@@ -36,7 +42,7 @@ public class City {
     public City() {
     }
 
-    public City(String name, String zip, String country) {
+    public City(String name, String zip) {
         this.name = name;
         this.zip = zip;
         this.country = country;
@@ -59,6 +65,7 @@ public class City {
         this.zip = zip;
     }
 
+    @JsonIgnore
     public List<Building> getBuildings() {
         return buildings;
     }
@@ -80,5 +87,21 @@ public class City {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public byte[] getBoundCoords() {
+        return boundCoords;
+    }
+
+    public void setBoundCoords(byte[] boundCoords) {
+        this.boundCoords = boundCoords;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
     }
 }

@@ -42,7 +42,7 @@ public class Building {
     private Double centroidLat;
     @Column(name = "CENTROID_LNG")
     private Double centroidLng;
-    @ManyToOne(fetch= FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name="OWNCITY_ID")
     private City ownCity;
 
@@ -135,5 +135,13 @@ public class Building {
 
     public void setCentroidLng(Double centroidLng) {
         this.centroidLng = centroidLng;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

@@ -4,7 +4,7 @@ import com.app.API.GoogleGeocoding.GoogleAPIServices;
 import com.app.API.GoogleGeocoding.LocationInfo;
 import com.app.models.Building;
 import com.app.models.City;
-import com.app.utils.Parser;
+import com.app.utils.FileLoader;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -24,7 +24,7 @@ public class CityCreator {
     private Document cityDocument;
 
     public CityCreator(String cityPath, String name, String zip) throws Exception {
-        this.cityDocument = Parser.loadFile(cityPath);
+        this.cityDocument = FileLoader.loadFile(cityPath);
         this.buildingList = new ArrayList<>();
         this.initializeCity(name, zip);
         this.create();

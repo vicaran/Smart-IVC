@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+
+    <head>
+        <meta charset="UTF-8"/>
+        <title>SMART-IVC</title>
+        <link rel="stylesheet" th:href="@{/css/styles.css}" type="text/css"
+              media="screen"/>
+
+        <script th:src="@{/js/jquery-3.2.0.min.js}" type="text/javascript"></script>
+        <script th:src="@{/js/functions.js}" type="text/javascript"></script>
+
+
+        <!--Import babilonjs scripts-->
+        <script src="http://www.babylonjs.com/hand.minified-1.2.js"></script>
+        <script src="http://www.babylonjs.com/cannon.js"></script>
+        <script src="http://www.babylonjs.com/oimo.js"></script>
+        <script src="http://www.babylonjs.com/babylon.js"></script>
+
+
+    </head>
+
+    <body>
+        <div id="canvasZone">
+            <canvas id="renderCanvas"></canvas>
+        </div>
+    </body>
+</html>

@@ -73,6 +73,7 @@ var createCanvas = function () {
     var prepareBuildings = function (data, scene) {
         if (data[0]) {
             var coordinateZero = getFirstCoordinate(createRing(data[0].ringCoords));
+            console.log(coordinateZero);
             coordinateZero = latLngToXYZ(coordinateZero.Lat, coordinateZero.Lng);
 
             for (var i = 0; i < data.length; i++) {
@@ -107,8 +108,8 @@ var createCanvas = function () {
 
     var loadCity = function (scene) {
         $.ajax({
-                   // url: SERVER_URL + "/building/max=46.061271,8.875321&min=45.940576,8.996019/",// ENTIRE LUGANO
-                   url: SERVER_URL + "building/max=46.006998,8.942853&min=45.992533,8.966763/", // AROUND LAKE
+                   url: SERVER_URL + "/building/max=46.061271,8.875321&min=45.940576,8.996019/",// ENTIRE LUGANO
+                   // url: SERVER_URL + "building/max=46.006998,8.942853&min=45.992533,8.966763/", // AROUND LAKE
                    type: "GET",
                    success: function (data, textStatus, jqXHR) {
                        prepareBuildings(data, scene);
@@ -158,3 +159,5 @@ var createCanvas = function () {
         engine.resize();
     });
 };
+
+// https://maps.googleapis.com/maps/api/staticmap?center=46.00429490926635,8.948536881634242&zoom=15&maptype=terrain&size=2048x2048&key=AIzaSyCY1ov7-HWE-CahFZyIjaGOQYGYK-T8wls

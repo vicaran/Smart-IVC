@@ -4,7 +4,7 @@
 /**
  * Created by Andrea on 19/03/2017.
  */
-var createMiniCanvas = function (data) {
+var createMiniCanvas = function (data, texture, scene) {
     var canvas = document.getElementById("renderMiniCanvas");
     var engine = new BABYLON.Engine(canvas, true);
 
@@ -24,13 +24,11 @@ var createMiniCanvas = function (data) {
         var shape = createShape(data.ringCoords, coordinateZero);
         var path = createPath(data.floors);
 
-        var box = BABYLON.Mesh.ExtrudeShape("miniBox_" + data.id, shape,
-                                            path, 1, 0,
-                                            3, scene);
+        var box = BABYLON.Mesh.ExtrudeShape("miniBox_" + data.id, shape, path, 1, 0, 3, scene);
 
         var boxMaterial = new BABYLON.StandardMaterial("miniBoxMaterial", scene);
 
-        boxMaterial.diffuseTexture = new BABYLON.Texture("/images/build.jpg", scene);
+        boxMaterial.diffuseTexture = new BABYLON.Texture(texture, scene);
 
         boxMaterial.specularColor = BABYLON.Color3.Black();
 
@@ -40,9 +38,12 @@ var createMiniCanvas = function (data) {
         return scene;
     };
 
-    var scene = createScene();
+    scene = createScene();
     engine.runRenderLoop(function () {
-        scene.activeCamera.alpha += .01;
+        if (scene.activeCamera) {
+            scene.activeCamera.alpha += .01;
+        }
         scene.render();
     });
+    return scene;
 };

@@ -1,6 +1,9 @@
 /**
  * Created by Andrea on 24/03/2017.
  */
+var SERVER_URL = "http://" + window.location.host + "/";
+
+
 var latLngToXYZ = function (lat, lng) {
     var R = 6371;
     var x = R * Math.cos(lat) * Math.cos(lng);

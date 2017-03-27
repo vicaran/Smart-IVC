@@ -42,9 +42,12 @@ public class BuildingController {
                                      @PathVariable Double maxLng,
                                      @PathVariable Double minLat,
                                      @PathVariable Double minLng) {
+        long start = System.currentTimeMillis();
 
-        //max=46.004509,8.948119&min=46.002147,8.951145
         List<Building> buildings = this.buildingRepository.findBuildingFromRange(maxLat, maxLng, minLat, minLng);
+
+        long end = System.currentTimeMillis();
+        System.out.println("Time for query is: " + (end-start));
 
         return new ResponseEntity<>(buildings, HttpStatus.OK);
     }

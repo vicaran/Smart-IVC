@@ -80,12 +80,12 @@ var createCanvas = function () {
                 if (data[i]) {
                     var shape = createShape(data[i].ringCoords, coordinateZero);
                     var path = createPath(data[i].floors);
+                    var firstCoord = getFirstCoordinate(createRing(data[i].ringCoords));
+                    firstCoord = latLngToXYZ(firstCoord.Lat, firstCoord.Lng);
 
                     var box = BABYLON.Mesh.ExtrudeShape("box_" + data[i].id, shape, path, 1, 0, 3, scene);
 
-                    var boxMaterial = new BABYLON.StandardMaterial(
-                        "boxMaterial" + i,
-                        scene);
+                    var boxMaterial = new BABYLON.StandardMaterial("boxMaterial" + i, scene);
 
                     var texture = "/images/build" + Math.floor((Math.random() * 5) + 1) + ".jpg";
 
@@ -100,6 +100,8 @@ var createCanvas = function () {
                     prepareButton(box, boxMaterial, scene, texture);
                     box.checkCollisions = true;
                     box.material = boxMaterial;
+                    box.rotation.y = Math.PI/2;
+                    // box.position = new BABYLON.Vector3(firstCoord.y-coordinateZero.y,0, firstCoord.x-coordinateZero.x);
                     // console.log("Box added" + box);
                 }
             }
@@ -108,8 +110,8 @@ var createCanvas = function () {
 
     var loadCity = function (scene) {
         $.ajax({
-                   url: SERVER_URL + "/building/max=46.061271,8.875321&min=45.940576,8.996019/",// ENTIRE LUGANO
-                   // url: SERVER_URL + "building/max=46.006998,8.942853&min=45.992533,8.966763/", // AROUND LAKE
+                   // url: SERVER_URL + "/building/max=46.061271,8.875321&min=45.940576,8.996019/",// ENTIRE LUGANO
+                   url: SERVER_URL + "building/max=46.006998,8.942853&min=45.992533,8.966763/", // AROUND LAKE
                    type: "GET",
                    success: function (data, textStatus, jqXHR) {
                        prepareBuildings(data, scene);
@@ -132,6 +134,9 @@ var createCanvas = function () {
         var groundMaterial = new BABYLON.StandardMaterial("ground", scene);
         groundMaterial.specularColor = new BABYLON.Color3(0.549, 0.4, 0.309);
         groundMaterial.diffuseColor = new BABYLON.Color3(0.549, 0.4, 0.309);
+        // ground.material = groundMaterial;
+
+        // var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "/images/heightmaps/lugano.jpg", 50, 50, 250, 0, 10, scene, false);
         ground.material = groundMaterial;
 
         // SET LIGHT

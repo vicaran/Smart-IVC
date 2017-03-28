@@ -11,4 +11,6 @@ public interface GoogleAPIServices {
     ArrayList<String> buildingInfo(Double latitude, Double longitude) throws Exception;
 
     HashMap<String, String> cityInfo(String cityName) throws Exception;
+
+    Double elevationInfo(Double latitude, Double longitude) throws Exception;
 }

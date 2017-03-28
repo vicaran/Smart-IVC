@@ -75,6 +75,7 @@ var createCanvas = function () {
             var coordinateZero = getFirstCoordinate(createRing(data[0].ringCoords));
             console.log(coordinateZero);
             coordinateZero = latLngToXYZ(coordinateZero.Lat, coordinateZero.Lng);
+            console.log(coordinateZero);
 
             for (var i = 0; i < data.length; i++) {
                 if (data[i]) {
@@ -100,7 +101,10 @@ var createCanvas = function () {
                     prepareButton(box, boxMaterial, scene, texture);
                     box.checkCollisions = true;
                     box.material = boxMaterial;
-                    box.rotation.y = Math.PI/2;
+                    // box.position = new BABYLON.Vector3(0,,0);
+
+                    // box.rotation.y = Math.PI/2;
+                    console.log(firstCoord.z - coordinateZero.z);
                     // box.position = new BABYLON.Vector3(firstCoord.y-coordinateZero.y,0, firstCoord.x-coordinateZero.x);
                     // console.log("Box added" + box);
                 }

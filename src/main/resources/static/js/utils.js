@@ -39,7 +39,8 @@ var createRing = function (binaryCoordinates) {
 var createShape = function (binaryCoordinates, coordinateZero) {
     var shape = [];
     var ringCoordinate = createRing(binaryCoordinates);
-    var firstCoords = getFirstCoordinate(ringCoordinate);
+    console.log(ringCoordinate);
+    // var firstCoords = getFirstCoordinate(ringCoordinate);
     // var adjusts = latLngToXYZ(firstCoords.Lat, firstCoords.Lng);
     // var adjusts = latLngToArr(firstLatCoord, firstLngCoord);
 

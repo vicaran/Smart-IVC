@@ -58,4 +58,8 @@ public class LocationInfo implements GoogleAPIServices {
 
         return requiredInfo;
     }
+
+    public Double elevationInfo(Double latitude, Double longitude){
+        return 2.0;
+    }
 }

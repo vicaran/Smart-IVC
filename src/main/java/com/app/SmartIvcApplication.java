@@ -3,6 +3,7 @@ package com.app;
 import com.app.models.Building;
 import com.app.repositories.BuildingRepository;
 import com.app.repositories.CityRepository;
+import com.app.utils.Converter;
 import com.app.utils.creators.CityCreator;
 
 import org.springframework.beans.factory.annotation.Autowired;

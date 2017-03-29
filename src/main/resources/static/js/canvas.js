@@ -49,10 +49,12 @@ var createCanvas = function () {
         mesh.actionManager.registerAction(
             new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnLeftPickTrigger,
                                           function (ev) {
+                                                console.log(mesh.name.substr(mesh.name.indexOf("_") + 1));
                                               $.ajax({
                                                          url: SERVER_URL + "building/info/" + mesh.name.substr(mesh.name.indexOf("_") + 1),
                                                          type: "GET",
                                                          success: function (data, textStatus, jqXHR) {
+                                                             console.log((atob(data.ringCoords)).split(","));
                                                              $("#buildingName").html(data.description);
                                                              $("#buildingAddress").html("Via unknown, " + data.civicNumber);
                                                              $("#buildingCity").html(data.city.name + " " + data.city.country);

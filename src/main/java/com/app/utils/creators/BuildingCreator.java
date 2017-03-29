@@ -40,6 +40,7 @@ public class BuildingCreator {
                 switch (valueIdx) {
                     case 1:
                         this.getBuildingCoordinates(node, building);
+                        break;
                     case 4:
                         building.setDescription(value);
                         break;

@@ -71,7 +71,8 @@ public class BuildingCreator {
             if (boundList != null) {
                 List<Pair<Double, Double>> coordinates = new ArrayList<>();
                 for (int extentIdx = 0; extentIdx < boundList.getLength(); extentIdx += 2) {
-                    coordinates.add(this.createConvertedPair(boundList.item(extentIdx), boundList.item(extentIdx + 1)));
+//                    coordinates.add(this.createConvertedPair(boundList.item(extentIdx), boundList.item(extentIdx + 1)));
+                    coordinates.add(this.createPair(boundList.item(extentIdx), boundList.item(extentIdx + 1)));
                 }
                 Pair<Double, Double> centroidCoords = this.computeCentroid(coordinates);
                 building.setCentroidLat(centroidCoords.getL());
@@ -83,9 +84,10 @@ public class BuildingCreator {
             if (ringList != null) {
                 List<Pair<Double, Double>> coordinates = new ArrayList<>();
                 for (int ringIdx = 0; ringIdx < ringList.getLength(); ringIdx++) {
-                    coordinates.add(this.createConvertedPair(ringList.item(ringIdx).getFirstChild(), ringList.item(ringIdx).getLastChild()));
+                    coordinates.add(this.createPair(ringList.item(ringIdx).getFirstChild(), ringList.item(ringIdx).getLastChild()));
+//                    coordinates.add(this.createConvertedPair(ringList.item(ringIdx).getFirstChild(), ringList.item(ringIdx).getLastChild()));
                 }
-                building.setRingCoords(this.createBinaryPoints(coordinates));
+                building.setRingSwissCoords(this.createBinaryPoints(coordinates));
             }
         }
     }
@@ -98,6 +100,12 @@ public class BuildingCreator {
         Double latitude = Converter.CHtoWGSlat(xCoord, yCoord);
         Double longitude = Converter.CHtoWGSlng(xCoord, yCoord);
         return new Pair<>(latitude, longitude);
+    }
+
+    private Pair<Double, Double> createPair(Node value1, Node value2) {
+        Double xCoord = Double.parseDouble(value1.getTextContent());
+        Double yCoord = Double.parseDouble(value2.getTextContent());
+        return new Pair<>(xCoord, yCoord);
     }
 
     @Contract(pure = true)

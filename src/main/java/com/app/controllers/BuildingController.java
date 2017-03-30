@@ -44,11 +44,11 @@ public class BuildingController {
                                      @PathVariable Double minLng) {
         long start = System.currentTimeMillis();
 
-        List<Building> buildings = this.buildingRepository.findBuildingFromRange(maxLat, maxLng, minLat, minLng);
+        List<Building> buildings = this.buildingRepository.findBuildingsByCentroidLatLessThanAndCentroidLngGreaterThanAndCentroidLatGreaterThanAndCentroidLngLessThan(maxLat, maxLng, minLat, minLng);
 
         long end = System.currentTimeMillis();
         System.out.println("Time for query is: " + (end-start));
-
+        System.out.println(buildings.size());
         return new ResponseEntity<>(buildings, HttpStatus.OK);
     }
 }

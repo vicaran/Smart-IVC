@@ -1,14 +1,23 @@
 package com.app.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -16,12 +25,21 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "BUILDING")
-public class Building {
+@Embeddable
+public class Building implements Serializable {
 
     @Id
     @Column(name = "BUILDING_ID", insertable = false, updatable = false, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToMany
+    @JoinTable(name = "building_type",
+            joinColumns = @JoinColumn(name = "id_building",
+                    referencedColumnName = "BUILDING_ID"),
+            inverseJoinColumns = @JoinColumn(name = "id_type",
+                    referencedColumnName = "TYPE_ID"))
+    private Set<Type> types;
 
     @Column(name = "DESCRIPTION")
     private String description;
@@ -34,17 +52,28 @@ public class Building {
     @Column(name = "BOUNDS")
     private byte[] boundCoords;
     @Lob
-    @Column(name = "RING")
-    private byte[] ringCoords;
+    @Column(name = "RING_SWISS_COORDS")
+    private byte[] ringSwissCoords;
+    @Lob
+    @Column(name = "RING_GLOBAL_COORDS")
+    private byte[] ringGlobalCoords;
     @Column(name = "CIVIC_NUMBER")
     private String civicNumber;
     @Column(name = "CENTROID_LAT")
     private Double centroidLat;
     @Column(name = "CENTROID_LNG")
     private Double centroidLng;
+
     @ManyToOne()
     @JoinColumn(name="OWNCITY_ID")
     private City ownCity;
+
+    @ManyToOne()
+    @JoinColumn(name="OWNSUBURB_ID")
+    private Suburb ownSuburb;
+
+    @OneToMany(mappedBy="ownBuilding")
+    private List<Address> addresses;
 
     // JPA REQUIRES IT!
     public Building() {
@@ -97,6 +126,17 @@ public class Building {
         }
     }
 
+    public Suburb getSuburb() {
+        return ownSuburb;
+    }
+
+    public void setSuburb(Suburb suburb) {
+        this.ownSuburb = suburb;
+        if (!suburb.getBuildings().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
+            suburb.getBuildings().add(this);
+        }
+    }
+
     public String getCivicNumber() {
         return civicNumber;
     }
@@ -111,14 +151,6 @@ public class Building {
 
     public void setBoundCoords(byte[] boundCoords) {
         this.boundCoords = boundCoords;
-    }
-
-    public byte[] getRingCoords() {
-        return ringCoords;
-    }
-
-    public void setRingCoords(byte[] ringCoords) {
-        this.ringCoords = ringCoords;
     }
 
     public Double getCentroidLat() {
@@ -143,5 +175,37 @@ public class Building {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public byte[] getRingGlobalCoords() {
+        return ringGlobalCoords;
+    }
+
+    public void setRingGlobalCoords(byte[] ringGlobalCoords) {
+        this.ringGlobalCoords = ringGlobalCoords;
+    }
+
+    public byte[] getRingSwissCoords() {
+        return ringSwissCoords;
+    }
+
+    public void setRingSwissCoords(byte[] ringSwissCoords) {
+        this.ringSwissCoords = ringSwissCoords;
+    }
+
+    @JsonIgnore
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
+
+    public void addAddress(Address address){
+        this.addresses.add(address);
+        if (address.getBuilding() != this) {
+            address.setBuilding(this);
+        }
     }
 }

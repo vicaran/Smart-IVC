@@ -37,9 +37,10 @@ $.ajax({
            url: SERVER_URL + "building/max=46.006998,8.942853&min=45.992533,8.966763/", // AROUND LAKE
            type: "GET",
            success: function (data, textStatus, jqXHR) {
+               console.log(data);
                for (var i = 0; i < data.length; i++) {
                    if (data[i]) {
-                       var list = createList(data[i].ringCoords);
+                       var list = createList(data[i].ringGlobalCoords);
                        if (data[i].id === 17296) {
                            console.log(list);
 

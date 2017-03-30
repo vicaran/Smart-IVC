@@ -30,6 +30,8 @@ public class CityCreator {
         this.create();
     }
 
+    public CityCreator(){}
+
     private void initializeCity(String name, String zip) throws Exception {
         this.cityModel = new City(name, zip);
 

@@ -1,5 +1,8 @@
 package com.app;
 
+import com.app.API.GoogleGeocoding.GoogleAPIServices;
+import com.app.API.SwissTopo.SwissTopoAPIServices;
+import com.app.API.SwissTopo.SwissTopoConverter;
 import com.app.models.Building;
 import com.app.repositories.BuildingRepository;
 import com.app.repositories.CityRepository;
@@ -30,19 +33,12 @@ public class SmartIvcApplication implements CommandLineRunner{
 	}
 
 	public void run(String... var1) throws Exception {
-//		this.loadLugano("src/main/resources/city_data/lugano.xml");
+
 	}
 
-	private void loadLugano(String cityPath) throws Exception {
-		CityCreator lugano = new CityCreator(cityPath, "Lugano", "6900");
 
-		this.cityRepository.save(lugano.getCityModel());
-
-		for (Building building : lugano.getBuildingList()) {
-			this.buildingRepository.save(building);
-		}
-	}
 //	https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=46.007639,8.958633&radius=500&key=AIzaSyCY1ov7-HWE-CahFZyIjaGOQYGYK-T8wls
 
+//	https://maps.googleapis.com/maps/api/elevation/json?locations=46.002290879,8.938280135&key=AIzaSyCY1ov7-HWE-CahFZyIjaGOQYGYK-T8wls
 
 }

@@ -35,8 +35,12 @@ public class City {
     private String area;
     @Column(name = "BOUNDS")
     private byte[] boundCoords;
+
     @OneToMany(mappedBy="ownCity")
     private List<Building> buildings;
+
+    @OneToMany(mappedBy="ownCity")
+    private List<Suburb> suburbs;
 
     // JPA REQUIRES IT!
     public City() {
@@ -78,6 +82,22 @@ public class City {
         this.buildings.add(building);
         if (building.getCity() != this) {
             building.setCity(this);
+        }
+    }
+
+    @JsonIgnore
+    public List<Suburb> getSuburbs() {
+        return suburbs;
+    }
+
+    public void setSuburbs(List<Suburb> suburbs) {
+        this.suburbs = suburbs;
+    }
+
+    public void addSuburb(Suburb suburb){
+        this.suburbs.add(suburb);
+        if (suburb.getCity() != this) {
+            suburb.setCity(this);
         }
     }
 

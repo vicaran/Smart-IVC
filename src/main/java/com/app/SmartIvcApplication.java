@@ -32,9 +32,7 @@ public class SmartIvcApplication implements CommandLineRunner{
 		SpringApplication.run(SmartIvcApplication.class, args);
 	}
 
-	public void run(String... var1) throws Exception {
-
-	}
+	public void run(String... var1) throws Exception {}
 
 
 //	https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=46.007639,8.958633&radius=500&key=AIzaSyCY1ov7-HWE-CahFZyIjaGOQYGYK-T8wls

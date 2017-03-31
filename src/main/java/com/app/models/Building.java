@@ -208,4 +208,12 @@ public class Building implements Serializable {
             address.setBuilding(this);
         }
     }
+
+    public Set<Type> getTypes() {
+        return types;
+    }
+
+    public void setTypes(Set<Type> types) {
+        this.types = types;
+    }
 }

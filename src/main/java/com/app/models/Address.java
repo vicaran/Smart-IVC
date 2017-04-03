@@ -3,8 +3,9 @@ package com.app.models;
 import java.io.Serializable;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,11 +19,15 @@ import javax.persistence.Table;
 public class Address implements Serializable{
 
     @Id
+    @Column(name = "ADDRESS_ID", insertable = false, updatable = false, nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
     private Double latitude;
-    @Id
+    @Column(nullable = false)
     private Double longitude;
 
-    @Id
     @ManyToOne()
     @JoinColumn(name = "BUILDING_ID")
     private Building ownBuilding;
@@ -31,6 +36,8 @@ public class Address implements Serializable{
     private String addressName;
     @Column(name = "HOUSE_NUMBER")
     private String houseNumber;
+    @Column(name = "ROAD_NUMBER")
+    private String roadNumber;
 
     // JPA REQUIRES IT!
     public Address() {
@@ -75,5 +82,13 @@ public class Address implements Serializable{
 
     public void setBuilding(Building ownBuilding) {
         this.ownBuilding = ownBuilding;
+    }
+
+    public String getRoadNumber() {
+        return roadNumber;
+    }
+
+    public void setRoadNumber(String roadNumber) {
+        this.roadNumber = roadNumber;
     }
 }

@@ -32,12 +32,16 @@ public class LocationInfo implements OpenStreetMapAPIServices {
         } catch (UnirestException e) {
             e.printStackTrace();
         }
-
         if (response != null && response.getStatus() == 200) {
-            Document xmlResponse = parseStringAsXML(response.getBody());
-            if (xmlResponse != null) {
-                result = checkExistenceAndPut(xmlResponse, result);
+            Document xmlResponse = null;
+            try {
+                xmlResponse = parseStringAsXML(response.getBody());
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (SAXException e) {
+                e.printStackTrace();
             }
+            result = checkExistenceAndPut(xmlResponse, result);
         }
         return result;
     }
@@ -47,29 +51,23 @@ public class LocationInfo implements OpenStreetMapAPIServices {
         return fields;
     }
 
-    private Document parseStringAsXML(String xml) {
-        Document doc = null;
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        DocumentBuilder db = null;
+    private Document parseStringAsXML(String xml) throws IOException, SAXException {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = null;
         try {
-            db = dbf.newDocumentBuilder();
-            InputSource is = new InputSource();
-            is.setCharacterStream(new StringReader(xml));
-            try {
-                doc = db.parse(is);
-            } catch (SAXException e) {
-                // handle SAXException
-            } catch (IOException e) {
-                // handle IOException
-            }
-        } catch (ParserConfigurationException e1) {
-            // handle ParserConfigurationException
+            builder = factory.newDocumentBuilder();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
         }
-        return doc;
+        InputSource is = new InputSource(new StringReader(xml));
+        return builder.parse(is);
     }
 
     private HashMap<String, String> checkExistenceAndPut(Document xml, HashMap<String, String> result) {
+
         for (String field : fields) {
+            System.out.println(field);
+            System.out.println(xml.getElementById(field));
             if (xml.getElementById(field) != null) {
                 result.put(field + "Name", xml.getElementsByTagName("road").item(0).getFirstChild().getTextContent());
             }

@@ -11,5 +11,9 @@ import java.util.Optional;
  * Created by Andrea on 30/03/2017.
  */
 public interface SuburbRepository  extends JpaRepository<Suburb, Long> {
-    Optional<Suburb> findBuildingById(Long id);
+    Optional<Suburb> findSuburbById(Long id);
+
+    Optional<Suburb> findSuburbByName(String name);
+
+
 }

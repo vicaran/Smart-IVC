@@ -3,9 +3,11 @@ package com.app;
 import com.app.API.GoogleGeocoding.GoogleAPIServices;
 import com.app.API.SwissTopo.SwissTopoAPIServices;
 import com.app.API.SwissTopo.SwissTopoConverter;
+import com.app.commands.ScheduledTasks;
 import com.app.models.Building;
 import com.app.repositories.BuildingRepository;
 import com.app.repositories.CityRepository;
+import com.app.repositories.SuburbRepository;
 import com.app.utils.Converter;
 import com.app.utils.creators.CityCreator;
 
@@ -21,18 +23,23 @@ public class SmartIvcApplication implements CommandLineRunner{
 
 	private final BuildingRepository buildingRepository;
 	private final CityRepository cityRepository;
+	private final SuburbRepository suburbRepository;
 
 	@Autowired
-	public SmartIvcApplication(BuildingRepository buildingRepository, CityRepository cityRepository) {
+	public SmartIvcApplication(BuildingRepository buildingRepository, CityRepository cityRepository, SuburbRepository suburbRepository) {
 		this.buildingRepository = buildingRepository;
 		this.cityRepository = cityRepository;
+		this.suburbRepository = suburbRepository;
 	}
 
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(SmartIvcApplication.class, args);
 	}
 
-	public void run(String... var1) throws Exception {}
+	public void run(String... var1) throws Exception {
+//		ScheduledTasks scheduledTasks = new ScheduledTasks(buildingRepository, cityRepository, suburbRepository);
+//		scheduledTasks.converterTask();
+	}
 
 
 //	https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=46.007639,8.958633&radius=500&key=AIzaSyCY1ov7-HWE-CahFZyIjaGOQYGYK-T8wls

@@ -1,5 +1,6 @@
 package com.app.utils.creators;
 
+import com.app.models.Address;
 import com.app.models.Building;
 import com.app.models.City;
 import com.app.utils.Converter;
@@ -30,8 +31,11 @@ import javax.xml.transform.stream.StreamResult;
  */
 public class BuildingCreator {
 
-    public Building create(NodeList valuesList, City city) {
+    public Pair<Building, Address> create(NodeList valuesList, City city) {
         Building building = new Building(city);
+        String houseNumber = null;
+        String roadNumber = null;
+
         for (int valueIdx = 0; valueIdx < valuesList.getLength(); valueIdx++) {
             Node node = valuesList.item(valueIdx);
 
@@ -45,7 +49,8 @@ public class BuildingCreator {
                         building.setDescription(value);
                         break;
                     case 6:
-                        building.setCivicNumber(getCivicNumber(value));
+                        roadNumber = getRoadNumber(value);
+                        houseNumber = getCivicNumber(value);
                         break;
                     case 10:
                         building.setFloors(Integer.parseInt(value));
@@ -61,7 +66,16 @@ public class BuildingCreator {
                 }
             }
         }
-        return building;
+
+
+        Address address = new Address();
+        address.setLatitude(building.getCentroidLat());
+        address.setLongitude(building.getCentroidLng());
+        address.setHouseNumber(houseNumber);
+        address.setRoadNumber(roadNumber);
+        address.setBuilding(building);
+
+        return new Pair<>(building, address);
     }
 
     private void getBuildingCoordinates(Node node, Building building) {
@@ -172,4 +186,13 @@ public class BuildingCreator {
         }
         return civicAddress.replaceFirst("^0+(?!$)", "");
     }
+
+    private String getRoadNumber(String value) {
+        String roadNumber = "";
+        if (value.length() >= 4) {
+            roadNumber = value.substring(0, 4);
+        }
+        return roadNumber.replaceFirst("^0+(?!$)", "");
+    }
+
 }

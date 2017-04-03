@@ -61,4 +61,5 @@ public class Type implements Serializable{
     public void setBuildings(Set<Building> buildings) {
         this.buildings = buildings;
     }
+
 }

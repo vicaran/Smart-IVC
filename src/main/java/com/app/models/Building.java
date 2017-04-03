@@ -3,12 +3,15 @@ package com.app.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,15 +35,6 @@ public class Building implements Serializable {
     @Column(name = "BUILDING_ID", insertable = false, updatable = false, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToMany
-    @JoinTable(name = "building_type",
-            joinColumns = @JoinColumn(name = "id_building",
-                    referencedColumnName = "BUILDING_ID"),
-            inverseJoinColumns = @JoinColumn(name = "id_type",
-                    referencedColumnName = "TYPE_ID"))
-    private Set<Type> types;
-
     @Column(name = "DESCRIPTION")
     private String description;
     @Column(name = "FLOORS")
@@ -57,12 +51,12 @@ public class Building implements Serializable {
     @Lob
     @Column(name = "RING_GLOBAL_COORDS")
     private byte[] ringGlobalCoords;
-    @Column(name = "CIVIC_NUMBER")
-    private String civicNumber;
     @Column(name = "CENTROID_LAT")
     private Double centroidLat;
     @Column(name = "CENTROID_LNG")
     private Double centroidLng;
+    @Column(name = "ALTITUDE")
+    private Double altitude;
 
     @ManyToOne()
     @JoinColumn(name="OWNCITY_ID")
@@ -72,8 +66,16 @@ public class Building implements Serializable {
     @JoinColumn(name="OWNSUBURB_ID")
     private Suburb ownSuburb;
 
-    @OneToMany(mappedBy="ownBuilding")
+    @OneToMany(mappedBy="ownBuilding", fetch=FetchType.EAGER)
     private List<Address> addresses;
+
+    @ManyToMany
+    @JoinTable(name = "building_type",
+            joinColumns = @JoinColumn(name = "id_building",
+                    referencedColumnName = "BUILDING_ID"),
+            inverseJoinColumns = @JoinColumn(name = "id_type",
+                    referencedColumnName = "TYPE_ID"))
+    private Set<Type> types;
 
     // JPA REQUIRES IT!
     public Building() {
@@ -81,6 +83,7 @@ public class Building implements Serializable {
 
     public Building(City city) {
         this.setCity(city);
+        this.addresses = new ArrayList<>();
     }
 
     public String getDescription() {
@@ -113,36 +116,6 @@ public class Building implements Serializable {
 
     public void setShapeArea(double shapeArea) {
         this.shapeArea = shapeArea;
-    }
-
-    public City getCity() {
-        return ownCity;
-    }
-
-    public void setCity(City city) {
-        this.ownCity = city;
-        if (!city.getBuildings().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
-            city.getBuildings().add(this);
-        }
-    }
-
-    public Suburb getSuburb() {
-        return ownSuburb;
-    }
-
-    public void setSuburb(Suburb suburb) {
-        this.ownSuburb = suburb;
-        if (!suburb.getBuildings().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
-            suburb.getBuildings().add(this);
-        }
-    }
-
-    public String getCivicNumber() {
-        return civicNumber;
-    }
-
-    public void setCivicNumber(String civicNumber) {
-        this.civicNumber = civicNumber;
     }
 
     public byte[] getBoundCoords() {
@@ -193,6 +166,28 @@ public class Building implements Serializable {
         this.ringSwissCoords = ringSwissCoords;
     }
 
+    public City getCity() {
+        return ownCity;
+    }
+
+    public void setCity(City city) {
+        this.ownCity = city;
+        if (!city.getBuildings().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
+            city.getBuildings().add(this);
+        }
+    }
+
+    public Suburb getSuburb() {
+        return ownSuburb;
+    }
+
+    public void setSuburb(Suburb suburb) {
+        this.ownSuburb = suburb;
+        if (!suburb.getBuildings().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
+            suburb.getBuildings().add(this);
+        }
+    }
+
     @JsonIgnore
     public List<Address> getAddresses() {
         return addresses;
@@ -209,11 +204,24 @@ public class Building implements Serializable {
         }
     }
 
+    public Double getAltitude() {
+        return altitude;
+    }
+
+    public void setAltitude(Double altitude) {
+        this.altitude = altitude;
+    }
+
+
     public Set<Type> getTypes() {
         return types;
     }
 
     public void setTypes(Set<Type> types) {
         this.types = types;
+    }
+
+    public void addType(Type type){
+        this.types.add(type);
     }
 }

@@ -51,6 +51,13 @@ public class Suburb {
         }
     }
 
+    public void addBuilding(Building building){
+        this.buildings.add(building);
+        if (building.getSuburb() != this) {
+            building.setSuburb(this);
+        }
+    }
+
     public List<Building> getBuildings() {
         return buildings;
     }

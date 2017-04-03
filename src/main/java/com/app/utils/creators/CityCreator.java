@@ -2,9 +2,11 @@ package com.app.utils.creators;
 
 import com.app.API.GoogleGeocoding.GoogleAPIServices;
 import com.app.API.GoogleGeocoding.LocationInfo;
+import com.app.models.Address;
 import com.app.models.Building;
 import com.app.models.City;
 import com.app.utils.FileLoader;
+import com.app.utils.dataStructures.Pair;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -20,12 +22,14 @@ import java.util.List;
 public class CityCreator {
 
     private List<Building> buildingList;
+    private List<Address> addressList;
     private City cityModel;
     private Document cityDocument;
 
     public CityCreator(String cityPath, String name, String zip) throws Exception {
         this.cityDocument = FileLoader.loadFile(cityPath);
         this.buildingList = new ArrayList<>();
+        this.addressList = new ArrayList<>();
         this.initializeCity(name, zip);
         this.create();
     }
@@ -56,7 +60,9 @@ public class CityCreator {
                 NodeList valuesList = recordsList.item(recordIdx).getFirstChild().getChildNodes();
                 if (valuesList != null) {
                     BuildingCreator building = new BuildingCreator();
-                    buildingList.add(building.create(valuesList, this.cityModel));
+                    Pair<Building, Address> createdBuilding = building.create(valuesList, this.cityModel);
+                    buildingList.add(createdBuilding.getL());
+                    addressList.add(createdBuilding.getR());
                 }
             }
         }
@@ -75,5 +81,8 @@ public class CityCreator {
 
     public List<Building> getBuildingList() {
         return buildingList;
+    }
+    public List<Address> getAddressList() {
+        return addressList;
     }
 }

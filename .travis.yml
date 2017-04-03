@@ -1,5 +1,8 @@
 language: java
 
+services:
+- docker
+
 jdk:
 - oraclejdk8
 # would just use default install/script but the ./mvnw script errors on travis
@@ -11,6 +14,11 @@ before_install:
 
 install:
 - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+
+after_install:
+- docker build vicaran/smart-ivc .
+- docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+- docker push vicaran/smart-ivc
 
 script:
 - mvn test

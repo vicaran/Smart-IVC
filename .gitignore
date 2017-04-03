@@ -22,8 +22,3 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
-
-## Sensitive Data ##
-src/main/resources/messages.properties
-src/main/resources/application.properties
-src/main/java/com/app/utils/APIKeys.java

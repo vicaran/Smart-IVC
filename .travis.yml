@@ -16,7 +16,7 @@ install:
 - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
 after_success:
-- docker build vicaran/smart-ivc .
+- docker build -t vicaran/smart-ivc .
 - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
 - docker push vicaran/smart-ivc
 

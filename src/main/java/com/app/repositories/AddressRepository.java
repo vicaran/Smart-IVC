@@ -1,8 +1,6 @@
 package com.app.repositories;
 
 import com.app.models.Address;
-import com.app.models.Building;
-import com.app.models.id_classes.AddressId;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

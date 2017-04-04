@@ -55,10 +55,15 @@ public class LocationInfo implements OpenStreetMapAPIServices {
         obj.put("longitude", longitude);
         obj.put("OSMInfo", response);
 
+        String prepender = ",";
+
         File jsonFile = new File("src/main/resources/city_data/OSM_DATA.json");
+        if(!jsonFile.exists()){
+            prepender = "[";
+        }
 //        jsonFile.createNewFile();
         FileOutputStream oFile = new FileOutputStream(jsonFile, true);
-        oFile.write(obj.toString().getBytes());
+        oFile.write((prepender + obj.toString()).getBytes());
         oFile.flush();
         oFile.close();
         System.out.println("Successfully Copied JSON Object to File...");

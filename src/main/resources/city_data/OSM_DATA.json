@@ -1,0 +1,446 @@
+[
+  {
+    "Building_ID": 1,
+    "latitude": 46.001614399805185,
+    "OSMInfo": {
+      "osm_type": "way",
+      "osm_id": "411082200",
+      "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://www.openstreetmap.org/copyright",
+      "boundingbox": [
+        "46.0009321",
+        "46.0058123",
+        "8.9393875",
+        "8.9461046"
+      ],
+      "address": {
+        "country": "Schweiz, Suisse, Svizzera, Svizra",
+        "country_code": "ch",
+        "town": "Lugano",
+        "road": "Via Sorengo",
+        "neighbourhood": "Besso",
+        "county": "Distretto di Lugano",
+        "postcode": "6924",
+        "suburb": "Molino Nuovo",
+        "state": "Ticino"
+      },
+      "lon": "8.9415757",
+      "display_name": "Via Sorengo, Besso, Molino Nuovo, Lugano, Circolo di Lugano ovest, Distretto di Lugano, Ticino, 6924, Schweiz, Suisse, Svizzera, Svizra",
+      "place_id": "152940762",
+      "lat": "46.0039022"
+    },
+    "longitude": 8.940313183766945
+  },
+  {
+    "Building_ID": 2,
+    "latitude": 46.00233014286138,
+    "OSMInfo": {
+      "osm_type": "way",
+      "osm_id": "133644791",
+      "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://www.openstreetmap.org/copyright",
+      "boundingbox": [
+        "46.0019721",
+        "46.004045",
+        "8.9386742",
+        "8.9406118"
+      ],
+      "address": {
+        "country": "Schweiz, Suisse, Svizzera, Svizra",
+        "country_code": "ch",
+        "town": "Lugano",
+        "road": "Via Marietta Crivelli-Torricelli",
+        "neighbourhood": "Besso",
+        "county": "Distretto di Lugano",
+        "postcode": "6924",
+        "suburb": "Molino Nuovo",
+        "state": "Ticino"
+      },
+      "lon": "8.9399891",
+      "display_name": "Via Marietta Crivelli-Torricelli, Besso, Molino Nuovo, Lugano, Circolo di Lugano ovest, Distretto di Lugano, Ticino, 6924, Schweiz, Suisse, Svizzera, Svizra",
+      "place_id": "95689142",
+      "lat": "46.0020479"
+    },
+    "longitude": 8.938325691596273
+  },
+  {
+    "Building_ID": 3,
+    "latitude": 46.00420992782324,
+    "OSMInfo": {
+      "osm_type": "way",
+      "osm_id": "156471728",
+      "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://www.openstreetmap.org/copyright",
+      "boundingbox": [
+        "46.0045188",
+        "46.0047297",
+        "8.9482544",
+        "8.9488421"
+      ],
+      "address": {
+        "country": "Schweiz, Suisse, Svizzera, Svizra",
+        "country_code": "ch",
+        "attraction": "Cattedrale di San Lorenzo",
+        "town": "Lugano",
+        "neighbourhood": "Quartiere Maghetti",
+        "county": "Distretto di Lugano",
+        "postcode": "6900",
+        "footway": "Salita Carlo Bossoli",
+        "suburb": "Molino Nuovo",
+        "state": "Ticino"
+      },
+      "lon": "8.94859646875781",
+      "display_name": "Cattedrale di San Lorenzo, Salita Carlo Bossoli, Quartiere Maghetti, Molino Nuovo, Lugano, Circolo di Lugano ovest, Distretto di Lugano, Ticino, 6900, Schweiz, Suisse, Svizzera, Svizra",
+      "place_id": "99217298",
+      "lat": "46.00462685"
+    },
+    "longitude": 8.948555929074265
+  },
+  {
+    "Building_ID": 4,
+    "latitude": 46.00627987333666,
+    "OSMInfo": {
+      "osm_type": "way",
+      "osm_id": "218931802",
+      "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://www.openstreetmap.org/copyright",
+      "boundingbox": [
+        "46.0062811",
+        "46.0067194",
+        "8.9409644",
+        "8.9415134"
+      ],
+      "address": {
+        "country": "Schweiz, Suisse, Svizzera, Svizra",
+        "country_code": "ch",
+        "town": "Lugano",
+        "place_of_worship": "Chiesa di San Nicolao della Flüe",
+        "road": "Via al Colle",
+        "neighbourhood": "Besso",
+        "county": "Distretto di Lugano",
+        "postcode": "6924",
+        "suburb": "Molino Nuovo",
+        "state": "Ticino"
+      },
+      "lon": "8.94123888167823",
+      "display_name": "Chiesa di San Nicolao della Flüe, Via al Colle, Besso, Molino Nuovo, Lugano, Circolo di Lugano ovest, Distretto di Lugano, Ticino, 6924, Schweiz, Suisse, Svizzera, Svizra",
+      "place_id": "113984077",
+      "lat": "46.00650025"
+    },
+    "longitude": 8.941453963543252
+  },
+  {
+    "Building_ID": 5,
+    "latitude": 46.00402581248382,
+    "OSMInfo": {
+      "osm_type": "node",
+      "osm_id": "3338401089",
+      "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://www.openstreetmap.org/copyright",
+      "boundingbox": [
+        "46.0039075",
+        "46.0041075",
+        "8.9500898",
+        "8.9502898"
+      ],
+      "address": {
+        "country": "Schweiz, Suisse, Svizzera, Svizra",
+        "country_code": "ch",
+        "town": "Lugano",
+        "neighbourhood": "Quartiere Maghetti",
+        "county": "Distretto di Lugano",
+        "postcode": "6900",
+        "suburb": "Molino Nuovo",
+        "house_number": "5",
+        "pedestrian": "Via Pessina",
+        "state": "Ticino"
+      },
+      "lon": "8.9501898",
+      "display_name": "5, Via Pessina, Quartiere Maghetti, Molino Nuovo, Lugano, Circolo di Lugano ovest, Distretto di Lugano, Ticino, 6900, Schweiz, Suisse, Svizzera, Svizra",
+      "place_id": "46022886",
+      "lat": "46.0040075"
+    },
+    "longitude": 8.950151157936483
+  },
+  {
+    "Building_ID": 6,
+    "latitude": 45.99610722508203,
+    "OSMInfo": {
+      "osm_type": "way",
+      "osm_id": "35077162",
+      "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://www.openstreetmap.org/copyright",
+      "boundingbox": [
+        "45.9944147",
+        "45.9972747",
+        "8.9426013",
+        "8.9439201"
+      ],
+      "address": {
+        "country": "Schweiz, Suisse, Svizzera, Svizra",
+        "country_code": "ch",
+        "town": "Lugano",
+        "road": "Via Clemente Marani",
+        "neighbourhood": "Besso",
+        "county": "Distretto di Lugano",
+        "postcode": "6902",
+        "suburb": "Molino Nuovo",
+        "state": "Ticino"
+      },
+      "lon": "8.9432864",
+      "display_name": "Via Clemente Marani, Besso, Molino Nuovo, Lugano, Circolo di Lugano ovest, Distretto di Lugano, Ticino, 6902, Schweiz, Suisse, Svizzera, Svizra",
+      "place_id": "72255401",
+      "lat": "45.9961554"
+    },
+    "longitude": 8.942879735945732
+  },
+  {
+    "Building_ID": 7,
+    "latitude": 46.00462091810605,
+    "OSMInfo": {
+      "osm_type": "node",
+      "osm_id": "408185178",
+      "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://www.openstreetmap.org/copyright",
+      "boundingbox": [
+        "46.0044896",
+        "46.0046896",
+        "8.9456765",
+        "8.9458765"
+      ],
+      "address": {
+        "country": "Schweiz, Suisse, Svizzera, Svizra",
+        "country_code": "ch",
+        "town": "Lugano",
+        "road": "Via Tomaso Rodari",
+        "neighbourhood": "Besso",
+        "county": "Distretto di Lugano",
+        "postcode": "6900",
+        "suburb": "Molino Nuovo",
+        "house_number": "8",
+        "state": "Ticino"
+      },
+      "lon": "8.9457765",
+      "display_name": "8, Via Tomaso Rodari, Besso, Molino Nuovo, Lugano, Circolo di Lugano ovest, Distretto di Lugano, Ticino, 6900, Schweiz, Suisse, Svizzera, Svizra",
+      "place_id": "3707001",
+      "lat": "46.0045896"
+    },
+    "longitude": 8.94516919701291
+  },
+  {
+    "Building_ID": 8,
+    "latitude": 46.01447512595639,
+    "OSMInfo": {
+      "osm_type": "way",
+      "osm_id": "329658442",
+      "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://www.openstreetmap.org/copyright",
+      "boundingbox": [
+        "46.014432",
+        "46.0145043",
+        "8.9552332",
+        "8.9554133"
+      ],
+      "address": {
+        "country": "Schweiz, Suisse, Svizzera, Svizra",
+        "country_code": "ch",
+        "town": "Lugano",
+        "road": "Via Giovanni Ferri",
+        "neighbourhood": "Quartiere Maghetti",
+        "county": "Distretto di Lugano",
+        "postcode": "6900",
+        "suburb": "Molino Nuovo",
+        "house_number": "2",
+        "state": "Ticino"
+      },
+      "lon": "8.95532325",
+      "display_name": "2, Via Giovanni Ferri, Quartiere Maghetti, Molino Nuovo, Lugano, Circolo di Lugano ovest, Distretto di Lugano, Ticino, 6900, Schweiz, Suisse, Svizzera, Svizra",
+      "place_id": "137395514",
+      "lat": "46.01446815"
+    },
+    "longitude": 8.955408786685572
+  },
+  {
+    "Building_ID": 9,
+    "latitude": 46.004221374402505,
+    "OSMInfo": {
+      "osm_type": "node",
+      "osm_id": "367088088",
+      "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://www.openstreetmap.org/copyright",
+      "boundingbox": [
+        "46.0040006",
+        "46.0042006",
+        "8.9515538",
+        "8.9517538"
+      ],
+      "address": {
+        "country": "Schweiz, Suisse, Svizzera, Svizra",
+        "country_code": "ch",
+        "town": "Lugano",
+        "neighbourhood": "Quartiere Maghetti",
+        "county": "Distretto di Lugano",
+        "postcode": "6900",
+        "suburb": "Molino Nuovo",
+        "house_number": "1",
+        "pedestrian": "Via Canova",
+        "state": "Ticino",
+        "pub": "La Roy"
+      },
+      "lon": "8.9516538",
+      "display_name": "La Roy, 1, Via Canova, Quartiere Maghetti, Molino Nuovo, Lugano, Circolo di Lugano ovest, Distretto di Lugano, Ticino, 6900, Schweiz, Suisse, Svizzera, Svizra",
+      "place_id": "3359989",
+      "lat": "46.0041006"
+    },
+    "longitude": 8.951696732871776
+  },
+  {
+    "Building_ID": 10,
+    "latitude": 46.004778236037076,
+    "OSMInfo": {
+      "osm_type": "node",
+      "osm_id": "1470955348",
+      "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://www.openstreetmap.org/copyright",
+      "boundingbox": [
+        "46.0043834",
+        "46.0045834",
+        "8.9381109",
+        "8.9383109"
+      ],
+      "address": {
+        "country": "Schweiz, Suisse, Svizzera, Svizra",
+        "country_code": "ch",
+        "town": "Lugano",
+        "road": "Via Moncucco",
+        "neighbourhood": "Besso",
+        "restaurant": "Osteria Penel",
+        "county": "Distretto di Lugano",
+        "postcode": "6900",
+        "suburb": "Molino Nuovo",
+        "house_number": "35",
+        "state": "Ticino"
+      },
+      "lon": "8.9382109",
+      "display_name": "Osteria Penel, 35, Via Moncucco, Besso, Molino Nuovo, Lugano, Circolo di Lugano ovest, Distretto di Lugano, Ticino, 6900, Schweiz, Suisse, Svizzera, Svizra",
+      "place_id": "16184603",
+      "lat": "46.0044834"
+    },
+    "longitude": 8.93811035597331
+  },
+  {
+    "Building_ID": 11,
+    "latitude": 46.00275309500548,
+    "OSMInfo": {
+      "osm_type": "way",
+      "osm_id": "275754520",
+      "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://www.openstreetmap.org/copyright",
+      "boundingbox": [
+        "46.0025441",
+        "46.00312",
+        "8.9448746",
+        "8.9449828"
+      ],
+      "address": {
+        "country": "Schweiz, Suisse, Svizzera, Svizra",
+        "country_code": "ch",
+        "town": "Lugano",
+        "road": "Via Giuseppe Stabile",
+        "neighbourhood": "Besso",
+        "county": "Distretto di Lugano",
+        "postcode": "6900",
+        "suburb": "Molino Nuovo",
+        "state": "Ticino"
+      },
+      "lon": "8.9449384",
+      "display_name": "Via Giuseppe Stabile, Besso, Molino Nuovo, Lugano, Circolo di Lugano ovest, Distretto di Lugano, Ticino, 6900, Schweiz, Suisse, Svizzera, Svizra",
+      "place_id": "127691956",
+      "lat": "46.0028481"
+    },
+    "longitude": 8.944806481022477
+  },
+  {
+    "Building_ID": 12,
+    "latitude": 46.008330269499275,
+    "OSMInfo": {
+      "osm_type": "way",
+      "osm_id": "328005378",
+      "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://www.openstreetmap.org/copyright",
+      "boundingbox": [
+        "46.00804",
+        "46.0081876",
+        "8.9500575",
+        "8.9502594"
+      ],
+      "address": {
+        "country": "Schweiz, Suisse, Svizzera, Svizra",
+        "country_code": "ch",
+        "town": "Lugano",
+        "road": "Via Cantonale",
+        "neighbourhood": "Quartiere Maghetti",
+        "county": "Distretto di Lugano",
+        "postcode": "6900",
+        "suburb": "Molino Nuovo",
+        "house_number": "13 a",
+        "state": "Ticino"
+      },
+      "lon": "8.95015845",
+      "display_name": "13 a, Via Cantonale, Quartiere Maghetti, Molino Nuovo, Lugano, Circolo di Lugano ovest, Distretto di Lugano, Ticino, 6900, Schweiz, Suisse, Svizzera, Svizra",
+      "place_id": "138059986",
+      "lat": "46.0081138"
+    },
+    "longitude": 8.949987621404537
+  },
+  {
+    "Building_ID": 13,
+    "latitude": 45.9979027807405,
+    "OSMInfo": {
+      "osm_type": "way",
+      "osm_id": "326806780",
+      "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://www.openstreetmap.org/copyright",
+      "boundingbox": [
+        "45.9973723",
+        "45.9990705",
+        "8.9423884",
+        "8.9447276"
+      ],
+      "address": {
+        "country": "Schweiz, Suisse, Svizzera, Svizra",
+        "country_code": "ch",
+        "town": "Lugano",
+        "road": "Via Quiete",
+        "neighbourhood": "Besso",
+        "county": "Distretto di Lugano",
+        "postcode": "6924",
+        "suburb": "Molino Nuovo",
+        "state": "Ticino"
+      },
+      "lon": "8.9434643",
+      "display_name": "Via Quiete, Besso, Molino Nuovo, Lugano, Circolo di Lugano ovest, Distretto di Lugano, Ticino, 6924, Schweiz, Suisse, Svizzera, Svizra",
+      "place_id": "137893961",
+      "lat": "45.9985674"
+    },
+    "longitude": 8.942990919089388
+  },
+  {
+    "Building_ID": 14,
+    "latitude": 46.00694804131003,
+    "OSMInfo": {
+      "osm_type": "way",
+      "osm_id": "218931782",
+      "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://www.openstreetmap.org/copyright",
+      "boundingbox": [
+        "46.0068989",
+        "46.0069977",
+        "8.9403699",
+        "8.9405366"
+      ],
+      "address": {
+        "country": "Schweiz, Suisse, Svizzera, Svizra",
+        "country_code": "ch",
+        "town": "Lugano",
+        "road": "Via Cortivallo",
+        "neighbourhood": "Besso",
+        "county": "Distretto di Lugano",
+        "postcode": "6924",
+        "suburb": "Molino Nuovo",
+        "house_number": "5",
+        "state": "Ticino"
+      },
+      "lon": "8.94045325",
+      "display_name": "5, Via Cortivallo, Besso, Molino Nuovo, Lugano, Circolo di Lugano ovest, Distretto di Lugano, Ticino, 6924, Schweiz, Suisse, Svizzera, Svizra",
+      "place_id": "113978823",
+      "lat": "46.0069483"
+    },
+    "longitude": 8.940458607103327
+  }

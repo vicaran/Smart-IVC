@@ -9,11 +9,11 @@ public interface OpenStreetMapAPIServices {
 
     String OpenStreetMapUrl = "http://api.openstreetmap.org/";
     String OpenStreetMapTestingUrl = "http://api06.dev.openstreetmap.org/";
-    String OpenStreetMapGeocodingUrl =  "http://nominatim.openstreetmap.org/reverse?format=xml&";
+    String OpenStreetMapGeocodingUrl =  "http://nominatim.openstreetmap.org/reverse?format=json&";
 
     String[] fields = new String[]{"road", "suburb", "town", "house_number"};
 
-    HashMap<String, String> buildingInfo(Double latitude, Double longitude);
+    HashMap<String, String> buildingInfo(Double latitude, Double longitude, Long building_id);
 
     String[] getFields();
 }

@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class HomeController {
 
-    @RequestMapping(value = "/cesium", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public String showHomeCesium() {
 
-        return "indexCesium";
+        return "index";
     }
 
     @RequestMapping(value = "/error", method = RequestMethod.GET)
@@ -24,10 +24,10 @@ public class HomeController {
         return "error";
     }
 
-    @RequestMapping(value = "/babylon", method = RequestMethod.GET)
+    @RequestMapping(value = "/old", method = RequestMethod.GET)
     public String showHomeBabylon() {
 
-        return "index";
+        return "indexBabylon";
     }
 
 }

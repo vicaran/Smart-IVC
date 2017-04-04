@@ -118,33 +118,33 @@ public class ScheduledTasks {
         OpenStreetMapAPIServices services = new LocationInfo();
         for (Building building : buildings) {
 
-            HashMap<String, String> result = services.buildingInfo(building.getCentroidLat(), building.getCentroidLng());
+            HashMap<String, String> result = services.buildingInfo(building.getCentroidLat(), building.getCentroidLng(), building.getId());
 
             System.out.println("Result produced, this is the result:");
             System.out.println(result.toString());
-            City city = new City();
+//            City city = new City();
 
-            if(result.get("townName") != null){
-                Optional<City> resultCity = cityRepository.findCityByName(result.get("townName"));
+//            if(result.get("townName") != null){
+//                Optional<City> resultCity = cityRepository.findCityByName(result.get("townName"));
+//
+//                if (resultCity.isPresent()) {
+//                    city = resultCity.get();
+//                } else {
+//                    city.setName(result.get("townName"));
+//                    //TODO INITIALIZE NEW CITY
+//                }
+//            }
 
-                if (resultCity.isPresent()) {
-                    city = resultCity.get();
-                } else {
-                    city.setName(result.get("townName"));
-                    //TODO INITIALIZE NEW CITY
-                }
-            }
-
-            Suburb suburb = new Suburb();
-            if(result.get("suburbName") != null) {
-                Optional<Suburb> resultSuburb = suburbRepository.findSuburbByName(result.get("suburbName"));
-
-                if (resultSuburb.isPresent()) {
-                    suburb = resultSuburb.get();
-                } else {
-                    //TODO INITIALIZE NEW SUBURB
-                }
-            }
+//            Suburb suburb = new Suburb();
+//            if(result.get("suburbName") != null) {
+//                Optional<Suburb> resultSuburb = suburbRepository.findSuburbByName(result.get("suburbName"));
+//
+//                if (resultSuburb.isPresent()) {
+//                    suburb = resultSuburb.get();
+//                } else {
+//                    //TODO INITIALIZE NEW SUBURB
+//                }
+//            }
 
 //            Address address = new Address();
 //            if(result.get("roadName") != null) {

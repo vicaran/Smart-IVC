@@ -66,9 +66,10 @@ public class ScheduledTasks {
             }
         };
 
-//        updateTimer.schedule(myConverterTask, 20000);
-//        updateTimer.schedule(myInformationTask, 15000);
-//        updateTimer.schedule(myLoadLuganoTask, 5000);
+        updateTimer.schedule(myConverterTask, 20000);
+//        updateTimer.schedule(myInformationTask, 30000, 86460000);
+//        updateTimer.schedule(myInformationTask, 30000);
+        updateTimer.schedule(myLoadLuganoTask, 5000);
     }
 
 
@@ -109,7 +110,6 @@ public class ScheduledTasks {
         }
         System.out.println("Ring Coordinates Updated from SwissTopo: " + ringUpdated + ".");
         System.out.println("Centroid Coordinates Updated SwissTopo: " + centroidUpdated + ".");
-
     }
 
     @Scheduled

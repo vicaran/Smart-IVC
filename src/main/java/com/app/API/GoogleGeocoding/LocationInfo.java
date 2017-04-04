@@ -20,7 +20,7 @@ public class LocationInfo implements GoogleAPIServices {
     GeoApiContext context;
 
     public LocationInfo(){
-        this.context = new GeoApiContext().setApiKey(APIKeys.GoogleMapsKey);
+        this.context = new GeoApiContext().setApiKey(APIKeys.GoogleKey);
     }
 
     public ArrayList<String> buildingInfo(Double lat, Double lng) throws Exception {

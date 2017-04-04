@@ -69,14 +69,6 @@ public class Building implements Serializable {
     @OneToMany(mappedBy="ownBuilding", fetch=FetchType.EAGER)
     private List<Address> addresses;
 
-    @ManyToMany
-    @JoinTable(name = "building_type",
-            joinColumns = @JoinColumn(name = "id_building",
-                    referencedColumnName = "BUILDING_ID"),
-            inverseJoinColumns = @JoinColumn(name = "id_type",
-                    referencedColumnName = "TYPE_ID"))
-    private Set<Type> types;
-
     // JPA REQUIRES IT!
     public Building() {
     }
@@ -210,18 +202,5 @@ public class Building implements Serializable {
 
     public void setAltitude(Double altitude) {
         this.altitude = altitude;
-    }
-
-
-    public Set<Type> getTypes() {
-        return types;
-    }
-
-    public void setTypes(Set<Type> types) {
-        this.types = types;
-    }
-
-    public void addType(Type type){
-        this.types.add(type);
     }
 }

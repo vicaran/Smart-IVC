@@ -1,6 +1,7 @@
 package com.app.models;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -38,6 +41,14 @@ public class Address implements Serializable{
     private String houseNumber;
     @Column(name = "ROAD_NUMBER")
     private String roadNumber;
+
+    @ManyToMany
+    @JoinTable(name = "address_type",
+            joinColumns = @JoinColumn(name = "id_address",
+                    referencedColumnName = "ADDRESS_ID"),
+            inverseJoinColumns = @JoinColumn(name = "id_type",
+                    referencedColumnName = "TYPE_ID"))
+    private Set<Type> types;
 
     // JPA REQUIRES IT!
     public Address() {
@@ -90,5 +101,17 @@ public class Address implements Serializable{
 
     public void setRoadNumber(String roadNumber) {
         this.roadNumber = roadNumber;
+    }
+
+    public Set<Type> getTypes() {
+        return types;
+    }
+
+    public void setTypes(Set<Type> types) {
+        this.types = types;
+    }
+
+    public void addType(Type type){
+        this.types.add(type);
     }
 }

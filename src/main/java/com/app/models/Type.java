@@ -26,12 +26,12 @@ public class Type implements Serializable{
     private Long id;
 
     @ManyToMany
-    @JoinTable(name="building_type",
-            joinColumns = @JoinColumn(name = "id_building",
+    @JoinTable(name="address_type",
+            joinColumns = @JoinColumn(name = "id_address",
                     referencedColumnName = "TYPE_ID"),
             inverseJoinColumns = @JoinColumn(name = "id_type",
-                    referencedColumnName = "BUILDING_ID"))
-    private Set<Building> buildings;
+                    referencedColumnName = "ADDRESS_ID"))
+    private Set<Address> addresses;
 
     @Column(name="name")
     private String typeName;
@@ -54,12 +54,12 @@ public class Type implements Serializable{
         this.id = id;
     }
 
-    public Set<Building> getBuildings() {
-        return buildings;
+    public Set<Address> getAddresses() {
+        return addresses;
     }
 
-    public void setBuildings(Set<Building> buildings) {
-        this.buildings = buildings;
+    public void setAddresses(Set<Address> addresses) {
+        this.addresses = addresses;
     }
 
 }

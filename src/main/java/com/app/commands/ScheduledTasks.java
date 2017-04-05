@@ -68,7 +68,7 @@ public class ScheduledTasks {
 
         updateTimer.schedule(myConverterTask, 20000);
 //        updateTimer.schedule(myInformationTask, 30000, 86460000);
-        updateTimer.schedule(myInformationTask, 10000);
+//        updateTimer.schedule(myInformationTask, 10000);
         updateTimer.schedule(myLoadLuganoTask, 5000);
     }
 

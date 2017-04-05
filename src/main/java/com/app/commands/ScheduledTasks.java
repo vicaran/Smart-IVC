@@ -68,7 +68,7 @@ public class ScheduledTasks {
 
         updateTimer.schedule(myConverterTask, 20000);
 //        updateTimer.schedule(myInformationTask, 30000, 86460000);
-//        updateTimer.schedule(myInformationTask, 30000);
+        updateTimer.schedule(myInformationTask, 10000);
         updateTimer.schedule(myLoadLuganoTask, 5000);
     }
 
@@ -116,12 +116,14 @@ public class ScheduledTasks {
     public void informationTask() {
         List<Building> buildings = this.buildingRepository.findAll();
         OpenStreetMapAPIServices services = new LocationInfo();
-        for (Building building : buildings) {
+        HashMap<String, String> result = services.buildingInfo(buildings.get(1).getCentroidLat(), buildings.get(1).getCentroidLng(), buildings.get(1).getId());
 
-            HashMap<String, String> result = services.buildingInfo(building.getCentroidLat(), building.getCentroidLng(), building.getId());
-
-            System.out.println("Result produced, this is the result:");
-            System.out.println(result.toString());
+//        for (Building building : buildings) {
+//
+//            HashMap<String, String> result = services.buildingInfo(building.getCentroidLat(), building.getCentroidLng(), building.getId());
+//
+//            System.out.println("Result produced, this is the result:");
+//            System.out.println(result.toString());
 //            City city = new City();
 
 //            if(result.get("townName") != null){
@@ -164,7 +166,7 @@ public class ScheduledTasks {
 //            cityRepository.save(city);
 
 
-        }
+//        }
     }
 
     private Building convertRingCHtoWGS(Building building) {

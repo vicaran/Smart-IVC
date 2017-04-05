@@ -5,13 +5,11 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
-import org.json.simple.JSONArray;
+import org.json.JSONException;
 import org.json.simple.JSONObject;
-import org.w3c.dom.Document;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -33,6 +31,7 @@ public class LocationInfo implements OpenStreetMapAPIServices {
         if (response != null && response.getStatus() == 200) {
             try {
                 createJsonFile(response.getBody(), latitude, longitude, building_id);
+                result = checkExistenceAndPut(response.getBody(), result);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -61,23 +60,26 @@ public class LocationInfo implements OpenStreetMapAPIServices {
         if(!jsonFile.exists()){
             prepender = "[";
         }
-//        jsonFile.createNewFile();
         FileOutputStream oFile = new FileOutputStream(jsonFile, true);
         oFile.write((prepender + obj.toString()).getBytes());
         oFile.flush();
         oFile.close();
-        System.out.println("Successfully Copied JSON Object to File...");
     }
 
-//    private HashMap<String, String> checkExistenceAndPut(Document xml, HashMap<String, String> result) {
-//
-//        for (String field : this.getFields()) {
+    private HashMap<String, String> checkExistenceAndPut(JsonNode jsonNode, HashMap<String, String> result) {
+        org.json.JSONObject fieldValue = jsonNode.getObject().getJSONObject("address");
+        for (String field : this.getFields()) {
+            try{
+
+            }catch (JSONException e){
+
+            }
+            fieldValue.get(field);
+            System.out.println(fieldValue.toString());
+
 //            System.out.println(field);
 //            System.out.println(xml.getElementById(field));
-//            if (xml.getElementById(field) != null) {
-//                result.put(field + "Name", xml.getElementsByTagName("road").item(0).getFirstChild().getTextContent());
-//            }
-//        }
-//        return result;
-//    }
+        }
+        return result;
+    }
 }

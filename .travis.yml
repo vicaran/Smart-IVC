@@ -12,8 +12,6 @@ notifications:
 
 jdk:
 - oraclejdk8
-# would just use default install/script but the ./mvnw script errors on travis
-# obviously this only works for maven builds right now...
 
 before_install:
 - npm install cesium

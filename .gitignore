@@ -26,3 +26,6 @@ nbdist/
 sonar-project.properties
 dbDumps/
 dbDumps/*
+.clover
+.clover/
+.clover/*

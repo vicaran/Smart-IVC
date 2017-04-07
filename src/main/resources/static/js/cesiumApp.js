@@ -1,12 +1,26 @@
 /**
  * Created by Andrea on 29/03/2017.
  */
+
+$(document).ready(function () {
+    $(".cesium-credit-textContainer").remove();
+    var creditsReveal = '<span class="cesium-credit-image"><a href="http://www.inf.usi.ch/faculty/lanza/reveal.html" target="_blank"><img src="/images/reveal/REVEALogo-black.png" alt="Reveal" title="Reveal" style="vertical-align: bottom;"></a></span>';
+    var creditsUsi = '<span class="cesium-credit-image"><a href="http://www.inf.usi.ch/" target="_blank"><img src="/images/reveal/logo_usi.png" alt="USI_INF" title="USI_INF" style="vertical-align: bottom;"></a></span>';
+
+    $(".cesium-credit-imageContainer").append(creditsReveal);
+    $(".cesium-credit-imageContainer").append(creditsUsi);
+});
+
 var SERVER_URL = "http://" + window.location.host + "/";
+
 var viewer = new Cesium.Viewer('cesiumContainer', {
     //Use standard Cesium terrain
     terrainProvider: new Cesium.CesiumTerrainProvider({
                                                           url: 'https://assets.agi.com/stk-terrain/world'
-                                                      })
+                                                      }),
+    imageryProvider: Cesium.createOpenStreetMapImageryProvider({
+                                                                   url: 'https://a.tile.openstreetmap.org/'
+                                                               }),
 });
 
 //Add basic drag and drop functionality

@@ -31,7 +31,7 @@ public class LocationInfo implements OpenStreetMapAPIServices {
         if (response != null && response.getStatus() == 200) {
             try {
                 createJsonFile(response.getBody(), latitude, longitude, building_id);
-                result = checkExistenceAndPut(response.getBody(), result);
+//                result = checkExistenceAndPut(response.getBody(), result);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -56,7 +56,7 @@ public class LocationInfo implements OpenStreetMapAPIServices {
 
         String prepender = ",";
 
-        File jsonFile = new File("src/main/resources/city_data/OSM_DATA.json");
+        File jsonFile = new File("src/main/resources/city_data/OSM_DATA3.json");
         if(!jsonFile.exists()){
             prepender = "[";
         }

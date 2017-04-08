@@ -49,6 +49,7 @@ public class BuildingController {
         long end = System.currentTimeMillis();
         System.out.println("Time for query is: " + (end-start));
         System.out.println(buildings.size());
+
         return new ResponseEntity<>(buildings, HttpStatus.OK);
     }
 }

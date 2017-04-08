@@ -24,10 +24,4 @@ public class HomeController {
         return "error";
     }
 
-    @RequestMapping(value = "/old", method = RequestMethod.GET)
-    public String showHomeBabylon() {
-
-        return "indexBabylon";
-    }
-
 }

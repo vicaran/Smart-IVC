@@ -3,6 +3,7 @@ package com.app.controllers;
 import com.app.exceptions.NotFoundException;
 import com.app.models.City;
 import com.app.repositories.CityRepository;
+import com.app.utils.dataStructures.Pair;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Andrea on 27/02/2017.
@@ -33,5 +38,12 @@ public class CityController {
         City city = this.cityRepository.findCityByName(name).orElseThrow(NotFoundException::new);
         return ResponseEntity.ok(city);
 
+    }
+
+    @RequestMapping(value = "/allCityNames", method = RequestMethod.GET)
+    public ResponseEntity<?> getCities() {
+        List<City> cityList = this.cityRepository.findAll();
+
+        return new ResponseEntity<>(cityList, HttpStatus.OK);
     }
 }

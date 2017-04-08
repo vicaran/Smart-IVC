@@ -1,58 +1,31 @@
 /**
- * Created by Andrea on 19/03/2017.
+ * Created by Andrea on 29/03/2017.
  */
-// Load canvas
-window.addEventListener('DOMContentLoaded', function () {
-    createCanvas();
+
+$(document).ready(function () {
+    $(".cesium-credit-textContainer").remove();
+    var creditsReveal = '<span class="cesium-credit-image"><a href="http://www.inf.usi.ch/faculty/lanza/reveal.html" target="_blank"><img src="/images/reveal/REVEALogo-black.png" alt="Reveal" title="Reveal" style="vertical-align: bottom;"></a></span>';
+    var creditsUsi = '<span class="cesium-credit-image"><a href="http://www.inf.usi.ch/" target="_blank"><img src="/images/reveal/logo_usi.png" alt="USI_INF" title="USI_INF" style="vertical-align: bottom;"></a></span>';
+
+    $(".cesium-credit-imageContainer").append(creditsReveal);
+    $(".cesium-credit-imageContainer").append(creditsUsi);
+
+    // $("#side_menu").append()
+    loadCities();
+    loadObjs();
+
 });
 
-
-// Handle Sidebar
-var menuLeft = document.getElementById('cbp-spmenu-s1'),
-    body = document.body;
-
-showLeft.onclick = function () {
-    classie.toggle(menuLeft, 'cbp-spmenu-open');
+var loadCities = function () {
+    $.ajax({
+               url: SERVER_URL + "city/allCityNames",
+               type: "GET",
+               success: function (data, textStatus, jqXHR) {
+                   for (var i = 0; i < data.length; i++) {
+                       $("#zoomSelector").append('<option id=city_' + data[i].id + 'value=' + data[i].name + '>' + data[i].name + ' </option >');
+                   }
+               }
+           })
 };
 
 
-$(document).ready(function () {
-    $('#showLeft').click(function () {
-        $(this).toggleClass('open');
-    });
-});
-
-(function(window) {
-
-    'use strict';
-    var hasClass, addClass, removeClass;
-
-    hasClass = function(elem, c) {
-        return elem.classList.contains(c);
-    };
-    addClass = function(elem, c) {
-        elem.classList.add(c);
-    };
-    removeClass = function(elem, c) {
-        elem.classList.remove(c);
-    };
-
-    function toggleClass(elem, c) {
-        var fn = hasClass(elem, c) ? removeClass : addClass;
-        fn(elem, c);
-    }
-
-    window.classie = {
-        // full names
-        hasClass: hasClass,
-        addClass: addClass,
-        removeClass: removeClass,
-        toggleClass: toggleClass,
-        // short names
-        has: hasClass,
-        add: addClass,
-        remove: removeClass,
-        toggle: toggleClass
-    };
-
-})(window);

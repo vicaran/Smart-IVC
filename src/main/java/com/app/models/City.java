@@ -24,7 +24,6 @@ public class City {
     @Column(name = "CITY_ID", insertable = false, updatable = false, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(name = "NAME")
     private String name;
     @Column(name = "ZIP")
@@ -123,5 +122,13 @@ public class City {
 
     public void setArea(String area) {
         this.area = area;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

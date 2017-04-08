@@ -7,7 +7,6 @@ import com.app.API.SwissTopo.SwissTopoConverter;
 import com.app.models.Address;
 import com.app.models.Building;
 import com.app.models.City;
-import com.app.models.Suburb;
 import com.app.repositories.AddressRepository;
 import com.app.repositories.BuildingRepository;
 import com.app.repositories.CityRepository;
@@ -116,13 +115,16 @@ public class ScheduledTasks {
     public void informationTask() {
         List<Building> buildings = this.buildingRepository.findAll();
         OpenStreetMapAPIServices services = new LocationInfo();
-        HashMap<String, String> result = services.buildingInfo(buildings.get(1).getCentroidLat(), buildings.get(1).getCentroidLng(), buildings.get(1).getId());
+//        HashMap<String, String> result = services.buildingInfo(buildings.get(1).getCentroidLat(), buildings.get(1).getCentroidLng(), buildings.get(1).getId());
 
-//        for (Building building : buildings) {
+        for (Building building : buildings) {
+            if (building.getId() > 3272) {
+                HashMap<String, String> result = services.buildingInfo(building.getCentroidLat(), building.getCentroidLng(), building.getId());
 //
-//            HashMap<String, String> result = services.buildingInfo(building.getCentroidLat(), building.getCentroidLng(), building.getId());
+                System.out.println("Result produced for building: " + building.getId());
+            }
 //
-//            System.out.println("Result produced, this is the result:");
+
 //            System.out.println(result.toString());
 //            City city = new City();
 
@@ -166,7 +168,7 @@ public class ScheduledTasks {
 //            cityRepository.save(city);
 
 
-//        }
+        }
     }
 
     private Building convertRingCHtoWGS(Building building) {

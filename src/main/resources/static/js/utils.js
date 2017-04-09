@@ -3,6 +3,7 @@
  */
 var SERVER_URL = "http://" + window.location.host + "/";
 var GRAVITY = 9.8;
+var MAX_HEIGHT = -10;
 
 
 var createRing = function (binaryCoordinates) {
@@ -19,6 +20,69 @@ var createList = function (binaryCoordinates) {
     });
     return shape;
 };
+
+var RGBToHex = function (r, g, b) {
+    var bin = r << 16 | g << 8 | b;
+    return (function (h) {
+        return new Array(7 - h.length).join("0") + h
+    })(bin.toString(16).toUpperCase())
+};
+
+var computeColorComplement = function (first, second, third) {
+    var hex;
+
+    if (first !== undefined && second !== undefined && third !== undefined) {
+        hex = RGBToHex(first * 255, second * 255, third * 255);
+    } else if (first !== undefined && second === undefined && third === undefined) {
+        hex = first;
+    }
+    if (hex.indexOf('#') === 0) {
+        hex = hex.slice(1);
+    }
+
+    if (hex === "FFFFFF" || hex === "ffffff") {
+        return "#ff0000";
+    }
+
+    // convert 3-digit hex to 6-digits.
+    if (hex.length === 3) {
+        hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+    }
+    if (hex.length !== 6) {
+        throw new Error('Invalid HEX color.');
+    }
+    var r = parseInt(hex.slice(0, 2), 16),
+        g = parseInt(hex.slice(2, 4), 16),
+        b = parseInt(hex.slice(4, 6), 16);
+    // invert color components
+    r = (255 - r).toString(16);
+    g = (255 - g).toString(16);
+    b = (255 - b).toString(16);
+    // pad each with zeros and return
+    return "#" + padZero(r) + padZero(g) + padZero(b);
+};
+
+var padZero = function (str, len) {
+    len = len || 2;
+    var zeros = new Array(len).join('0');
+    return (zeros + str).slice(-len);
+};
+
+var interpolate = function (value, maximum, start_point, end_point) {
+    return start_point + (end_point - start_point) * value / maximum;
+};
+
+var interpolateColors = function (value, maximum, startRGB, endRGB) {
+    var interpolatedColors = [];
+    if (startRGB.length === 3 && endRGB.length === 3) {
+        interpolatedColors[0] = interpolate(value, maximum, startRGB[0], endRGB[0]);
+        interpolatedColors[1] = interpolate(value, maximum, startRGB[1], endRGB[1]);
+        interpolatedColors[2] = interpolate(value, maximum, startRGB[2], endRGB[2]);
+    }
+
+    return interpolatedColors;
+};
+
 
 //
 // var CAM_HEIGHT = 10;

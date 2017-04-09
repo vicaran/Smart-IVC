@@ -35,35 +35,45 @@
 </head>
 <body>
 <div id="cesiumContainer"></div>
+
 <div class="backdrop" id="side_menu" style="display: inline-block;">
-
-    <span>Styling</span>
-    <div class="nowrap">
-        <input id="osmColors" name="coloring" type="radio" checked=""/>
-        <label for="osmColors">Standard colors</label>
+    <h3 class="sectionHeader">Choose city</h3>
+    <div class="nowrap sectionContent">
+            <select id="zoomSelector">
+                <option selected="" disabled="" hidden="" value="">Choose...</option>
+            </select>
     </div>
-
-    <div class="nowrap">
-        <input id="colorByHeight" name="coloring" type="radio"/>
-        <label for="colorByHeight">Color by height</label>
+    <span class="divider"></span>
+    <h3 class="sectionHeader">Colors</h3>
+    <div class="nowrap sectionContent">
+        <form class="nowrap" id="coloring">
+            <div style="display: inline-block;">
+                <input id="osmColors" name="coloring" type="radio" value="default" checked=""/>
+                <label for="osmColors">Uniform</label>
+                <input id="colorPicker" type="color" name="favcolor" value="#FFFFFF"/>
+            </div>
+            <br/>
+            <input id="colorByHeight" name="coloring" value="height" type="radio"/>
+            <label for="colorByHeight">By height</label>
+        </form>
     </div>
-
-    <div class="nowrap">
-        <label id="heightSliderLabel" for="heightSlider">Heights</label>
-        <input id="heightSlider" type="range" min="10" max="400" value="400" step="10"/>
-        <label id="heightValue">All</label>
+    <span class="divider"></span>
+    <h3 class="sectionHeader">Styles</h3>
+    <div class="nowrap sectionContent">
+        <div class="nowrap">
+            <input id="translucence" type="checkbox"/>
+            <label for="translucence">Translucence</label>
+        </div>
     </div>
-
-    <div class="nowrap">
-        Choose city
-        <select id="zoomSelector">
-            <option selected="" disabled="" hidden="" value="">Choose...</option>
-        </select>
-    </div>
-
-    <div class="nowrap">
-        <input id="shadows" type="checkbox"/>
-        <label for="shadows">Enable shadows</label>
+    <span class="divider"></span>
+    <h3 class="sectionHeader">Show</h3>
+    <div class="nowrap sectionContent">
+        <div class="nowrap">
+            <label id="heightSliderLabel" for="heightSlider">Heights</label><br/>
+            <div>
+                <input id="heightSlider" type="range" min="10" max="400" value="400" step="10"/>
+            </div>
+        </div>
     </div>
 
 </div>

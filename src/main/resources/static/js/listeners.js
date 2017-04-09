@@ -3,23 +3,66 @@
  */
 
 
-var selectedEntity = [];
+var selectedEntity = undefined;
+var hoverEntity = undefined;
+var translucenceStatus = 1;
 
 handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
 
+
 handler.setInputAction(function (click) {
     var pickedObject = viewer.scene.pick(click.position);
-    if (Cesium.defined(viewer.entities.getById(selectedEntity[0]))) {
-        viewer.entities.getById(selectedEntity[0]).polygon.material.color = selectedEntity[1];
+
+    if (pickedObject !== undefined) {
+        if (selectedEntity !== undefined) {
+            selectedEntity.primitive.appearance.material.uniforms.color = Cesium.Color.fromCssColorString($('#colorPicker').val());
+            selectedEntity.primitive.appearance.material.uniforms.color.alpha = translucenceStatus;
+        }
+        selectedEntity = pickedObject;
+        var complementColor = computeColorComplement($('#colorPicker').val());
+        selectedEntity.primitive.appearance.material.uniforms.color = Cesium.Color.fromCssColorString(complementColor);
+        if (translucenceStatus === 0.5) {
+            selectedEntity.primitive.appearance.material.uniforms.color.alpha = 1;
+        }
+        console.log(selectedEntity);
+    } else {
+        if (selectedEntity !== undefined) {
+            selectedEntity.primitive.appearance.material.uniforms.color = Cesium.Color.fromCssColorString($('#colorPicker').val());
+            selectedEntity.primitive.appearance.material.uniforms.color.alpha = translucenceStatus;
+            selectedEntity = undefined;
+        }
     }
-    if (Cesium.defined(pickedObject)) {
-        var entityId = pickedObject.id._id;
-        var oldColor = viewer.entities.getById(entityId).polygon.material.color;
-        viewer.entities.getById(entityId).polygon.material.color = Cesium.Color.RED;
-        selectedEntity[0] = entityId;
-        selectedEntity[1] = oldColor;
-    }
+
 }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+handler.setInputAction(function (movement) {
+    var hoverObject = viewer.scene.pick(movement.endPosition);
+
+    if (hoverObject !== undefined && hoverObject !== selectedEntity) {
+        if (hoverEntity !== undefined && hoverEntity !== selectedEntity) {
+            hoverEntity.primitive.appearance.material.uniforms.color = Cesium.Color.fromCssColorString($('#colorPicker').val());
+            hoverEntity.primitive.appearance.material.uniforms.color.alpha = translucenceStatus;
+        }
+        hoverEntity = hoverObject;
+
+        var complementColor = "#00ff23";
+        hoverEntity.primitive.appearance.material.uniforms.color = Cesium.Color.fromCssColorString(complementColor);
+        if (translucenceStatus === 1) {
+            hoverEntity.primitive.appearance.material.uniforms.color.alpha = 0.5;
+        } else {
+            hoverEntity.primitive.appearance.material.uniforms.color.alpha = 1;
+        }
+    }
+    else {
+        if (hoverEntity !== undefined && hoverEntity !== selectedEntity) {
+            hoverEntity.primitive.appearance.material.uniforms.color = Cesium.Color.fromCssColorString($('#colorPicker').val());
+            hoverEntity.primitive.appearance.material.uniforms.color.alpha = translucenceStatus;
+            hoverEntity = undefined;
+        }
+    }
+}, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+
+
 
 $("#zoomSelector").change(function () {
     var cityName = $("select option:selected").text()
@@ -42,3 +85,78 @@ $("#zoomSelector").change(function () {
     }
 
 }).change();
+
+$("#shadows").change(function () {
+    var shadowsStatus = false;
+    if (this.checked) {
+        shadowsStatus = true;
+    }
+
+    for (var i = 0; i < viewer.scene.primitives.length; i++) {
+        if (viewer.scene.primitives.get(i).appearance !== undefined) {
+            viewer.scene.primitives.get(i).appearance.translucent = shadowsStatus;
+        }
+    }
+});
+
+$("#translucence").change(function () {
+    if (this.checked) {
+        translucenceStatus = 0.5;
+    } else {
+        translucenceStatus = 1;
+    }
+
+    for (var i = 0; i < viewer.scene.primitives.length; i++) {
+        if (viewer.scene.primitives.get(i).appearance !== undefined) {
+            viewer.scene.primitives.get(i).appearance.material.uniforms.color.alpha = translucenceStatus;
+        }
+    }
+    if (selectedEntity !== undefined) {
+        selectedEntity.primitive.appearance.material.uniforms.color.alpha = 1;
+    }
+
+});
+
+$('#coloring input').on('change', function () {
+    var selectedRadio = $('input[name=coloring]:checked', '#coloring').val();
+    if (selectedRadio === "height") {
+        $('#colorPicker').attr("disabled", true);
+        for (var i = 0; i < viewer.scene.primitives.length; i++) {
+            if (viewer.scene.primitives.get(i).geometryInstances !== undefined) {
+                var newRGB = interpolateColors(viewer.scene.primitives.get(i).geometryInstances.geometry._height, MAX_HEIGHT, [0, 0, 1], [1, 0, 0]);
+                viewer.scene.primitives.get(i).appearance.material.uniforms.color = new Cesium.Color(newRGB[0], newRGB[1], newRGB[2], 1.0)
+            }
+        }
+
+    } else {
+        $('#colorPicker').attr("disabled", false);
+        setDefaultColors();
+    }
+});
+
+$('#colorPicker').on('change', function () {
+    var selectedRadio = $('input[name=coloring]:checked', '#coloring').val();
+    if (selectedRadio === "default") {
+        setDefaultColors();
+    }
+});
+
+var setDefaultColors = function () {
+    for (var i = 0; i < viewer.scene.primitives.length; i++) {
+        if (viewer.scene.primitives.get(i).appearance !== undefined) {
+            var alphaStatus = viewer.scene.primitives.get(i).appearance.material.uniforms.color.alpha;
+            viewer.scene.primitives.get(i).appearance.material.uniforms.color = Cesium.Color.fromCssColorString($('#colorPicker').val());
+            viewer.scene.primitives.get(i).appearance.material.uniforms.color.alpha = alphaStatus;
+            if (selectedEntity !== undefined) {
+                var complementColor = computeColorComplement($('#colorPicker').val());
+                selectedEntity.primitive.appearance.material.uniforms.color = Cesium.Color.fromCssColorString(complementColor);
+            }
+        }
+    }
+};
+
+
+// TODO: VISUALIZE BUILDINGS BY HEIGHT
+// TODO: Optimize query to visualize entire city
+// TODO: refactor global variable MAX_HEIGHT
+// TODO : study a way to get height of terrain and put building on elevation

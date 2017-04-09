@@ -118,7 +118,7 @@ public class ScheduledTasks {
 //        HashMap<String, String> result = services.buildingInfo(buildings.get(1).getCentroidLat(), buildings.get(1).getCentroidLng(), buildings.get(1).getId());
 
         for (Building building : buildings) {
-            if (building.getId() > 5112) {
+            if (building.getId() > 6852) {
                 HashMap<String, String> result = services.buildingInfo(building.getCentroidLat(), building.getCentroidLng(), building.getId());
 //
                 System.out.println("Result produced for building: " + building.getId());

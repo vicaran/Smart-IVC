@@ -27,3 +27,4 @@ viewer.dropError.addEventListener(function (dropHandler, name, error) {
     window.alert(error);
 });
 var scene = viewer.scene;
+scene.debugShowFramesPerSecond = true;

@@ -80,6 +80,7 @@ $("#zoomSelector").change(function () {
                                                                                           14000)
 
                                            });
+                       loadObjs();
                    }
                })
     }

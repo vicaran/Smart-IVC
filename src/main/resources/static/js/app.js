@@ -4,7 +4,7 @@
 
 $(document).ready(function () {
     $(".cesium-credit-textContainer").remove();
-    var creditsReveal = '<span class="cesium-credit-image"><a href="http://www.inf.usi.ch/faculty/lanza/reveal.html" target="_blank"><img src="/images/reveal/REVEALogo-black.png" alt="Reveal" title="Reveal" style="vertical-align: bottom;"></a></span>';
+    var creditsReveal = '<span class="cesium-credit-image"><a href="http://reveal.inf.usi.ch/" target="_blank"><img src="/images/reveal/REVEALogo-black.png" alt="Reveal" title="Reveal" style="vertical-align: bottom;"></a></span>';
     var creditsUsi = '<span class="cesium-credit-image"><a href="http://www.inf.usi.ch/" target="_blank"><img src="/images/reveal/logo_usi.png" alt="USI_INF" title="USI_INF" style="vertical-align: bottom;"></a></span>';
 
     $(".cesium-credit-imageContainer").append(creditsReveal);
@@ -12,7 +12,6 @@ $(document).ready(function () {
 
     // $("#side_menu").append()
     loadCities();
-    loadObjs();
 
 });
 

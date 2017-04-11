@@ -2,6 +2,7 @@
  * Created by Andrea on 08/04/2017.
  */
 var SERVER_URL = "http://" + window.location.host + "/";
+
 var GRAVITY = 9.8;
 var MAX_HEIGHT = -10;
 

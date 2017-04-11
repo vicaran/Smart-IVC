@@ -6,7 +6,7 @@ var viewer = new Cesium.Viewer('cesiumContainer', {
     // terrainProvider : new Cesium.CesiumTerrainProvider({
     //                                                        url : 'https://assets.agi.com/stk-terrain/world'
     //                                                    }),
-    baseLayerPicker: false,
+    // baseLayerPicker: false,
     fullscreenButton: true,
     vrButton: true,
     // geocoder: false,

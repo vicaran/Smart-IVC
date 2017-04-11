@@ -67,7 +67,7 @@ public class ScheduledTasks {
 
         updateTimer.schedule(myConverterTask, 20000);
 //        updateTimer.schedule(myInformationTask, 30000, 86460000);
-        updateTimer.schedule(myInformationTask, 10000);
+//        updateTimer.schedule(myInformationTask, 10000);
         updateTimer.schedule(myLoadLuganoTask, 5000);
     }
 
@@ -118,11 +118,9 @@ public class ScheduledTasks {
 //        HashMap<String, String> result = services.buildingInfo(buildings.get(1).getCentroidLat(), buildings.get(1).getCentroidLng(), buildings.get(1).getId());
 
         for (Building building : buildings) {
-            if (building.getId() > 16643) {
                 HashMap<String, String> result = services.buildingInfo(building.getCentroidLat(), building.getCentroidLng(), building.getId());
 //
                 System.out.println("Result produced for building: " + building.getId());
-            }
 //
 
 //            System.out.println(result.toString());

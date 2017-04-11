@@ -156,6 +156,19 @@ var setDefaultColors = function () {
     }
 };
 
+var triggerCreditButton = function () {
+    var creditsBox = $("#credits-box");
+    console.log("click");
+    $("#credits-button").click(function () {
+        if (creditsBox.hasClass("cesium-navigation-help-visible")) {
+            creditsBox.removeClass("cesium-navigation-help-visible");
+        } else {
+            creditsBox.addClass("cesium-navigation-help-visible");
+        }
+    });
+};
+
+
 
 // TODO: VISUALIZE BUILDINGS BY HEIGHT
 // TODO: Optimize query to visualize entire city

@@ -8,10 +8,7 @@ cache:
   - $HOME/.m2
 
 notifications:
-  email:
-    - burata@usi.ch
-  on_success: always # default: change
-  on_failure: always # default: always
+  email: false
 
 jdk:
 - oraclejdk8

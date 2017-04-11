@@ -56,7 +56,7 @@ public class LocationInfo implements OpenStreetMapAPIServices {
 
         String prepender = ",";
 
-        File jsonFile = new File("src/main/resources/city_data/OSM_DATA9.json");
+        File jsonFile = new File("src/main/resources/city_data/OSM_DATA10.json");
         if(!jsonFile.exists()){
             prepender = "[";
         }

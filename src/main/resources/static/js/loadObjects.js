@@ -57,15 +57,15 @@ var loadObjs = function () {
         // }
 
     $.ajax({
-               // url: SERVER_URL + "/building/max=46.061271,8.875321&min=45.940576,8.996019/",// ENTIRE LUGANO
-               url: SERVER_URL + "building/max=46.016348,8.942548&min=45.995867, 8.971934/", // LARGER LAKE
+               url: SERVER_URL + "/building/max=46.061271,8.875321&min=45.940576,8.996019/",// ENTIRE LUGANO
+               // url: SERVER_URL + "building/max=46.016348,8.942548&min=45.995867, 8.971934/", // LARGER LAKE
                // url: SERVER_URL + "building/max=46.006998,8.942853&min=45.992533,8.966763/", // AROUND LAKE
                type: "GET",
                success: function (data, textStatus, jqXHR) {
                    for (var i = 0; i < data.length; i++) {
                        if (data[i]) {
                            var list = createList(data[i].ringGlobalCoords);
-                           var height = (data[i].floors + 2) * 3;
+                           var height = (data[i].floors + 2)*2;
                            if (height > MAX_HEIGHT) {
                                MAX_HEIGHT = height;
                            }

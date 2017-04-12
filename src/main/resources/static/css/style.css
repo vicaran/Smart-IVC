@@ -59,3 +59,12 @@ input[type="color"]::-webkit-color-swatch {
     position: relative;
     display: inline-block;
 }
+
+.links_style{
+    text-decoration: none;
+    color: white;
+}
+
+.links_style:hover{
+    text-decoration: underline;
+}

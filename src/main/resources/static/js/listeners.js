@@ -157,9 +157,11 @@ var setDefaultColors = function () {
 };
 
 var triggerCreditButton = function () {
+
     var creditsBox = $("#credits-box");
-    console.log("click");
-    $("#credits-button").click(function () {
+    $("#credits-button").click(function (e) {
+        e.stopPropagation();
+
         if (creditsBox.hasClass("cesium-navigation-help-visible")) {
             creditsBox.removeClass("cesium-navigation-help-visible");
         } else {
@@ -167,6 +169,14 @@ var triggerCreditButton = function () {
         }
     });
 };
+
+$('#cesiumContainer').click(function () {
+    var creditsBox = $("#credits-box");
+    if (creditsBox.hasClass("cesium-navigation-help-visible")) {
+        creditsBox.removeClass("cesium-navigation-help-visible");
+    }
+});
+
 
 
 

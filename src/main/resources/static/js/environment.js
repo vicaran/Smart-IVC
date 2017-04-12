@@ -3,22 +3,14 @@
  */
 
 var viewer = new Cesium.Viewer('cesiumContainer', {
-    //Use standard Cesium terrain
-    // terrainProvider : new Cesium.CesiumTerrainProvider({
-    //                                                        url : 'https://assets.agi.com/stk-terrain/world'
-    //                                                    }),
     baseLayerPicker: false,
     fullscreenButton: true,
     vrButton: true,
-    geocoder: false,
+    // geocoder: false,
     // selectionIndicator: false,
     navigationInstructionsInitiallyVisible: false,
     scene3DOnly: true,
     imageryProvider: false,
-    // imageryProvider: new Cesium.MapboxImageryProvider({
-    //                                                         url: 'https://api.mapbox.com/v4/',
-    //                                                         mapId: 'mapbox.streets'
-    //                                                            }),
     projectionPicker: false
 });
 
@@ -37,47 +29,56 @@ var myLayerPicker = '<span id="baseLayerPickerContainer" class="cesium-navigatio
 $(myLayerPicker).insertBefore($(".cesium-navigationHelpButton-wrapper"));
 
 var imageryViewModels = [];
-imageryViewModels.push(new Cesium.ProviderViewModel({
-                                                        name : 'Open\u00adStreet\u00adMap',
-                                                        iconUrl : Cesium.buildModuleUrl('Widgets/Images/ImageryProviders/openStreetMap.png'),
-                                                        tooltip : 'OpenStreetMap (OSM) is a collaborative project to create a free editable \
-map of the world.\nhttp://www.openstreetmap.org',
-                                                        creationFunction : function() {
-                                                            return Cesium.createOpenStreetMapImageryProvider({
-                                                                                                                 url : 'https://a.tile.openstreetmap.org/'
-                                                                                                             });
-                                                        }
-                                                    }));
+var terrainViewModels = [];
 
 imageryViewModels.push(new Cesium.ProviderViewModel({
-                                                        name : 'Black Marble',
-                                                        iconUrl : Cesium.buildModuleUrl('Widgets/Images/ImageryProviders/blackMarble.png'),
-                                                        tooltip : 'The lights of cities and villages trace the outlines of civilization \
-in this global view of the Earth at night as seen by NASA/NOAA\'s Suomi NPP satellite.',
+                                                        name : 'Mapbox\u00adStreet\u00a0Classic',
+                                                        iconUrl : Cesium.buildModuleUrl('Widgets/Images/ImageryProviders/mapboxStreets.png'),
+                                                        tooltip : 'Mapbox streets basic imagery',
                                                         creationFunction : function() {
-                                                            return Cesium.createTileMapServiceImageryProvider({
-                                                                                                                  url : 'https://cesiumjs.org/blackmarble',
-                                                                                                                  credit : 'Black Marble imagery courtesy NASA Earth Observatory',
-                                                                                                                  flipXY : true
-                                                                                                              });
-                                                        }
-                                                    }));
-
-imageryViewModels.push(new Cesium.ProviderViewModel({
-                                                        name : 'Natural Earth\u00a0II',
-                                                        iconUrl : Cesium.buildModuleUrl('Widgets/Images/ImageryProviders/naturalEarthII.png'),
-                                                        tooltip : 'Natural Earth II, darkened for contrast.\nhttp://www.naturalearthdata.com/',
-                                                        creationFunction : function() {
-                                                            return Cesium.createTileMapServiceImageryProvider({
-                                                                                                                  url : Cesium.buildModuleUrl('Assets/Textures/NaturalEarthII')
-                                                                                                              });
+                                                            return new Cesium.MapboxImageryProvider({
+                                                                                                        url: 'https://api.mapbox.com/v4/',
+                                                                                                        mapId: 'mapbox.streets'
+                                                                                                    });
                                                         }
                                                     }));
 
 
-//Finally, create the baseLayerPicker widget using our view models.
+imageryViewModels.push(new Cesium.ProviderViewModel({
+                                                        name : 'Bing\u00adMaps\u00a0Aerial',
+                                                        iconUrl : Cesium.buildModuleUrl('Widgets/Images/ImageryProviders/bingAerial.png'),
+                                                        tooltip : 'Bing Maps aerial Imagery',
+                                                        creationFunction : function() {
+                                                            return new Cesium.BingMapsImageryProvider({
+                                                                                                         url : 'https://dev.virtualearth.net',
+                                                                                                         key : 'AibFjJSh0jKod09GGPlExgM-mBd5DEah5hPAeIVTDHQhEuUHi0PAhYKS3vmFi-i9',
+                                                                                                         mapStyle : Cesium.BingMapsStyle.AERIAL
+                                                                                                     });
+                                                        }
+                                                    }));
+
+terrainViewModels.push(new Cesium.ProviderViewModel({
+                                                        name : 'STK\u00a0World\u00a0Terrain\u00a0meshes',
+                                                        iconUrl : Cesium.buildModuleUrl('Widgets/Images/TerrainProviders/STK.png'),
+                                                        tooltip: 'High-resolution, mesh-based terrain for the entire globe. Free for use on the Internet. Closed-network options are available.http://www.agi.com',
+                                                        creationFunction : function() {
+                                                            return new Cesium.CesiumTerrainProvider({
+                                                                                                        url : 'https://assets.agi.com/stk-terrain/world'
+                                                                                                   });
+                                                        }
+                                                    }));
+terrainViewModels.push(new Cesium.ProviderViewModel({
+                                                        name : 'WGS84\u00a0Ellipsoid',
+                                                        iconUrl : Cesium.buildModuleUrl('Widgets/Images/TerrainProviders/Ellipsoid.png'),
+                                                        tooltip: 'WGS84 standard ellipsoid, also known as EPSG:4326',
+                                                        creationFunction : function() {
+                                                            return new Cesium.EllipsoidTerrainProvider();
+                                                        }
+                                                    }));
+
 var layers = viewer.imageryLayers;
 var baseLayerPicker = new Cesium.BaseLayerPicker('baseLayerPickerContainer', {
     globe : viewer.scene.globe,
-    imageryProviderViewModels : imageryViewModels
+    imageryProviderViewModels : imageryViewModels,
+    terrainProviderViewModels: terrainViewModels
 });

@@ -3,7 +3,7 @@ package com.app.utils.creators;
 import com.app.models.Address;
 import com.app.models.Building;
 import com.app.models.City;
-import com.app.utils.Converter;
+import com.app.utils.OfflineConverter;
 import com.app.utils.dataStructures.Pair;
 
 import org.jetbrains.annotations.Contract;
@@ -111,8 +111,8 @@ public class BuildingCreator {
         Double yCoord = Double.parseDouble(value2.getTextContent());
 
         // Convert coordinates from CH1903 to GWC
-        Double latitude = Converter.CHtoWGSlat(xCoord, yCoord);
-        Double longitude = Converter.CHtoWGSlng(xCoord, yCoord);
+        Double latitude = OfflineConverter.CHtoWGSlat(xCoord, yCoord);
+        Double longitude = OfflineConverter.CHtoWGSlng(xCoord, yCoord);
         return new Pair<>(latitude, longitude);
     }
 

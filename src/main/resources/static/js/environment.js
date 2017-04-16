@@ -3,6 +3,7 @@
  */
 
 var viewer = new Cesium.Viewer('cesiumContainer', {
+    animation: false,
     baseLayerPicker: false,
     fullscreenButton: true,
     vrButton: true,
@@ -11,6 +12,7 @@ var viewer = new Cesium.Viewer('cesiumContainer', {
     navigationInstructionsInitiallyVisible: false,
     scene3DOnly: true,
     imageryProvider: false,
+    terrainShadows: Cesium.ShadowMode.DISABLED,
     projectionPicker: false
 });
 
@@ -64,17 +66,21 @@ terrainViewModels.push(new Cesium.ProviderViewModel({
                                                         creationFunction : function() {
                                                             return new Cesium.CesiumTerrainProvider({
                                                                                                         url : 'https://assets.agi.com/stk-terrain/world'
-                                                                                                   });
+                                                                                                    });
                                                         }
                                                     }));
-terrainViewModels.push(new Cesium.ProviderViewModel({
-                                                        name : 'WGS84\u00a0Ellipsoid',
-                                                        iconUrl : Cesium.buildModuleUrl('Widgets/Images/TerrainProviders/Ellipsoid.png'),
-                                                        tooltip: 'WGS84 standard ellipsoid, also known as EPSG:4326',
-                                                        creationFunction : function() {
-                                                            return new Cesium.EllipsoidTerrainProvider();
-                                                        }
-                                                    }));
+
+// terrainViewModels.push(new Cesium.ProviderViewModel({
+//                                                         name : 'WGS84\u00a0Ellipsoid',
+//                                                         iconUrl : Cesium.buildModuleUrl('Widgets/Images/TerrainProviders/Ellipsoid.png'),
+//                                                         tooltip: 'WGS84 standard ellipsoid, also known as EPSG:4326',
+//                                                         creationFunction : function() {
+//                                                             return new Cesium.EllipsoidTerrainProvider();
+//                                                         }
+//                                                     }));
+
+
+
 
 var layers = viewer.imageryLayers;
 var baseLayerPicker = new Cesium.BaseLayerPicker('baseLayerPickerContainer', {

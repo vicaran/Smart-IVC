@@ -1,17 +1,18 @@
 package com.app.models;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -25,7 +26,7 @@ public class Type implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="address_type",
             joinColumns = @JoinColumn(name = "id_address",
                     referencedColumnName = "TYPE_ID"),
@@ -37,6 +38,11 @@ public class Type implements Serializable{
     private String typeName;
 
     public Type(){}
+
+    public Type(String typeName){
+        this.setTypeName(typeName);
+        this.addresses = new HashSet<>();
+    }
 
     public String getTypeName() {
         return typeName;
@@ -60,6 +66,13 @@ public class Type implements Serializable{
 
     public void setAddresses(Set<Address> addresses) {
         this.addresses = addresses;
+    }
+
+    public void addAddress(Address address) {
+        this.addresses.add(address);
+        if (!address.getTypes().contains(this)) {
+            address.addType(this);
+        }
     }
 
 }

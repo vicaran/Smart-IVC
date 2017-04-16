@@ -157,7 +157,7 @@ public class Building implements Serializable {
     public void setRingSwissCoords(byte[] ringSwissCoords) {
         this.ringSwissCoords = ringSwissCoords;
     }
-
+    @JsonIgnore
     public City getCity() {
         return ownCity;
     }

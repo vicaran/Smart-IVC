@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,7 +43,7 @@ public class Address implements Serializable{
     @Column(name = "ROAD_NUMBER")
     private String roadNumber;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "address_type",
             joinColumns = @JoinColumn(name = "id_address",
                     referencedColumnName = "ADDRESS_ID"),

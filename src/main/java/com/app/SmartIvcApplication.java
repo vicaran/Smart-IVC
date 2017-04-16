@@ -1,22 +1,13 @@
 package com.app;
 
-import com.app.API.GoogleGeocoding.GoogleAPIServices;
-import com.app.API.SwissTopo.SwissTopoAPIServices;
-import com.app.API.SwissTopo.SwissTopoConverter;
-import com.app.commands.ScheduledTasks;
-import com.app.models.Building;
 import com.app.repositories.BuildingRepository;
 import com.app.repositories.CityRepository;
 import com.app.repositories.SuburbRepository;
-import com.app.utils.Converter;
-import com.app.utils.creators.CityCreator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.util.List;
 
 @SpringBootApplication
 public class SmartIvcApplication implements CommandLineRunner{

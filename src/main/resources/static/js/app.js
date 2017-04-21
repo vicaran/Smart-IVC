@@ -3,6 +3,9 @@
  */
 
 $(document).ready(function () {
+    sessionStorage.setItem("buildingIDs", []);
+    sessionStorage.setItem("buildingElevations", []);
+    sessionStorage.setItem("buildingHeights", []);
     addCredits();
     loadCities();
 });

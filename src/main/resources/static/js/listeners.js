@@ -6,6 +6,7 @@
 var selectedEntity = undefined;
 var hoverEntity = undefined;
 var translucenceStatus = 1;
+var prevColor;
 
 handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
 
@@ -15,7 +16,7 @@ handler.setInputAction(function (click) {
 
     if (pickedObject !== undefined) {
         if (selectedEntity !== undefined) {
-            selectedEntity.primitive.appearance.material.uniforms.color = Cesium.Color.fromCssColorString($('#colorPicker').val());
+            selectedEntity.primitive.appearance.material.uniforms.color = prevColor;
             selectedEntity.primitive.appearance.material.uniforms.color.alpha = translucenceStatus;
         }
         selectedEntity = pickedObject;
@@ -27,7 +28,7 @@ handler.setInputAction(function (click) {
         console.log(selectedEntity);
     } else {
         if (selectedEntity !== undefined) {
-            selectedEntity.primitive.appearance.material.uniforms.color = Cesium.Color.fromCssColorString($('#colorPicker').val());
+            selectedEntity.primitive.appearance.material.uniforms.color = prevColor;
             selectedEntity.primitive.appearance.material.uniforms.color.alpha = translucenceStatus;
             selectedEntity = undefined;
         }
@@ -40,12 +41,13 @@ handler.setInputAction(function (movement) {
 
     if (hoverObject !== undefined && hoverObject !== selectedEntity) {
         if (hoverEntity !== undefined && hoverEntity !== selectedEntity) {
-            hoverEntity.primitive.appearance.material.uniforms.color = Cesium.Color.fromCssColorString($('#colorPicker').val());
+            hoverEntity.primitive.appearance.material.uniforms.color = prevColor;
             hoverEntity.primitive.appearance.material.uniforms.color.alpha = translucenceStatus;
         }
         hoverEntity = hoverObject;
 
         var complementColor = "#00ff23";
+        prevColor = hoverEntity.primitive.appearance.material.uniforms.color;
         hoverEntity.primitive.appearance.material.uniforms.color = Cesium.Color.fromCssColorString(complementColor);
         if (translucenceStatus === 1) {
             hoverEntity.primitive.appearance.material.uniforms.color.alpha = 0.5;
@@ -55,7 +57,7 @@ handler.setInputAction(function (movement) {
     }
     else {
         if (hoverEntity !== undefined && hoverEntity !== selectedEntity) {
-            hoverEntity.primitive.appearance.material.uniforms.color = Cesium.Color.fromCssColorString($('#colorPicker').val());
+            hoverEntity.primitive.appearance.material.uniforms.color = prevColor;
             hoverEntity.primitive.appearance.material.uniforms.color.alpha = translucenceStatus;
             hoverEntity = undefined;
         }
@@ -75,12 +77,13 @@ $("#zoomSelector").change(function () {
                        var centroidLat = (Number(coords[0].split(" ")[1]) + Number(coords[1].split(" ")[1])) / 2;
                        var centroidLng = (Number(coords[0].split(" ")[0]) + Number(coords[1].split(" ")[0])) / 2;
                        viewer.camera.flyTo({
-                                               destination: Cesium.Cartesian3.fromDegrees(centroidLat,
-                                                                                          centroidLng,
-                                                                                          14000)
+                                                             destination: Cesium.Cartesian3.fromDegrees(centroidLat,
+                                                                                                        centroidLng,
+                                                                                                        15000),
+                                                             maximumHeight: 10000,
+                                                             complete: loadObjs()
 
-                                           });
-                       loadObjs();
+                                                         });
                    }
                })
     }
@@ -124,7 +127,9 @@ $('#coloring input').on('change', function () {
         $('#colorPicker').attr("disabled", true);
         for (var i = 0; i < viewer.scene.primitives.length; i++) {
             if (viewer.scene.primitives.get(i).geometryInstances !== undefined) {
-                var newRGB = interpolateColors(viewer.scene.primitives.get(i).geometryInstances.geometry._height, MAX_HEIGHT, [0, 0, 1], [1, 0, 0]);
+                var buildingHeight = viewer.scene.primitives.get(i).geometryInstances.geometry._height
+                                     - viewer.scene.primitives.get(i).geometryInstances.geometry._extrudedHeight;
+                var newRGB = interpolateColors(parseInt(buildingHeight) , parseInt(MAX_HEIGHT), [0, 0, 1], [1, 0, 0]);
                 viewer.scene.primitives.get(i).appearance.material.uniforms.color = new Cesium.Color(newRGB[0], newRGB[1], newRGB[2], 1.0)
             }
         }
@@ -180,7 +185,5 @@ $('#cesiumContainer').click(function () {
 
 
 
-// TODO: VISUALIZE BUILDINGS BY HEIGHT
 // TODO: Optimize query to visualize entire city
 // TODO: refactor global variable MAX_HEIGHT
-// TODO : study a way to get height of terrain and put building on elevation

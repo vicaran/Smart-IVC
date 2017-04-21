@@ -59,6 +59,15 @@ imageryViewModels.push(new Cesium.ProviderViewModel({
                                                         }
                                                     }));
 
+// terrainViewModels.push(new Cesium.ProviderViewModel({
+//                                                         name: 'WGS84\u00a0Ellipsoid',
+//                                                         iconUrl: Cesium.buildModuleUrl('Widgets/Images/TerrainProviders/Ellipsoid.png'),
+//                                                         tooltip: 'WGS84 standard ellipsoid, also known as EPSG:4326',
+//                                                         creationFunction: function () {
+//                                                             return new Cesium.EllipsoidTerrainProvider();
+//                                                         }
+//                                                     }));
+
 terrainViewModels.push(new Cesium.ProviderViewModel({
                                                         name : 'STK\u00a0World\u00a0Terrain\u00a0meshes',
                                                         iconUrl : Cesium.buildModuleUrl('Widgets/Images/TerrainProviders/STK.png'),
@@ -70,14 +79,6 @@ terrainViewModels.push(new Cesium.ProviderViewModel({
                                                         }
                                                     }));
 
-// terrainViewModels.push(new Cesium.ProviderViewModel({
-//                                                         name : 'WGS84\u00a0Ellipsoid',
-//                                                         iconUrl : Cesium.buildModuleUrl('Widgets/Images/TerrainProviders/Ellipsoid.png'),
-//                                                         tooltip: 'WGS84 standard ellipsoid, also known as EPSG:4326',
-//                                                         creationFunction : function() {
-//                                                             return new Cesium.EllipsoidTerrainProvider();
-//                                                         }
-//                                                     }));
 
 
 
@@ -88,3 +89,4 @@ var baseLayerPicker = new Cesium.BaseLayerPicker('baseLayerPickerContainer', {
     imageryProviderViewModels : imageryViewModels,
     terrainProviderViewModels: terrainViewModels
 });
+viewer.resolutionScale = 0.8;

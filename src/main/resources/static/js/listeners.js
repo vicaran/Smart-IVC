@@ -25,7 +25,20 @@ handler.setInputAction(function (click) {
         if (translucenceStatus === 0.5) {
             selectedEntity.primitive.appearance.material.uniforms.color.alpha = 1;
         }
-        console.log(selectedEntity);
+        $.ajax({
+                   url: SERVER_URL + 'building/info/' + selectedEntity.id.substr(selectedEntity.id.indexOf("_") + 1),
+                   type: "GET",
+                   success: function (data, textStatus, jqXHR) {
+
+                       viewer.selectedEntity = new Cesium.Entity({
+                                                                     id: selectedEntity.id,
+                                                                     description: '<p>Address: '+data.addresses[0]+ ', '+data.civicNumbers[0]+'</p>'+
+                                                                                  '<br><p>Address:</p> '
+                                                                 });
+                   }
+               });
+
+
     } else {
         if (selectedEntity !== undefined) {
             selectedEntity.primitive.appearance.material.uniforms.color = prevColor;

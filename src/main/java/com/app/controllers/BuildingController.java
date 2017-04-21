@@ -1,9 +1,12 @@
 package com.app.controllers;
 
 import com.app.exceptions.NotFoundException;
+import com.app.models.Address;
 import com.app.models.Building;
+import com.app.repositories.AddressRepository;
 import com.app.repositories.BuildingRepository;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Andrea on 17/03/2017.
@@ -23,17 +27,40 @@ import java.util.List;
 public class BuildingController {
 
     private final BuildingRepository buildingRepository;
+    private final AddressRepository addressRepository;
 
     @Autowired
-    public BuildingController(BuildingRepository buildingRepository) {
+    public BuildingController(BuildingRepository buildingRepository, AddressRepository addressRepository) {
         this.buildingRepository = buildingRepository;
+        this.addressRepository = addressRepository;
     }
 
-    @RequestMapping(value = "/info/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/info/{id}", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity handleBuildingById(@PathVariable Long id) {
 
         Building building = this.buildingRepository.findBuildingById(id).orElseThrow(NotFoundException::new);
-        return ResponseEntity.ok(building);
+        List<Address> addresses = this.addressRepository.findAddressByOwnBuilding(building);
+
+        JSONObject buildingNumbers = new JSONObject();
+        JSONObject buildingAddresses = new JSONObject();
+//        JSONObject buildingTypes = new JSONObject();
+
+        if (addresses != null) {
+            for (int i = 0; i < addresses.size(); i++) {
+                buildingAddresses.append("" + i, addresses.get(i).getAddressName());
+                buildingNumbers.append("" + i, addresses.get(i).getHouseNumber());
+//                buildingTypes.append("" + i, addresses.get(i).getTypes());
+            }
+        }
+
+
+        String obj = new JSONObject()
+                .put("floors", building.getFloors())
+                .put("addresses", buildingAddresses)
+                .put("civicNumbers", buildingNumbers).toString();
+//                .put("types", buildingTypes).toString();
+//TODO HANDLE TYPES
+        return ResponseEntity.ok(obj);
     }
 
 
@@ -53,3 +80,4 @@ public class BuildingController {
         return new ResponseEntity<>(buildings, HttpStatus.OK);
     }
 }
+

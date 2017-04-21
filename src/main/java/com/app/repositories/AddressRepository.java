@@ -1,6 +1,7 @@
 package com.app.repositories;
 
 import com.app.models.Address;
+import com.app.models.Building;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -15,5 +16,5 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
     Optional<Address> findAddressById(Long id);
     Optional<Address> findAddressByIdAndLatitudeAndLongitude(Long id, Double latitude, Double longitude);
     List<Address> findAddressByRoadNumber(String roadNumber);
-
+    List<Address> findAddressByOwnBuilding(Building building);
 }

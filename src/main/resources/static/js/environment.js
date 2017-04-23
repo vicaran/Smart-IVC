@@ -59,14 +59,7 @@ imageryViewModels.push(new Cesium.ProviderViewModel({
                                                         }
                                                     }));
 
-// terrainViewModels.push(new Cesium.ProviderViewModel({
-//                                                         name: 'WGS84\u00a0Ellipsoid',
-//                                                         iconUrl: Cesium.buildModuleUrl('Widgets/Images/TerrainProviders/Ellipsoid.png'),
-//                                                         tooltip: 'WGS84 standard ellipsoid, also known as EPSG:4326',
-//                                                         creationFunction: function () {
-//                                                             return new Cesium.EllipsoidTerrainProvider();
-//                                                         }
-//                                                     }));
+
 
 terrainViewModels.push(new Cesium.ProviderViewModel({
                                                         name : 'STK\u00a0World\u00a0Terrain\u00a0meshes',
@@ -76,6 +69,14 @@ terrainViewModels.push(new Cesium.ProviderViewModel({
                                                             return new Cesium.CesiumTerrainProvider({
                                                                                                         url : 'https://assets.agi.com/stk-terrain/world'
                                                                                                     });
+                                                        }
+                                                    }));
+terrainViewModels.push(new Cesium.ProviderViewModel({
+                                                        name: 'WGS84\u00a0Ellipsoid',
+                                                        iconUrl: Cesium.buildModuleUrl('Widgets/Images/TerrainProviders/Ellipsoid.png'),
+                                                        tooltip: 'WGS84 standard ellipsoid, also known as EPSG:4326',
+                                                        creationFunction: function () {
+                                                            return new Cesium.EllipsoidTerrainProvider();
                                                         }
                                                     }));
 

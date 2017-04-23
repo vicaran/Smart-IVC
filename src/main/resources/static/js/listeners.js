@@ -87,14 +87,29 @@ $("#zoomSelector").change(function () {
                    type: "GET",
                    success: function (data, textStatus, jqXHR) {
                        var coords = createRing(data.boundCoords);
-                       var centroidLat = (Number(coords[0].split(" ")[1]) + Number(coords[1].split(" ")[1])) / 2;
-                       var centroidLng = (Number(coords[0].split(" ")[0]) + Number(coords[1].split(" ")[0])) / 2;
+                       var maxLat = Number(coords[0].split(" ")[0]);
+                       var maxLng = Number(coords[1].split(" ")[1]);
+
+                       var minLat = Number(coords[1].split(" ")[0]);
+                       var minLng = Number(coords[0].split(" ")[1]);
+
+
+
+                       var centroidLat = (maxLat + minLat) / 2;
+                       var centroidLng = (maxLng + minLng) / 2;
+
+                       console.log(maxLat);
+                       console.log(maxLng);
+                       console.log(minLat);
+                       console.log(minLng);
                        viewer.camera.flyTo({
-                                                             destination: Cesium.Cartesian3.fromDegrees(centroidLat,
-                                                                                                        centroidLng,
+                                                             destination: Cesium.Cartesian3.fromDegrees(centroidLng,
+                                                                                                        centroidLat,
                                                                                                         15000),
                                                              maximumHeight: 10000,
-                                                             complete: loadObjs()
+                                                             // TODO: Pass max bounds of city and centroid to load city
+                                                             // complete: cityLoader(maxLat, maxLng, minLat, minLng, centroidLat, centroidLng)
+                                                            complete: cityLoader(maxLat, maxLng, minLat, minLng, 46.009447, 8.960488)
 
                                                          });
                    }

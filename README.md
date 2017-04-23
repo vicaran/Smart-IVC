@@ -1,23 +1,28 @@
-<p align="center">
-<img src="images/logo.png" width="50%" height="50%" />
-</p>
+<div align="center">
+	<img src="images/logo.png" width="100pt" height="100pt" />
+	<div align="center">
+		<a href="http://reveal.inf.usi.ch/">
+			<img src="images/REVEALogo-black.png" width="300pt" height="100pt"/>
+		</a>
+		<a href="http://www.inf.usi.ch/">
+			<img src="images/logo_usi.png" width="100pt" height="100pt"/>
+		</a>
+	</div>
+</div>
 
-### Smart-IVC ###
+
+[![Build Status](https://travis-ci.org/vicaran/Smart-IVC.svg?branch=master)](https://travis-ci.org/vicaran/Smart-IVC)&nbsp;
+
+# Smart-IVC
 Smart-IVC is a web application that provides a 3D visualization of cities which is both intuitive and interactive.
 
-# Developed by:
+## Developed by: ##
 -   Andrea Vicari
 
-# Under the supervision of:
-- Prof. Dr. Michele Lanza
-- Dr. Andrea Mocci
+## Under the supervision of: ##
+- [Prof. Dr. Michele Lanza](http://www.inf.usi.ch/faculty/lanza/)
+- [Dr. Andrea Mocci](http://www.inf.usi.ch/postdoc/mocci/)
+
+Created during the Spring Semester 2017 as a Bachelor Project [@Università della Svizzera Italiana](http://www.inf.usi.ch/) 
 
 
-Developed during the Spring Semester 2017 as a Bachelor Project @ Università della Svizzera Italiana
-
-<p align="center">
-<img src="images/REVEALogo-black.pdf" width="50%"/>
-</p>
-<p align="center">
-<img src="images/logo_usi.eps" width="50%"/>
-</p>

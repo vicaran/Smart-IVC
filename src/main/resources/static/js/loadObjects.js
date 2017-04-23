@@ -2,20 +2,20 @@
  * Created by Andrea on 08/04/2017.
  */
 var INCREMENTER = 0.0000000;
-var step = 0.001000;
-var bufferedData = [];
-var maxSize = 910;
+var step = 0.01000;
 
-var loadObjs = function (maxLat, maxLng, minLat, minLng) {
-    var buildings = new Cesium.CustomDataSource();
+var loadObjs = function (sectionExtremes) {
     var urlVal;
-    if (maxLat !== undefined && maxLng !== undefined && minLat !== undefined && minLng !== undefined) {
-        urlVal = "building/max=" + maxLat + "," + maxLng + "&min=" + minLat + "," + minLng + "/";
+    if (sectionExtremes !== undefined) {
+        urlVal =
+            "building/max=" + sectionExtremes.maxLat + "," + sectionExtremes.maxLng + "&min=" + sectionExtremes.minLat + "," + sectionExtremes.minLng
+            + "/";
     } else {
         // urlVal = "building/max=46.006998,8.942853&min=45.992533,8.966763/"; // AROUND LAKE
         urlVal = "building/max=46.016348,8.942548&min=45.995867, 8.971934/"; // LARGER LAKE
         // urlVal = "/building/max=46.061271,8.875321&min=45.940576,8.996019/";// ENTIRE LUGANO
     }
+    console.log(urlVal);
     $.ajax({
                url: SERVER_URL + urlVal,
                type: "GET",
@@ -24,14 +24,10 @@ var loadObjs = function (maxLat, maxLng, minLat, minLng) {
                    var positions = [];
                    var buildingsHeight = [];
                    var primitivesArray = [];
-                   // if(data.length < maxSize) {
-                   //     var remainingSize = bufferedData.length - maxSize;
-                   //     for(var j = 0; j < remainingSize; j++){
-                   //         bufferedData.append(data[j]);
-                   //     }
-                   // }
+                   var counter = 0;
                    for (var i = 0; i < data.length; i++) {
                        if (data[i] && !(sessionStorage.getItem("buildingIDs").includes('building_' + data[i].id))) {
+                           counter++;
                            var list = createList(data[i].ringGlobalCoords);
                            var buildingHeight = (data[i].floors + 2) * 2;
                            var buildingID = 'building_' + data[i].id;
@@ -40,9 +36,13 @@ var loadObjs = function (maxLat, maxLng, minLat, minLng) {
                            buildingsHeight.push(buildingHeight);
                            positions.push(Cesium.Cartographic.fromDegrees(data[i].centroidLng, data[i].centroidLat));
 
-                           var buildingGeometry = Cesium.PolygonGeometry.fromPositions({
-                                                                                           positions: Cesium.Cartesian3.fromDegreesArray(list),
-                                                                                           extrudedHeight: buildingHeight
+                           var buildingGeometry = new Cesium.PolygonGeometry({
+                                                                                 polygonHierarchy : new Cesium.PolygonHierarchy(
+                                                                                     Cesium.Cartesian3.fromDegreesArray(list)
+                                                                                 ),
+                                                                                    granularity: 0.1,
+                                                                                    extrudedHeight: buildingHeight,
+                                                                                    closeBottom: false
                                                                                        });
 
                            var building = new Cesium.GeometryInstance({
@@ -58,7 +58,6 @@ var loadObjs = function (maxLat, maxLng, minLat, minLng) {
                            var primitive = new Cesium.Primitive({
                                                                     geometryInstances: building,
                                                                     appearance: new Cesium.MaterialAppearance({
-                                                                                                                  closed: true,
                                                                                                                   translucent: false,
                                                                                                                   flat: false,
                                                                                                                   material: new Cesium.Material(
@@ -74,13 +73,17 @@ var loadObjs = function (maxLat, maxLng, minLat, minLng) {
                                                                                                                               }
                                                                                                                           }
                                                                                                                       })
-                                                                                                              }), releaseGeometryInstances: false
+                                                                                                              }),
+                                                                    releaseGeometryInstances: false,
+                                                                    interleave: true,
+                                                                    cull: false,
+                                                                    asynchronous: true,
                                                                 });
                            primitivesArray.push(primitive);
-                           // scene.primitives.add(primitive);
 
                        }
                    }
+                   console.log(counter);
                    var promise = Cesium.sampleTerrainMostDetailed(viewer.terrainProvider, positions);
                    Cesium.when(promise, function (updatedPositions) {
                        for (var i = 0; updatedPositions.length; i++) {
@@ -103,34 +106,53 @@ var loadObjs = function (maxLat, maxLng, minLat, minLng) {
                    sessionStorage.setItem("buildingHeights", sessionStorage.getItem("buildingHeights").concat(JSON.stringify(buildingsHeight)));
                }
            });
-    // viewer.zoomTo(viewer.entities);
-    INCREMENTER = (parseFloat(INCREMENTER) + step).toFixed(6);
-    }
-;
-
-var loadAfter = function () {
-    loadObjs(46.014606, 8.953889, 46.009087, 8.963175);
-}
+};
 
 var loadHere = function () {
     var pos = getCameraCoordinates();
     setInterval(function () {
         console.log("Calling ajax: " + INCREMENTER);
-        loadObjs((parseFloat(pos.maxLat) + parseFloat(INCREMENTER)).toFixed(6),
-                 (parseFloat(pos.maxLon) - parseFloat(INCREMENTER)).toFixed(6),
-                 (parseFloat(pos.minLat) + parseFloat(INCREMENTER)).toFixed(6),
-                 (parseFloat(pos.minLon) - parseFloat(INCREMENTER)).toFixed(6));
+        var sectionExtremes = {
+            maxLat: (parseFloat(pos.maxLat) + parseFloat(INCREMENTER)).toFixed(6),
+            maxLng: (parseFloat(pos.maxLon) - parseFloat(INCREMENTER)).toFixed(6),
+            minLat: (parseFloat(pos.minLat) + parseFloat(INCREMENTER)).toFixed(6),
+            minLng: (parseFloat(pos.minLon) - parseFloat(INCREMENTER)).toFixed(6)
+        };
+        loadObjs(sectionExtremes);
+        INCREMENTER = (parseFloat(INCREMENTER) + step).toFixed(6);
     }, 500)
     ;
-}
+};
 
-// "46.013468"
-// maxLon
-//     :
-//     "8.954092"
-// minLat
-//     :
-//     "46.009447"
-// minLon
-//     :
-//     "8.960488"
+var cityLoader = function (maxLat, maxLng, minLat, minLng, centroidLat, centroidLng) {
+
+    var sectionExtremes = {
+        maxLat: maxLat.toFixed(6),
+        maxLng: maxLng.toFixed(6),
+        minLat: (maxLat - parseFloat(step)).toFixed(6),
+        minLng: minLng.toFixed(6)
+    };
+
+    var tid = setInterval(function () {
+        loadObjs(sectionExtremes);
+        sectionExtremes.maxLat = sectionExtremes.minLat;
+        sectionExtremes.minLat = (parseFloat(sectionExtremes.minLat) - parseFloat(step)).toFixed(6);
+        if (sectionExtremes.minLat < minLat) {
+            console.log("OVERSIZEEEE");
+            clearInterval(tid);
+        }
+        // var redPolygon = viewer.entities.add({
+        //                                          name: 'Red polygon on surface',
+        //                                          polygon: {
+        //                                              hierarchy: Cesium.Cartesian3.fromDegreesArray([sectionExtremes.maxLng, sectionExtremes.maxLat,
+        //                                                                                             sectionExtremes.minLng, sectionExtremes.maxLat,
+        //                                                                                             sectionExtremes.minLng, sectionExtremes.minLat,
+        //                                                                                             sectionExtremes.maxLng, sectionExtremes.minLat
+        //                                                                                            ]),
+        //                                              material: Cesium.Color.AQUA
+        //                                          }
+        //                                      });
+
+    }, 1500)
+
+};

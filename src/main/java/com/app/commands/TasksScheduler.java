@@ -21,7 +21,15 @@ public class TasksScheduler {
         Timer updateTimer = new Timer();
         ConverterCommand converterCommand = new ConverterCommand(buildingRepository, addressRepository);
         CityLoaderCommand cityLoaderCommand = new CityLoaderCommand(buildingRepository, cityRepository, addressRepository);
-        CityInformationCommand cityInformationCommand = new CityInformationCommand(buildingRepository, addressRepository, typeRepository);
+        CityInformationCommand cityInformationCommand = new CityInformationCommand(addressRepository, typeRepository, suburbRepository);
+
+        TimerTask myLoadLuganoTask = new TimerTask() {
+            @Override
+            public void run() {
+                cityLoaderCommand.loadLuganoTask();
+            }
+        };
+        updateTimer.schedule(myLoadLuganoTask, 5000);
 
         TimerTask myConverterTask = new TimerTask() {
             @Override
@@ -29,7 +37,7 @@ public class TasksScheduler {
                 converterCommand.converterTask();
             }
         };
-//        updateTimer.schedule(myConverterTask, 20000);
+        updateTimer.schedule(myConverterTask, 6000);
 
 
         TimerTask myInformationTask = new TimerTask() {
@@ -39,15 +47,9 @@ public class TasksScheduler {
             }
         };
 //        updateTimer.schedule(myInformationTask, 30000, 86460000);
-//        updateTimer.schedule(myInformationTask, 5000);
+        updateTimer.schedule(myInformationTask, 7000);
 
 
-        TimerTask myLoadLuganoTask = new TimerTask() {
-            @Override
-            public void run() {
-                cityLoaderCommand.loadLuganoTask();
-            }
-        };
-//        updateTimer.schedule(myLoadLuganoTask, 5000);
+
     }
 }

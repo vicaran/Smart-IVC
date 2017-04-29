@@ -25,7 +25,19 @@ viewer.dropError.addEventListener(function (dropHandler, name, error) {
 });
 var scene = viewer.scene;
 scene.debugShowFramesPerSecond = true;
-
+scene.contextOptions = {
+    alpha: false,
+    depth: false,
+    stencil: false,
+    antialias: false,
+    premultipliedAlpha: false,
+    preserveDrawingBuffer: false,
+    failIfMajorPerformanceCaveat: false
+};
+scene.fog = new Cesium.Fog({enabled: false});
+scene.fxaa = false;
+scene.moon = undefined;
+// scene.skyAtmosphere = undefined;
 
 var myLayerPicker = '<span id="baseLayerPickerContainer" class="cesium-navigationHelpButton-wrapper"></span>';
 $(myLayerPicker).insertBefore($(".cesium-navigationHelpButton-wrapper"));

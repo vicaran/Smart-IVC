@@ -5,6 +5,7 @@ import com.app.models.Suburb;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Collection;
 import java.util.Optional;
 
 /**
@@ -14,6 +15,8 @@ public interface SuburbRepository  extends JpaRepository<Suburb, Long> {
     Optional<Suburb> findSuburbById(Long id);
 
     Optional<Suburb> findSuburbByName(String name);
+
+//    Optional<Collection<Suburb>> findSuburbByCityId(Long id);
 
 
 }

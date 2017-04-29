@@ -11,8 +11,8 @@ var loadObjs = function (sectionExtremes) {
             "building/max=" + sectionExtremes.maxLat + "," + sectionExtremes.maxLng + "&min=" + sectionExtremes.minLat + "," + sectionExtremes.minLng
             + "/";
     } else {
-        // urlVal = "building/max=46.006998,8.942853&min=45.992533,8.966763/"; // AROUND LAKE
-        urlVal = "building/max=46.016348,8.942548&min=45.995867, 8.971934/"; // LARGER LAKE
+        urlVal = "building/max=46.006998,8.942853&min=45.992533,8.966763/"; // AROUND LAKE
+        // urlVal = "building/max=46.016348,8.942548&min=45.995867, 8.971934/"; // LARGER LAKE
         // urlVal = "/building/max=46.061271,8.875321&min=45.940576,8.996019/";// ENTIRE LUGANO
     }
     console.log(urlVal);
@@ -50,7 +50,7 @@ var loadObjs = function (sectionExtremes) {
                                                                           id: 'building_' + data[i].id,
                                                                           attributes: ({
                                                                               distanceDisplayCondition: new Cesium.DistanceDisplayConditionGeometryInstanceAttribute(
-                                                                                  0, 5000),
+                                                                                  0, 300),
                                                                               // scaleByDistance: new Cesium.NearFarScalar(0,10, 5000, 1),
                                                                               // translucenceByDistance: new Cesium.NearFarScalar(0, 1,// 5000, 0) })
                                                                           })
@@ -90,7 +90,7 @@ var loadObjs = function (sectionExtremes) {
 
                            var prevHeight = primitivesArray[i].geometryInstances.geometry._height;
                            primitivesArray[i].geometryInstances.geometry._height =
-                               updatedPositions[i].height + ((primitivesArray[i].geometryInstances.geometry._height) / 2) + 5;
+                               updatedPositions[i].height + ((primitivesArray[i].geometryInstances.geometry._height) / 2) + prevHeight;
                            primitivesArray[i].geometryInstances.geometry._extrudedHeight = updatedPositions[i].height - prevHeight;
 
                            var buildingHeight = primitivesArray[i].geometryInstances.geometry._height

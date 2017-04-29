@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,9 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -66,7 +63,7 @@ public class Building implements Serializable {
     @JoinColumn(name="OWNSUBURB_ID")
     private Suburb ownSuburb;
 
-    @OneToMany(mappedBy="ownBuilding", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy="ownBuilding",cascade = CascadeType.DETACH)
     private List<Address> addresses;
 
     // JPA REQUIRES IT!
@@ -168,16 +165,19 @@ public class Building implements Serializable {
             city.getBuildings().add(this);
         }
     }
-
+    @JsonIgnore
     public Suburb getSuburb() {
         return ownSuburb;
     }
 
     public void setSuburb(Suburb suburb) {
+//        if (sameAsFormer(suburb))
+//            return;
         this.ownSuburb = suburb;
-        if (!suburb.getBuildings().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
-            suburb.getBuildings().add(this);
-        }
+    }
+
+    private boolean sameAsFormer(Suburb suburb) {
+        return ownSuburb == null ? suburb == null : ownSuburb.equals(suburb);
     }
 
     @JsonIgnore

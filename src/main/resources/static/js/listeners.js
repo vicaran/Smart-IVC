@@ -29,12 +29,11 @@ handler.setInputAction(function (click) {
                    url: SERVER_URL + 'building/info/' + selectedEntity.id.substr(selectedEntity.id.indexOf("_") + 1),
                    type: "GET",
                    success: function (data, textStatus, jqXHR) {
-
-                       viewer.selectedEntity = new Cesium.Entity({
+                       var promise = viewer.selectedEntity = new Cesium.Entity({
                                                                      id: selectedEntity.id,
-                                                                     description: '<p>Address: '+data.addresses[0]+ ', '+data.civicNumbers[0]+'</p>'+
-                                                                                  '<br><p>Address:</p> '
+                                                                                   description: generateTable(data)
                                                                  });
+
                    }
                });
 
@@ -109,7 +108,8 @@ $("#zoomSelector").change(function () {
                                                              maximumHeight: 10000,
                                                              // TODO: Pass max bounds of city and centroid to load city
                                                              // complete: cityLoader(maxLat, maxLng, minLat, minLng, centroidLat, centroidLng)
-                                                            complete: cityLoader(maxLat, maxLng, minLat, minLng, 46.009447, 8.960488)
+                                               // complete: cityLoader(maxLat, maxLng, minLat, minLng, 46.009447, 8.960488)
+                                               complete: loadObjs()
 
                                                          });
                    }
@@ -210,8 +210,38 @@ $('#cesiumContainer').click(function () {
     }
 });
 
+var generateTable = function (data) {
+    var table = '<div class="cesium-infoBox-description">'
+                + '<table class="cesium-infoBox-defaultTable">'
+                + '<tbody>';
+    for (var field in data) {
+        if (field !== undefined) {
+            var value = createValue(data, field);
+            table += +'<tr>'
+                     + '<th>' + field + '</th>'
+                     + '<td>' + value + '</td>'
+                     + '</tr>'
+        }
+    }
+    table += +'</tbody>' + '</table>' + '</div>';
+    return table;
+};
 
-
-
+var createValue = function (data, field) {
+    var value = '';
+    switch (typeof data[field]) {
+        case 'number':
+            value = data[field];
+            break;
+        case 'object':
+            for (var entry in data[field]) {
+                value += data[field][entry][0];
+            }
+            break;
+        default:
+            break;
+    }
+    return value;
+};
 // TODO: Optimize query to visualize entire city
 // TODO: refactor global variable MAX_HEIGHT

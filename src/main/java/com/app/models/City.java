@@ -2,11 +2,18 @@ package com.app.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,8 +45,8 @@ public class City {
     @OneToMany(mappedBy="ownCity")
     private List<Building> buildings;
 
-    @OneToMany(mappedBy="ownCity")
-    private List<Suburb> suburbs;
+    @OneToMany(mappedBy="ownCity", fetch= FetchType.EAGER, cascade = CascadeType.PERSIST)
+    private Set<Suburb> suburbs;
 
     // JPA REQUIRES IT!
     public City() {
@@ -50,6 +57,7 @@ public class City {
         this.zip = zip;
         this.country = country;
         this.buildings = new ArrayList<>();
+        this.suburbs = new HashSet<>();
     }
 
     public String getName() {
@@ -85,11 +93,11 @@ public class City {
     }
 
     @JsonIgnore
-    public List<Suburb> getSuburbs() {
+    public Set<Suburb> getSuburbs() {
         return suburbs;
     }
 
-    public void setSuburbs(List<Suburb> suburbs) {
+    public void setSuburbs(Set<Suburb> suburbs) {
         this.suburbs = suburbs;
     }
 

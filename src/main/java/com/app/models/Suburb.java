@@ -1,9 +1,16 @@
 package com.app.models;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,7 +31,7 @@ public class Suburb {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "NAME")
-    private byte[] name;
+    private String name;
     @Column(name = "BOUNDS")
     private byte[] boundCoords;
 
@@ -32,37 +39,47 @@ public class Suburb {
     @JoinColumn(name = "OWNCITY_ID")
     private City ownCity;
 
-    @OneToMany(mappedBy="ownSuburb")
-    private List<Building> buildings;
-
+    @OneToMany(mappedBy = "ownSuburb")
+    private Collection<Building> buildings = new ArrayList<>();
 
     // JPA REQUIRES IT!
     public Suburb() {
-    };
+    }
 
+    public Suburb(City city, String name) {
+        this.setCity(city);
+        this.setName(name);
+    }
+
+    @JsonIgnore
     public City getCity() {
         return ownCity;
     }
 
     public void setCity(City city) {
         this.ownCity = city;
-        if (!city.getSuburbs().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
-            city.getSuburbs().add(this);
-        }
+        city.addSuburb(this);
     }
 
     public void addBuilding(Building building){
-        this.buildings.add(building);
-        if (building.getSuburb() != this) {
-            building.setSuburb(this);
-        }
+//        if (buildings.contains(building))
+//            return;
+        buildings.add(building);
+        building.setSuburb(this);
     }
 
-    public List<Building> getBuildings() {
-        return buildings;
+    public Collection<Building> getBuildings() {
+        return new ArrayList<Building>(buildings);
     }
 
-    public void setBuildings(List<Building> buildings) {
+//    public void removeBuilding(Building building) {
+//        if (!buildings.contains(building))
+//            return;
+//        buildings.remove(building);
+//        building.setSuburb(null);
+//    }
+
+    public void setBuildings(Collection<Building> buildings) {
         this.buildings = buildings;
     }
 
@@ -74,11 +91,11 @@ public class Suburb {
         this.id = id;
     }
 
-    public byte[] getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(byte[] name) {
+    public void setName(String name) {
         this.name = name;
     }
 

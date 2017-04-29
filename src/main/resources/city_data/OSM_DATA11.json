@@ -5061,5 +5061,67 @@
       "lat": "46.01842965"
     },
     "longitude": 8.955576891640836
+  },
+  {
+    "Building_ID": 14657,
+    "latitude": 46.07525520165619,
+    "OSMInfo": {
+      "osm_type": "node",
+      "osm_id": "3475531903",
+      "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://www.openstreetmap.org/copyright",
+      "boundingbox": [
+        "46.0900553",
+        "46.0902553",
+        "9.0639787",
+        "9.0641787"
+      ],
+      "address": {
+        "country": "Schweiz, Suisse, Svizzera, Svizra",
+        "country_code": "ch",
+        "town": "Lugano",
+        "neighbourhood": "Bugertone",
+        "county": "Distretto di Lugano",
+        "postcode": "6951",
+        "suburb": "Cardaiö",
+        "state": "Ticino"
+      },
+      "lon": "9.0640787",
+      "display_name": "Bugertone, Cardaiö, Lugano, Circolo di Sonvico, Distretto di Lugano, Ticino, 6951, Schweiz, Suisse, Svizzera, Svizra",
+      "place_id": "48415928",
+      "lat": "46.0901553"
+    },
+    "longitude": 9.066292596707946
+  },
+  {
+    "Building_ID": 14705,
+    "latitude": 46.084732275189126,
+    "OSMInfo": {
+      "osm_type": "way",
+      "osm_id": "341600302",
+      "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://www.openstreetmap.org/copyright",
+      "boundingbox": [
+        "46.0845281",
+        "46.0847684",
+        "9.0603409",
+        "9.0608511"
+      ],
+      "address": {
+        "country": "Schweiz, Suisse, Svizzera, Svizra",
+        "country_code": "ch",
+        "town": "Lugano",
+        "road": "Terminaia",
+        "neighbourhood": "Bugertone",
+        "county": "Distretto di Lugano",
+        "postcode": "6951",
+        "suburb": "Cardaiö",
+        "state": "Ticino"
+      },
+      "lon": "9.0605551",
+      "display_name": "Terminaia, Bugertone, Cardaiö, Lugano, Circolo di Sonvico, Distretto di Lugano, Ticino, 6951, Schweiz, Suisse, Svizzera, Svizra",
+      "place_id": "139958914",
+      "lat": "46.0846259"
+    },
+    "longitude": 9.060843997122237
   }
 ]
+

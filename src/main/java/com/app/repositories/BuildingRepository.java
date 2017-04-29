@@ -16,6 +16,7 @@ public interface BuildingRepository extends JpaRepository<Building, Long> {
         Optional<Building> findBuildingById(Long id);
 
         List<Building> findBuildingsByOwnCityCountry(String country);
+        List<Building> findBuildingByOwnSuburbId(Long id);
 
         List<Building> findBuildingsByCentroidLatLessThanAndCentroidLngGreaterThanAndCentroidLatGreaterThanAndCentroidLngLessThan(Double maxLat, Double maxLng, Double minLat, Double minLng);
 

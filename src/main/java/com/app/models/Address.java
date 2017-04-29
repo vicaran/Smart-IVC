@@ -3,6 +3,7 @@ package com.app.models;
 import java.io.Serializable;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -32,7 +33,7 @@ public class Address implements Serializable{
     @Column(nullable = false)
     private Double longitude;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @JoinColumn(name = "BUILDING_ID")
     private Building ownBuilding;
 
@@ -43,7 +44,7 @@ public class Address implements Serializable{
     @Column(name = "ROAD_NUMBER")
     private String roadNumber;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @JoinTable(name = "address_type",
             joinColumns = @JoinColumn(name = "id_address",
                     referencedColumnName = "ADDRESS_ID"),

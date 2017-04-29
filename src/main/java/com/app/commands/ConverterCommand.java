@@ -48,6 +48,7 @@ public class ConverterCommand {
                 centroidUpdated = true;
                 building = onlineConverter.convertBuildingCentroidCHtoWGS(building);
                 List<Address> buildingAddresses = new ArrayList<>();
+                building.setAddresses(addressRepository.findAddressByOwnBuilding(building));
                 for (Address address : building.getAddresses()) {
                     Address convertedResult = onlineConverter.convertAddressCoordinatesCHtoWGS(address);
                     buildingAddresses.add(convertedResult);

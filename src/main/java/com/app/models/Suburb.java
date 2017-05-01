@@ -39,7 +39,7 @@ public class Suburb {
     @JoinColumn(name = "OWNCITY_ID")
     private City ownCity;
 
-    @OneToMany(mappedBy = "ownSuburb")
+    @OneToMany(mappedBy = "ownSuburb", cascade = CascadeType.ALL)
     private Collection<Building> buildings = new ArrayList<>();
 
     // JPA REQUIRES IT!

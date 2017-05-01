@@ -59,7 +59,7 @@ public class Building implements Serializable {
     @JoinColumn(name="OWNCITY_ID")
     private City ownCity;
 
-    @ManyToOne()
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="OWNSUBURB_ID")
     private Suburb ownSuburb;
 
@@ -75,6 +75,7 @@ public class Building implements Serializable {
         this.addresses = new ArrayList<>();
     }
 
+    @JsonIgnore
     public String getDescription() {
         return description;
     }
@@ -147,6 +148,7 @@ public class Building implements Serializable {
         this.ringGlobalCoords = ringGlobalCoords;
     }
 
+    @JsonIgnore
     public byte[] getRingSwissCoords() {
         return ringSwissCoords;
     }

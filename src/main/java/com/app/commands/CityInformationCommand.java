@@ -1,13 +1,9 @@
 package com.app.commands;
 
-import com.app.API.OpenStreetMap.LocationInfo;
-import com.app.API.OpenStreetMap.OpenStreetMapAPIServices;
 import com.app.models.Address;
 import com.app.models.Suburb;
 import com.app.models.Type;
 import com.app.repositories.AddressRepository;
-import com.app.repositories.BuildingRepository;
-import com.app.repositories.CityRepository;
 import com.app.repositories.SuburbRepository;
 import com.app.repositories.TypeRepository;
 
@@ -43,14 +39,14 @@ public class CityInformationCommand {
     public void informationTask() {
 
         Optional<List<Address>> nullAddresses = Optional.ofNullable(addressRepository.findAddressByAddressNameIsNull());
-
+        System.out.println("Updating Addresses and Types...");
         if (nullAddresses.isPresent() && nullAddresses.get().size() > 81) {
 
             JSONParser parser = new JSONParser();
             JSONArray infoArray;
 
             try {
-                System.out.println("Updating Addresses and Types...");
+
                 File dir = new File("src/main/resources/city_data/");
                 File[] directoryListing = dir.listFiles();
                 if (directoryListing != null) {
@@ -124,11 +120,12 @@ public class CityInformationCommand {
                         }
                     }
                 }
-                System.out.println("Addresses and Types updated!");
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+        System.out.println("Addresses and Types updated!");
     }
 
     private String saveRoadName(Address address, Object addressKey, JSONObject addresses) {
@@ -150,7 +147,7 @@ public class CityInformationCommand {
         if (!type.isPresent()) {
             type = Optional.of(new Type(addressName));
         }
-        return type.get();
+        return typeRepository.save(type.get());
     }
 
     private void handleSuburb(Address address, String suburbName) {

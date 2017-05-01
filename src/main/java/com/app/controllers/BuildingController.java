@@ -3,6 +3,7 @@ package com.app.controllers;
 import com.app.exceptions.NotFoundException;
 import com.app.models.Address;
 import com.app.models.Building;
+import com.app.models.Type;
 import com.app.repositories.AddressRepository;
 import com.app.repositories.BuildingRepository;
 
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by Andrea on 17/03/2017.
@@ -39,30 +39,36 @@ public class BuildingController {
     public ResponseEntity handleBuildingById(@PathVariable Long id) {
 
         Building building = this.buildingRepository.findBuildingById(id).orElseThrow(NotFoundException::new);
-        List<Address> addresses = this.addressRepository.findAddressByOwnBuilding(building);
+        List<Address> addresses = building.getAddresses();
+
 
         JSONObject buildingNumbers = new JSONObject();
         JSONObject buildingAddresses = new JSONObject();
-//        JSONObject buildingTypes = new JSONObject();
+        JSONObject buildingTypes = new JSONObject();
 
         if (addresses != null) {
+
             for (int i = 0; i < addresses.size(); i++) {
                 buildingAddresses.append("" + i, addresses.get(i).getAddressName());
                 buildingNumbers.append("" + i, addresses.get(i).getHouseNumber());
-//                buildingTypes.append("" + i, addresses.get(i).getTypes());
+                StringBuilder typesString = new StringBuilder();
+
+                for (Type type : addresses.get(i).getTypes()) {
+                    typesString.append(type.getTypeName()).append(", ");
+                }
+                if (typesString.length() > 2) {
+                    buildingTypes.append("" + i, typesString.substring(0, typesString.length() - 2));
+                }
             }
         }
 
-
         String obj = new JSONObject()
                 .put("floors", building.getFloors())
+                .put("civicNumbers", buildingNumbers)
                 .put("addresses", buildingAddresses)
-                .put("civicNumbers", buildingNumbers).toString();
-//                .put("types", buildingTypes).toString();
-//TODO HANDLE TYPES
+                .put("types", buildingTypes).toString();
         return ResponseEntity.ok(obj);
     }
-
 
     @RequestMapping(value = "/max={maxLat},{maxLng}&min={minLat},{minLng}/", method = RequestMethod.GET)
     public ResponseEntity<?> handleBuildingsByCoords(@PathVariable Double maxLat,

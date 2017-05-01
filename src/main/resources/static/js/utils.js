@@ -90,23 +90,85 @@ var getCameraCoordinates = function () {
 
     var cartographic;
 
-    cartographic = this.viewer.scene.globe.ellipsoid.cartesianToCartographic(posUL);
-    var maxLat = Cesium.Math.toDegrees(cartographic.latitude).toFixed(6);
+    if (posUL !== undefined) {
+        cartographic = this.viewer.scene.globe.ellipsoid.cartesianToCartographic(posUL);
+        var maxLat = Cesium.Math.toDegrees(cartographic.latitude).toFixed(6);
+    }
 
+    if (posUR !== undefined) {
     cartographic = this.viewer.scene.globe.ellipsoid.cartesianToCartographic(posUR);
     var minLon = Cesium.Math.toDegrees(cartographic.longitude).toFixed(6);
+    }
 
+    if (posLR !== undefined) {
     cartographic = this.viewer.scene.globe.ellipsoid.cartesianToCartographic(posLR);
     var minLat = Cesium.Math.toDegrees(cartographic.latitude).toFixed(6);
+    }
 
+    if (posLL !== undefined) {
     cartographic = this.viewer.scene.globe.ellipsoid.cartesianToCartographic(posLL);
     var maxLon = Cesium.Math.toDegrees(cartographic.longitude).toFixed(6);
+    }
 
     return {
-        'maxLat': maxLat,
-        'maxLon': maxLon,
-        'minLat': minLat,
-        'minLon': minLon
+        'maxLat': maxLat || 0.0,
+        'maxLon': maxLon || 0.0,
+        'minLat': minLat || 0.0,
+        'minLon': minLon || 0.0
     }
 };
 
+// USED IN LISTENERS
+
+var generateTable = function (data) {
+    var miniCanvas = '<div id="miniCanvasZone"><canvas id="renderMiniCanvas"></canvas></div>';
+    var table = '<div class="cesium-infoBox-description"><table class="cesium-infoBox-defaultTable"><tbody>';
+    for (var field in data) {
+        if (field !== undefined) {
+            var value = createValuesForTable(data, field);
+            table += '<tr>'
+                     + '<th>' + formatText(field) + '</th>'
+                     + '<td>' + formatText(value) + '</td>'
+                     + '</tr>'
+        }
+    }
+    table += '</tbody>' + '</table>' + '</div>';
+    return miniCanvas + table;
+};
+var createValuesForTable = function (data, field) {
+    var value = '';
+    switch (typeof data[field]) {
+        case 'number':
+            value = data[field];
+            break;
+        case 'object':
+            for (var entry in data[field]) {
+                if (data[field][entry][0] !== null) {
+                    value += data[field][entry][0];
+                }
+            }
+            break;
+        default:
+            break;
+    }
+    if (value.length === 0) {
+        value = "Not Given"
+    }
+    return value.toString();
+};
+
+var formatText = function (txt) {
+
+    var frags = txt.split('_');
+    for (var i = 0; i < frags.length; i++) {
+        frags[i] = frags[i].charAt(0).toUpperCase() + frags[i].slice(1);
+    }
+
+    frags = frags.join(' ').toString().split(', ');
+    for (var i = 0; i < frags.length; i++) {
+        frags[i] = frags[i].charAt(0).toUpperCase() + frags[i].slice(1);
+    }
+
+    return frags.join(', ');
+
+};

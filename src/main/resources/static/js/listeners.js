@@ -7,6 +7,7 @@ var selectedEntity = undefined;
 var hoverEntity = undefined;
 var translucenceStatus = 1;
 var prevColor;
+var GLOBALSELECTION;
 
 handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
 
@@ -29,14 +30,18 @@ handler.setInputAction(function (click) {
                    url: SERVER_URL + 'building/info/' + selectedEntity.id.substr(selectedEntity.id.indexOf("_") + 1),
                    type: "GET",
                    success: function (data, textStatus, jqXHR) {
+                       GLOBALSELECTION =data;
                        var promise = viewer.selectedEntity = new Cesium.Entity({
-                                                                     id: selectedEntity.id,
+                                                                                   id: selectedEntity.id,
                                                                                    description: generateTable(data)
                                                                  });
-
+                       Cesium.when(promise,function () {
+                           console.log("Promise done");
+                           console.log(promise);
+                           createMiniCanvas(data);
+                       });
                    }
                });
-
 
     } else {
         if (selectedEntity !== undefined) {
@@ -209,39 +214,5 @@ $('#cesiumContainer').click(function () {
         creditsBox.removeClass("cesium-navigation-help-visible");
     }
 });
-
-var generateTable = function (data) {
-    var table = '<div class="cesium-infoBox-description">'
-                + '<table class="cesium-infoBox-defaultTable">'
-                + '<tbody>';
-    for (var field in data) {
-        if (field !== undefined) {
-            var value = createValue(data, field);
-            table += +'<tr>'
-                     + '<th>' + field + '</th>'
-                     + '<td>' + value + '</td>'
-                     + '</tr>'
-        }
-    }
-    table += +'</tbody>' + '</table>' + '</div>';
-    return table;
-};
-
-var createValue = function (data, field) {
-    var value = '';
-    switch (typeof data[field]) {
-        case 'number':
-            value = data[field];
-            break;
-        case 'object':
-            for (var entry in data[field]) {
-                value += data[field][entry][0];
-            }
-            break;
-        default:
-            break;
-    }
-    return value;
-};
 // TODO: Optimize query to visualize entire city
 // TODO: refactor global variable MAX_HEIGHT

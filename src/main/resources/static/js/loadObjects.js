@@ -50,7 +50,7 @@ var loadObjs = function (sectionExtremes) {
                                                                           id: 'building_' + data[i].id,
                                                                           attributes: ({
                                                                               distanceDisplayCondition: new Cesium.DistanceDisplayConditionGeometryInstanceAttribute(
-                                                                                  0, 300),
+                                                                                  0, 1000),
                                                                               // scaleByDistance: new Cesium.NearFarScalar(0,10, 5000, 1),
                                                                               // translucenceByDistance: new Cesium.NearFarScalar(0, 1,// 5000, 0) })
                                                                           })

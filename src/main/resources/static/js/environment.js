@@ -16,6 +16,7 @@ var viewer = new Cesium.Viewer('cesiumContainer', {
     projectionPicker: false
 });
 
+
 //Add basic drag and drop functionality
 viewer.extend(Cesium.viewerDragDropMixin);
 //Show a pop-up alert if we encounter an error when processing a dropped file
@@ -103,3 +104,12 @@ var baseLayerPicker = new Cesium.BaseLayerPicker('baseLayerPickerContainer', {
     terrainProviderViewModels: terrainViewModels
 });
 viewer.resolutionScale = 0.8;
+
+
+viewer.infoBox.frame.removeAttribute('sandbox');
+// var node = document.createElement("DIV");
+// node.id = "miniCanvasZone";
+// var canvas = document.createElement("CANVAS");
+// canvas.id = "renderMiniCanvas";
+// node.appendChild(canvas);
+// viewer.infoBox.frame.contentDocument.body.prepend(node);

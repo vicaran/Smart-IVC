@@ -7,6 +7,7 @@ import com.app.models.Type;
 import com.app.repositories.AddressRepository;
 import com.app.repositories.BuildingRepository;
 
+import org.apache.commons.codec.binary.Base64;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,7 +37,7 @@ public class BuildingController {
     }
 
     @RequestMapping(value = "/info/{id}", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity handleBuildingById(@PathVariable Long id) {
+    public ResponseEntity<?> handleBuildingById(@PathVariable Long id) {
 
         Building building = this.buildingRepository.findBuildingById(id).orElseThrow(NotFoundException::new);
         List<Address> addresses = building.getAddresses();
@@ -63,11 +64,14 @@ public class BuildingController {
         }
 
         String obj = new JSONObject()
+                .put("id", building.getId())
                 .put("floors", building.getFloors())
                 .put("civicNumbers", buildingNumbers)
                 .put("addresses", buildingAddresses)
-                .put("types", buildingTypes).toString();
-        return ResponseEntity.ok(obj);
+                .put("types", buildingTypes)
+                .put("ringCoords", Base64.encodeBase64String(building.getRingGlobalCoords())).toString();
+
+        return new ResponseEntity<>(obj, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/max={maxLat},{maxLng}&min={minLat},{minLng}/", method = RequestMethod.GET)

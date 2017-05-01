@@ -35,11 +35,12 @@ handler.setInputAction(function (click) {
                                                                                    id: selectedEntity.id,
                                                                                    description: generateTable(data)
                                                                  });
-                       Cesium.when(promise,function () {
-                           console.log("Promise done");
-                           console.log(promise);
-                           createMiniCanvas(data);
-                       });
+                       // Cesium.when(promise,function () {
+                       //     console.log("Promise done");
+                       //     console.log(promise);
+                       //     createMiniCanvas(data);
+                       // });
+                       setTimeout(function(){createMiniCanvas(data)},50)
                    }
                });
 

@@ -5,7 +5,10 @@
 
 var selectedEntity = undefined;
 var hoverEntity = undefined;
+var miniCanvasScene = undefined;
+
 var translucenceStatus = 1;
+
 var prevColor;
 var GLOBALSELECTION;
 
@@ -30,17 +33,42 @@ handler.setInputAction(function (click) {
                    url: SERVER_URL + 'building/info/' + selectedEntity.id.substr(selectedEntity.id.indexOf("_") + 1),
                    type: "GET",
                    success: function (data, textStatus, jqXHR) {
-                       GLOBALSELECTION =data;
-                       var promise = viewer.selectedEntity = new Cesium.Entity({
+                       GLOBALSELECTION = data;
+                       viewer.selectedEntity = new Cesium.Entity({
                                                                                    id: selectedEntity.id,
                                                                                    description: generateTable(data)
                                                                  });
-                       // Cesium.when(promise,function () {
-                       //     console.log("Promise done");
-                       //     console.log(promise);
-                       //     createMiniCanvas(data);
-                       // });
-                       setTimeout(function(){createMiniCanvas(data)},50)
+                       setTimeout(function () {
+                           if (miniCanvasScene !== undefined) {
+                               console.log("DISPOSING CANVAS");
+                               miniCanvasScene.dispose();
+                           }
+                           miniCanvasScene = createMiniCanvas(data);
+                           $.ajax({
+                                      url: SERVER_URL + "type/getall",
+                                      type: "GET",
+                                      success: function (data, textStatus, jqXHR) {
+                                          console.log("data is ");
+                                          console.log(data);
+                                          console.log(document.getElementsByClassName('cesium-infoBox-iframe'));
+
+                                          var iframe = document.getElementsByClassName('cesium-infoBox-iframe');
+                                          // var innerDoc = $('.cesium-infoBox-iframe').contents().find('buildingType')[0];
+
+                                          console.log(iframe[0].contentDocument || iframe[0].contentWindow.document);
+                                          var innerDoc = iframe[0].contentDocument || iframe[0].contentWindow.document;
+                                          for (var i = 0; i < data.length; i++) {
+                                              var opt = document.createElement("OPTION");
+                                              var val = document.createTextNode(formatText(data[i].typeName));
+                                              opt.id = data[i].id;
+                                              opt.value = data[i].typeName;
+                                              opt.appendChild(val);
+                                              innerDoc.getElementById('buildingType').appendChild(opt);
+                                          }
+                                      }
+                                  });
+
+                       }, 10)
                    }
                });
 
@@ -85,7 +113,7 @@ handler.setInputAction(function (movement) {
 
 
 $("#zoomSelector").change(function () {
-    var cityName = $("select option:selected").text()
+    var cityName = $("#zoomSelector option:selected").text();
     if (cityName.localeCompare("Choose...") !== 0) {
         $.ajax({
                    url: SERVER_URL + "city/" + cityName,
@@ -215,5 +243,31 @@ $('#cesiumContainer').click(function () {
         creditsBox.removeClass("cesium-navigation-help-visible");
     }
 });
+
+$('#queryFromBuildingCity').click(function () {
+    setDefaultColors();
+    var typeId = $("#buildingTypeCity option:selected").attr("id");
+    if (typeId !== undefined) {
+        $.ajax({
+                   url: SERVER_URL + "building/type/" + typeId,
+                   type: "GET",
+                   success: function (data, textStatus, jqXHR) {
+                       for (var j = 0; j < data.buildingIds.length; j++) {
+                           for (var i = 0; i < viewer.scene.primitives.length; i++) {
+                               if (viewer.scene.primitives.get(i).geometryInstances !== undefined) {
+                                   if (parseInt((viewer.scene.primitives.get(i).geometryInstances.id).split("_")[1]) === parseInt(data.buildingIds[j])) {
+                                       console.log("Match");
+                                       viewer.scene.primitives.get(i).appearance.material.uniforms.color = Cesium.Color.fromCssColorString("#FF0000");
+                                   }
+                               }
+                           }
+                       }
+                   }
+
+               })
+    }
+})
+;
+
 // TODO: Optimize query to visualize entire city
 // TODO: refactor global variable MAX_HEIGHT

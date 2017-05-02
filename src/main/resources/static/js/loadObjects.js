@@ -141,17 +141,6 @@ var cityLoader = function (maxLat, maxLng, minLat, minLng, centroidLat, centroid
             console.log("OVERSIZEEEE");
             clearInterval(tid);
         }
-        // var redPolygon = viewer.entities.add({
-        //                                          name: 'Red polygon on surface',
-        //                                          polygon: {
-        //                                              hierarchy: Cesium.Cartesian3.fromDegreesArray([sectionExtremes.maxLng, sectionExtremes.maxLat,
-        //                                                                                             sectionExtremes.minLng, sectionExtremes.maxLat,
-        //                                                                                             sectionExtremes.minLng, sectionExtremes.minLat,
-        //                                                                                             sectionExtremes.maxLng, sectionExtremes.minLat
-        //                                                                                            ]),
-        //                                              material: Cesium.Color.AQUA
-        //                                          }
-        //                                      });
 
     }, 1500)
 

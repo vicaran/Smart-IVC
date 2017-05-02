@@ -9,6 +9,7 @@ var viewer = new Cesium.Viewer('cesiumContainer', {
     vrButton: true,
     // geocoder: false,
     // selectionIndicator: false,
+    timeline: false,
     navigationInstructionsInitiallyVisible: false,
     scene3DOnly: true,
     imageryProvider: false,
@@ -103,7 +104,7 @@ var baseLayerPicker = new Cesium.BaseLayerPicker('baseLayerPickerContainer', {
     imageryProviderViewModels : imageryViewModels,
     terrainProviderViewModels: terrainViewModels
 });
-viewer.resolutionScale = 0.8;
+viewer.resolutionScale = 0.9;
 
 
 viewer.infoBox.frame.removeAttribute('sandbox');

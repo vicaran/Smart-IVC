@@ -180,8 +180,23 @@ var generateTable = function (data) {
         }
     }
     table += '</tbody>' + '</table>' + '</div>';
-    return miniCanvas + table;
+
+    return miniCanvas + table + generateQuerieSelector();
 };
+
+var generateQuerieSelector = function () {
+    return '<div class="nowrap sectionContent"><span>Select</span>'
+           + '<select id="buildingSelector">'
+           + '<option selected="" disabled="" hidden="" value="">Choose...</option>'
+           + '<option value="Nearest">Nearest</option>'
+           + '</select>'
+           + '<select id="buildingType">'
+           + '<option selected="" disabled="" hidden="" value="">Choose...</option>'
+           + '</select>'
+           + '<button type="button" id="queryFromBuilding">Search</button>'
+           + '</div>';
+};
+
 var createValuesForTable = function (data, field) {
     var value = '';
     switch (typeof data[field]) {

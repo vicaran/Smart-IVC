@@ -18,4 +18,6 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
     List<Address> findAddressByRoadNumber(String roadNumber);
     List<Address> findAddressByOwnBuilding(Building building);
     List<Address> findAddressByAddressNameIsNull();
+    List<Address> findByTypes_Id(Long id);
+//    Optional<Address> findBytTypes_IdWhere();
 }

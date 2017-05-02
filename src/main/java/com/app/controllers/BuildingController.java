@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Andrea on 17/03/2017.
@@ -63,7 +66,7 @@ public class BuildingController {
             }
         }
 
-        String obj = new JSONObject()
+        String result = new JSONObject()
                 .put("id", building.getId())
                 .put("floors", building.getFloors())
                 .put("civicNumbers", buildingNumbers)
@@ -71,7 +74,7 @@ public class BuildingController {
                 .put("types", buildingTypes)
                 .put("ringCoords", Base64.encodeBase64String(building.getRingGlobalCoords())).toString();
 
-        return new ResponseEntity<>(obj, HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/max={maxLat},{maxLng}&min={minLat},{minLng}/", method = RequestMethod.GET)
@@ -88,6 +91,22 @@ public class BuildingController {
         System.out.println(buildings.size());
 
         return new ResponseEntity<>(buildings, HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value = "/type/{id}", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<?> handleBuildingByType(@PathVariable Long id) {
+        Collection<Address> allTypes = this.addressRepository.findByTypes_Id(id);
+
+        Set<Long> buildingIds = new HashSet<>();
+        for (Address address: allTypes) {
+            buildingIds.add(address.getBuilding().getId());
+        }
+
+        String result = new JSONObject()
+                .put("buildingIds",buildingIds).toString();
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
 

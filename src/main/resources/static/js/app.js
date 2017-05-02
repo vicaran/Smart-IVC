@@ -8,6 +8,7 @@ $(document).ready(function () {
     sessionStorage.setItem("buildingHeights", []);
     addCredits();
     loadCities();
+    loadTypes();
 });
 
 var loadCities = function () {
@@ -82,3 +83,21 @@ var addCredits = function () {
     triggerCreditButton();
 };
 
+var loadTypes = function () {
+
+    $.ajax({
+               url: SERVER_URL + "type/getall",
+               type: "GET",
+               success: function (data, textStatus, jqXHR) {
+                   for (var i = 0; i < data.length; i++) {
+                       var opt = document.createElement("OPTION");
+                       var val = document.createTextNode(formatText(data[i].typeName));
+                       opt.id = data[i].id;
+                       opt.value = data[i].typeName;
+                       opt.appendChild(val);
+                       document.getElementById('buildingTypeCity').appendChild(opt);
+                   }
+               }
+           });
+
+}

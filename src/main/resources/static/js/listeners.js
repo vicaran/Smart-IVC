@@ -109,6 +109,21 @@ handler.setInputAction(function (movement) {
         }
     }
 }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+//
+// handler.setInputAction(function (click) {
+//     var pickedObject = viewer.scene.pick(click.position);
+//
+//     if (pickedObject !== undefined) {
+//         viewer.camera.flyTo({
+//                                 destination: Cesium.Cartesian3.fromRadians(
+//                                     pickedObject.primitive.geometryInstances.geometry._polygonHierarchy.positions[0].x,
+//                                     pickedObject.primitive.geometryInstances.geometry._polygonHierarchy.positions[0].y,
+//                                     pickedObject.primitive.geometryInstances.geometry._polygonHierarchy.positions[0].z
+//                                 )
+//                             });
+//     }
+//
+// }, Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
 
 
 

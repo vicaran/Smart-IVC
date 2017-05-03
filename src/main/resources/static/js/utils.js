@@ -3,6 +3,7 @@
  */
 var SERVER_URL = "http://" + window.location.host + "/";
 var MAX_HEIGHT = -10;
+var POINTS = 0;
 
 
 var createRing = function (binaryCoordinates) {

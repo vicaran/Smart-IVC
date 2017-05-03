@@ -33,13 +33,21 @@ public class ConverterCommand {
         System.out.println("Converting Swiss to Global coordinates...");
         List<Building> buildings = this.buildingRepository.findBuildingsByOwnCityCountry("Switzerland");
         boolean ringUpdated = false;
+        boolean boundUpdated = false;
         boolean centroidUpdated = false;
 
         for (Building building : buildings) {
             // Convert Ring from CH to Global Coordinates
             if (building.getRingGlobalCoords() == null) {
                 ringUpdated = true;
-                building = onlineConverter.convertBuildingRingCHtoWGS(building);
+                building = onlineConverter.convertBuildingRingCHtoWGS(building, building.getRingSwissCoords());
+            }
+
+            // Convert Bounds from CH to Global Coordinates
+            String firstBoudCoord = new String(building.getBoundCoords()).split(" ")[0];
+            if (Double.parseDouble(firstBoudCoord) >= 90) {
+                boundUpdated = true;
+                building = onlineConverter.convertBuildingRingCHtoWGS(building, building.getBoundCoords());
             }
 
             // Convert Centroid
@@ -58,11 +66,12 @@ public class ConverterCommand {
             }
 
             // Save updated values
-            if (ringUpdated || centroidUpdated) {
+            if (ringUpdated || centroidUpdated || boundUpdated) {
                 this.saveModels(building, addresses);
             }
         }
         System.out.println("Ring Coordinates Updated from SwissTopo: " + ringUpdated + ".");
+        System.out.println("Bound Coordinates Updated from SwissTopo: " + boundUpdated + ".");
         System.out.println("Centroid Coordinates Updated SwissTopo: " + centroidUpdated + ".");
     }
 

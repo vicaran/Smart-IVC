@@ -18,24 +18,30 @@ var viewer = new Cesium.Viewer('cesiumContainer', {
 });
 
 
-//Add basic drag and drop functionality
-viewer.extend(Cesium.viewerDragDropMixin);
-//Show a pop-up alert if we encounter an error when processing a dropped file
-viewer.dropError.addEventListener(function (dropHandler, name, error) {
-    console.log(error);
-    window.alert(error);
-});
+// //Add basic drag and drop functionality
+// viewer.extend(Cesium.viewerDragDropMixin);
+// //Show a pop-up alert if we encounter an error when processing a dropped file
+// viewer.dropError.addEventListener(function (dropHandler, name, error) {
+//     console.log(error);
+//     window.alert(error);
+// });
 var scene = viewer.scene;
 scene.debugShowFramesPerSecond = true;
+scene.orderIndependentTranslucency = false;
 scene.contextOptions = {
-    alpha: false,
-    depth: false,
-    stencil: false,
-    antialias: false,
-    premultipliedAlpha: false,
-    preserveDrawingBuffer: false,
-    failIfMajorPerformanceCaveat: false
+    allowTextureFilterAnisotropic: false,
+    webgl: {
+        alpha: false,
+        depth: false,
+        stencil: false,
+        antialias: false,
+        premultipliedAlpha: false,
+        preserveDrawingBuffer: false,
+        failIfMajorPerformanceCaveat: false
+    }
 };
+
+scene.shadows = false;
 scene.fog = new Cesium.Fog({enabled: false});
 scene.fxaa = false;
 scene.moon = undefined;
@@ -104,7 +110,7 @@ var baseLayerPicker = new Cesium.BaseLayerPicker('baseLayerPickerContainer', {
     imageryProviderViewModels : imageryViewModels,
     terrainProviderViewModels: terrainViewModels
 });
-viewer.resolutionScale = 0.9;
+viewer.resolutionScale = 0.8;
 
 
 viewer.infoBox.frame.removeAttribute('sandbox');

@@ -20,12 +20,14 @@ public class OnlineConverter {
     }
 
 
-    public Building convertBuildingRingCHtoWGS(Building building) {
+    public Building convertBuildingRingCHtoWGS(Building building, byte[] ring) {
         String globalCoordinates = "";
-        String swissCoords = new String(building.getRingSwissCoords(), StandardCharsets.UTF_8);
+        String swissCoords = new String(ring, StandardCharsets.UTF_8);
         String[] points = swissCoords.split(",");
+        int pointsCounter = 0;
 
         for (String point : points) {
+            pointsCounter++;
             String[] pointNE = point.split(" ");
             Pair<Double, Double> convertedCoords = this.swissTopo.CHtoWGS(Double.parseDouble(pointNE[0]), Double.parseDouble(pointNE[1]));
             globalCoordinates += convertedCoords.getL() + " " + convertedCoords.getR() + ",";
@@ -34,7 +36,12 @@ public class OnlineConverter {
             globalCoordinates = globalCoordinates.substring(0, globalCoordinates.length() - 1);
         }
 
-        building.setRingGlobalCoords(globalCoordinates.getBytes());
+        if (pointsCounter == 2) {
+            building.setBoundCoords(globalCoordinates.getBytes());
+        } else {
+            building.setRingGlobalCoords(globalCoordinates.getBytes());
+        }
+
         return building;
     }
 

@@ -94,6 +94,14 @@ public class BuildingController {
     }
 
 
+    @RequestMapping(value = "/city={id}/", method = RequestMethod.GET)
+    public ResponseEntity<?> handleBuildingsByCoords(@PathVariable Long id) {
+
+        List<Building> buildings = this.buildingRepository.findBuildingByOwnCityId(id);
+
+        return new ResponseEntity<>(buildings, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/type/{id}", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<?> handleBuildingByType(@PathVariable Long id) {
         Collection<Address> allTypes = this.addressRepository.findByTypes_Id(id);

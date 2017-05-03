@@ -29,8 +29,8 @@ var loadObjs = function (sectionExtremes) {
                        if (data[i] && !(sessionStorage.getItem("buildingIDs").includes('building_' + data[i].id))) {
                            // if (createRing(data[i].ringGlobalCoords).length < 6) {
                            counter++;
-                           // var list = createList(data[i].ringGlobalCoords);
-                           var list = createList(data[i].boundCoords);
+                           var list = createList(data[i].ringGlobalCoords);
+                           // var list = createList(data[i].boundCoords);
                            var buildingHeight = (data[i].floors + 2) * 2;
                            var buildingID = 'building_' + data[i].id;
 
@@ -38,21 +38,21 @@ var loadObjs = function (sectionExtremes) {
                            buildingsHeight.push(buildingHeight);
                            positions.push(Cesium.Cartographic.fromDegrees(data[i].centroidLng, data[i].centroidLat));
 
-                           // var buildingGeometry = new Cesium.PolygonGeometry({
-                           //                                                       polygonHierarchy : new Cesium.PolygonHierarchy(
-                           //                                                           Cesium.Cartesian3.fromDegreesArray(list)
-                           //                                                       ),
-                           //                                                       // vertexFormat: Cesium.VertexFormat.POSITION_ONLY,
-                           //                                                          extrudedHeight: buildingHeight,
-                           //                                                          closeBottom: false
-                           //                                                             });
-
-
-                           var buildingGeometry = new Cesium.BoxGeometry({
-                                                                             minimum : new Cesium.Cartesian3.fromDegrees(list[0], list[1]),
+                           var buildingGeometry = new Cesium.PolygonGeometry({
+                                                                                 polygonHierarchy : new Cesium.PolygonHierarchy(
+                                                                                     Cesium.Cartesian3.fromDegreesArray(list)
+                                                                                 ),
                                                                                  // vertexFormat: Cesium.VertexFormat.POSITION_ONLY,
-                                                                             maximum: new Cesium.Cartesian3.fromDegrees(list[2], list[3])
-                                                                             });
+                                                                                    extrudedHeight: buildingHeight,
+                                                                                    closeBottom: false
+                                                                                       });
+
+
+                           // var buildingGeometry = new Cesium.BoxGeometry({
+                           //                                                   minimum : new Cesium.Cartesian3.fromDegrees(list[0], list[1]),
+                           //                                                       // vertexFormat: Cesium.VertexFormat.POSITION_ONLY,
+                           //                                                   maximum: new Cesium.Cartesian3.fromDegrees(list[2], list[3])
+                           //                                                   });
 
                            // var buildingGeometry = Cesium.BoxGeometry.createGeometry(buildingGeometry);
 
@@ -100,32 +100,32 @@ var loadObjs = function (sectionExtremes) {
                                                                     asynchronous: true,
                                                                 });
                            primitivesArray.push(primitive);
-                           scene.primitives.add(primitive);
+                           // scene.primitives.add(primitive);
 
                        }
                        // }
                    }
                    console.log(counter);
-                   // var promise = Cesium.sampleTerrainMostDetailed(viewer.terrainProvider, positions);
-                   // Cesium.when(promise, function (updatedPositions) {
-                   //     for (var i = 0; updatedPositions.length; i++) {
-                   //
-                   //         var prevHeight = primitivesArray[i].geometryInstances.geometry._height;
-                   //         primitivesArray[i].geometryInstances.geometry._height =
-                   //             updatedPositions[i].height + ((primitivesArray[i].geometryInstances.geometry._height) / 2) + prevHeight;
-                   //         primitivesArray[i].geometryInstances.geometry._extrudedHeight = updatedPositions[i].height - prevHeight;
-                   //
-                   //         var buildingHeight = primitivesArray[i].geometryInstances.geometry._height
-                   //                              - primitivesArray[i].geometryInstances.geometry._extrudedHeight;
-                   //         if (buildingHeight > MAX_HEIGHT) {
-                   //             MAX_HEIGHT = buildingHeight;
-                   //         }
-                   //         scene.primitives.add(primitivesArray[i]);
-                   //     }
-                   // });
-                   // sessionStorage.setItem("buildingIDs", sessionStorage.getItem("buildingIDs").concat(JSON.stringify(buildingsID)));
-                   // sessionStorage.setItem("buildingElevations", sessionStorage.getItem("buildingElevations").concat(JSON.stringify(positions)));
-                   // sessionStorage.setItem("buildingHeights", sessionStorage.getItem("buildingHeights").concat(JSON.stringify(buildingsHeight)));
+                   var promise = Cesium.sampleTerrainMostDetailed(viewer.terrainProvider, positions);
+                   Cesium.when(promise, function (updatedPositions) {
+                       for (var i = 0; updatedPositions.length; i++) {
+
+                           var prevHeight = primitivesArray[i].geometryInstances.geometry._height;
+                           primitivesArray[i].geometryInstances.geometry._height =
+                               updatedPositions[i].height + ((primitivesArray[i].geometryInstances.geometry._height) / 2) + prevHeight;
+                           primitivesArray[i].geometryInstances.geometry._extrudedHeight = updatedPositions[i].height - prevHeight;
+
+                           var buildingHeight = primitivesArray[i].geometryInstances.geometry._height
+                                                - primitivesArray[i].geometryInstances.geometry._extrudedHeight;
+                           if (buildingHeight > MAX_HEIGHT) {
+                               MAX_HEIGHT = buildingHeight;
+                           }
+                           scene.primitives.add(primitivesArray[i]);
+                       }
+                   });
+                   sessionStorage.setItem("buildingIDs", sessionStorage.getItem("buildingIDs").concat(JSON.stringify(buildingsID)));
+                   sessionStorage.setItem("buildingElevations", sessionStorage.getItem("buildingElevations").concat(JSON.stringify(positions)));
+                   sessionStorage.setItem("buildingHeights", sessionStorage.getItem("buildingHeights").concat(JSON.stringify(buildingsHeight)));
                }
            });
 };

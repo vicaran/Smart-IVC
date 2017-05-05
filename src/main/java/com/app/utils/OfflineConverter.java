@@ -33,11 +33,21 @@ public class OfflineConverter {
     //        Updated 9 dec 2014
     //        Please validate your results with NAVREF on-line service: http://www.swisstopo.admin.ch/internet/swisstopo/en/home/apps/calc/navref.html (difference ~ 1-2m)
 
+    /**
+     * Instantiates a new Offline converter.
+     */
     public OfflineConverter() {
         // Only static
     }
 
-    // Convert CH y/x to WGS lat
+    /**
+     * C hto wg slat double.
+     *
+     * @param y the y
+     * @param x the x
+     * @return the double
+     */
+// Convert CH y/x to WGS lat
     public static double CHtoWGSlat(double y, double x) {
         // Converts military to civil and to unit = 1000km
         // Auxiliary values (% Bern)
@@ -57,7 +67,14 @@ public class OfflineConverter {
         return lat;
     }
 
-    // Convert CH y/x to WGS long
+    /**
+     * C hto wg slng double.
+     *
+     * @param y the y
+     * @param x the x
+     * @return the double
+     */
+// Convert CH y/x to WGS long
     public static double CHtoWGSlng(double y, double x) {
         // Converts military to civil and to unit = 1000km
         // Auxiliary values (% Bern)

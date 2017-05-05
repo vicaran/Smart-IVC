@@ -21,12 +21,22 @@ public class CityLoaderCommand {
     private final CityRepository cityRepository;
     private final AddressRepository addressRepository;
 
+    /**
+     * Instantiates a new City loader command.
+     *
+     * @param buildingRepository the building repository
+     * @param cityRepository     the city repository
+     * @param addressRepository  the address repository
+     */
     public CityLoaderCommand(BuildingRepository buildingRepository, CityRepository cityRepository, AddressRepository addressRepository) {
         this.buildingRepository = buildingRepository;
         this.cityRepository = cityRepository;
         this.addressRepository = addressRepository;
     }
 
+    /**
+     * Load lugano task.
+     */
     @Scheduled
     public void loadLuganoTask() {
         Optional<City> cityLugano = this.cityRepository.findCityByName("Lugano");

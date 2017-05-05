@@ -1,9 +1,13 @@
 package com.app.commands;
 
+import com.app.API.SwissTopo.SwissTopoAPI;
+import com.app.API.SwissTopo.SwissTopoAPIServices;
 import com.app.models.Address;
+import com.app.models.Building;
 import com.app.models.Suburb;
 import com.app.models.Type;
 import com.app.repositories.AddressRepository;
+import com.app.repositories.BuildingRepository;
 import com.app.repositories.SuburbRepository;
 import com.app.repositories.TypeRepository;
 
@@ -28,25 +32,64 @@ public class CityInformationCommand {
     private final AddressRepository addressRepository;
     private final TypeRepository typeRepository;
     private final SuburbRepository suburbRepository;
+    private final BuildingRepository buildingRepository;
+    private SwissTopoAPIServices swissTopo;
 
-    public CityInformationCommand(AddressRepository addressRepository, TypeRepository typeRepository, SuburbRepository suburbRepository) {
+    /**
+     * Instantiates a new City information command.
+     *
+     * @param addressRepository  the address repository
+     * @param typeRepository     the type repository
+     * @param suburbRepository   the suburb repository
+     * @param buildingRepository the building repository
+     */
+    public CityInformationCommand(AddressRepository addressRepository, TypeRepository typeRepository, SuburbRepository suburbRepository, BuildingRepository buildingRepository) {
         this.addressRepository = addressRepository;
         this.typeRepository = typeRepository;
         this.suburbRepository = suburbRepository;
+        this.buildingRepository = buildingRepository;
+        this.swissTopo = new SwissTopoAPI();
     }
 
+    /**
+     * Information task from swiss topo.
+     */
     @Scheduled
-    public void informationTask() {
+    public void informationTaskFromSwissTopo() {
+        System.out.println("Updating Addresses from SwissTopo...");
+        List<Building> egidBuildings = buildingRepository.findBuildingsByEgidUcaIsNotNull();
+        for (Building building : egidBuildings) {
+            Optional<Address> address = addressRepository.findAddressByLatitudeAndLongitudeAndOwnBuilding_Id(building.getCentroidLat(), building.getCentroidLng(), building.getId());
+            if (address.isPresent()) {
+                org.json.JSONObject buildingInformation = swissTopo.egidToBuildingAddress(building.getEgidUca());
+                if (buildingInformation != null) {
+                    address.get().setHouseNumber(!buildingInformation.isNull("deinr") ? buildingInformation.getString("deinr") : address.get().getHouseNumber());
+                    address.get().setAddressName(!buildingInformation.isNull("strname1") ? buildingInformation.getString("strname1") : address.get().getAddressName());
 
+                    String suburbName = !buildingInformation.isNull("plzname") ? buildingInformation.getString("plzname") : null;
+                    if (suburbName != null && !suburbName.equals(building.getCity().getName())) {
+                        this.handleSuburb(address.get(), suburbName);
+                    }
+                    System.out.println("Updating address " + address.get().getBuilding().getId());
+                    addressRepository.save(address.get());
+                }
+            }
+
+        }
+        System.out.println("Addresses updated!");
+    }
+
+    /**
+     * Information task from osm.
+     */
+    @Scheduled
+    public void informationTaskFromOsm() {
         Optional<List<Address>> nullAddresses = Optional.ofNullable(addressRepository.findAddressByAddressNameIsNull());
-        System.out.println("Updating Addresses and Types...");
+        System.out.println("Updating Addresses and Types from OSM...");
         if (nullAddresses.isPresent() && nullAddresses.get().size() > 81) {
-
             JSONParser parser = new JSONParser();
             JSONArray infoArray;
-
             try {
-
                 File dir = new File("src/main/resources/city_data/");
                 File[] directoryListing = dir.listFiles();
                 if (directoryListing != null) {

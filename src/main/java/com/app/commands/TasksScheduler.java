@@ -17,11 +17,20 @@ import java.util.TimerTask;
 @Service
 public class TasksScheduler {
 
+    /**
+     * Instantiates a new Tasks scheduler.
+     *
+     * @param buildingRepository the building repository
+     * @param cityRepository     the city repository
+     * @param suburbRepository   the suburb repository
+     * @param addressRepository  the address repository
+     * @param typeRepository     the type repository
+     */
     public TasksScheduler(BuildingRepository buildingRepository, CityRepository cityRepository, SuburbRepository suburbRepository, AddressRepository addressRepository, TypeRepository typeRepository) {
         Timer updateTimer = new Timer();
         ConverterCommand converterCommand = new ConverterCommand(buildingRepository, addressRepository);
         CityLoaderCommand cityLoaderCommand = new CityLoaderCommand(buildingRepository, cityRepository, addressRepository);
-        CityInformationCommand cityInformationCommand = new CityInformationCommand(addressRepository, typeRepository, suburbRepository);
+        CityInformationCommand cityInformationCommand = new CityInformationCommand(addressRepository, typeRepository, suburbRepository, buildingRepository);
 
         TimerTask myLoadLuganoTask = new TimerTask() {
             @Override
@@ -40,14 +49,21 @@ public class TasksScheduler {
         updateTimer.schedule(myConverterTask, 6000);
 
 
-        TimerTask myInformationTask = new TimerTask() {
+        TimerTask myInformationTaskOsm = new TimerTask() {
             @Override
             public void run() {
-                cityInformationCommand.informationTask();
+                cityInformationCommand.informationTaskFromOsm();
             }
         };
-//        updateTimer.schedule(myInformationTask, 30000, 86460000);
-        updateTimer.schedule(myInformationTask, 7000);
+        updateTimer.schedule(myInformationTaskOsm, 7000);
+
+        TimerTask myInformationTaskSwissTopo = new TimerTask() {
+            @Override
+            public void run() {
+                cityInformationCommand.informationTaskFromSwissTopo();
+            }
+        };
+        updateTimer.schedule(myInformationTaskSwissTopo, 8000);
 
 
 

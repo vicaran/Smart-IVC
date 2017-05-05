@@ -13,11 +13,53 @@ import java.util.Optional;
  */
 public interface AddressRepository extends JpaRepository<Address, Long> {
 
+    /**
+     * Find address by id optional.
+     *
+     * @param id the id
+     * @return the optional
+     */
     Optional<Address> findAddressById(Long id);
-    Optional<Address> findAddressByIdAndLatitudeAndLongitude(Long id, Double latitude, Double longitude);
+
+    /**
+     * Find address by latitude and longitude and own building id optional.
+     *
+     * @param latitude  the latitude
+     * @param longitude the longitude
+     * @param id        the id
+     * @return the optional
+     */
+    Optional<Address> findAddressByLatitudeAndLongitudeAndOwnBuilding_Id(Double latitude, Double longitude, Long id);
+
+    /**
+     * Find address by road number list.
+     *
+     * @param roadNumber the road number
+     * @return the list
+     */
     List<Address> findAddressByRoadNumber(String roadNumber);
+
+    /**
+     * Find address by own building list.
+     *
+     * @param building the building
+     * @return the list
+     */
     List<Address> findAddressByOwnBuilding(Building building);
+
+    /**
+     * Find address by address name is null list.
+     *
+     * @return the list
+     */
     List<Address> findAddressByAddressNameIsNull();
+
+    /**
+     * Find by types id list.
+     *
+     * @param id the id
+     * @return the list
+     */
     List<Address> findByTypes_Id(Long id);
 //    Optional<Address> findBytTypes_IdWhere();
 }

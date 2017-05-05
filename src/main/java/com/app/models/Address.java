@@ -52,67 +52,145 @@ public class Address implements Serializable{
                     referencedColumnName = "TYPE_ID"))
     private Set<Type> types;
 
-    // JPA REQUIRES IT!
+    /**
+     * Instantiates a new Address.
+     */
+// JPA REQUIRES IT!
     public Address() {
     }
 
 
+    /**
+     * Gets address name.
+     *
+     * @return the address name
+     */
     public String getAddressName() {
         return addressName;
     }
 
+    /**
+     * Sets address name.
+     *
+     * @param addressName the address name
+     */
     public void setAddressName(String addressName) {
         this.addressName = addressName;
     }
 
+    /**
+     * Gets house number.
+     *
+     * @return the house number
+     */
     public String getHouseNumber() {
         return houseNumber;
     }
 
+    /**
+     * Sets house number.
+     *
+     * @param houseNumber the house number
+     */
     public void setHouseNumber(String houseNumber) {
         this.houseNumber = houseNumber;
     }
 
+    /**
+     * Gets latitude.
+     *
+     * @return the latitude
+     */
     public Double getLatitude() {
         return latitude;
     }
 
+    /**
+     * Sets latitude.
+     *
+     * @param latitude the latitude
+     */
     public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
+    /**
+     * Gets longitude.
+     *
+     * @return the longitude
+     */
     public Double getLongitude() {
         return longitude;
     }
 
+    /**
+     * Sets longitude.
+     *
+     * @param longitude the longitude
+     */
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 
+    /**
+     * Gets building.
+     *
+     * @return the building
+     */
     public Building getBuilding() {
         return ownBuilding;
     }
 
+    /**
+     * Sets building.
+     *
+     * @param ownBuilding the own building
+     */
     public void setBuilding(Building ownBuilding) {
         this.ownBuilding = ownBuilding;
     }
 
+    /**
+     * Gets road number.
+     *
+     * @return the road number
+     */
     public String getRoadNumber() {
         return roadNumber;
     }
 
+    /**
+     * Sets road number.
+     *
+     * @param roadNumber the road number
+     */
     public void setRoadNumber(String roadNumber) {
         this.roadNumber = roadNumber;
     }
 
+    /**
+     * Gets types.
+     *
+     * @return the types
+     */
     public Set<Type> getTypes() {
         return types;
     }
 
+    /**
+     * Sets types.
+     *
+     * @param types the types
+     */
     public void setTypes(Set<Type> types) {
         this.types = types;
     }
 
+    /**
+     * Add type.
+     *
+     * @param type the type
+     */
     public void addType(Type type){
         this.types.add(type);
     }

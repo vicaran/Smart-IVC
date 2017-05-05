@@ -42,25 +42,49 @@ public class Suburb {
     @OneToMany(mappedBy = "ownSuburb", cascade = CascadeType.ALL)
     private Collection<Building> buildings = new ArrayList<>();
 
-    // JPA REQUIRES IT!
+    /**
+     * Instantiates a new Suburb.
+     */
+// JPA REQUIRES IT!
     public Suburb() {
     }
 
+    /**
+     * Instantiates a new Suburb.
+     *
+     * @param city the city
+     * @param name the name
+     */
     public Suburb(City city, String name) {
         this.setCity(city);
         this.setName(name);
     }
 
+    /**
+     * Gets city.
+     *
+     * @return the city
+     */
     @JsonIgnore
     public City getCity() {
         return ownCity;
     }
 
+    /**
+     * Sets city.
+     *
+     * @param city the city
+     */
     public void setCity(City city) {
         this.ownCity = city;
         city.addSuburb(this);
     }
 
+    /**
+     * Add building.
+     *
+     * @param building the building
+     */
     public void addBuilding(Building building){
 //        if (buildings.contains(building))
 //            return;
@@ -68,6 +92,11 @@ public class Suburb {
         building.setSuburb(this);
     }
 
+    /**
+     * Gets buildings.
+     *
+     * @return the buildings
+     */
     public Collection<Building> getBuildings() {
         return new ArrayList<Building>(buildings);
     }
@@ -79,30 +108,65 @@ public class Suburb {
 //        building.setSuburb(null);
 //    }
 
+    /**
+     * Sets buildings.
+     *
+     * @param buildings the buildings
+     */
     public void setBuildings(Collection<Building> buildings) {
         this.buildings = buildings;
     }
 
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets name.
+     *
+     * @param name the name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Get bound coords byte [ ].
+     *
+     * @return the byte [ ]
+     */
     public byte[] getBoundCoords() {
         return boundCoords;
     }
 
+    /**
+     * Sets bound coords.
+     *
+     * @param boundCoords the bound coords
+     */
     public void setBoundCoords(byte[] boundCoords) {
         this.boundCoords = boundCoords;
     }

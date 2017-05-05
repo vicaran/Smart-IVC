@@ -17,8 +17,14 @@ import java.util.HashMap;
  */
 public class LocationInfo implements GoogleAPIServices {
 
+    /**
+     * The Context.
+     */
     GeoApiContext context;
 
+    /**
+     * Instantiates a new Location info.
+     */
     public LocationInfo(){
         this.context = new GeoApiContext().setApiKey(APIKeys.GoogleKey);
     }

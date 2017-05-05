@@ -25,7 +25,6 @@ import java.util.Set;
 /**
  * Created by Andrea on 17/03/2017.
  */
-
 @RestController
 @RequestMapping("/building")
 public class BuildingController {
@@ -33,12 +32,24 @@ public class BuildingController {
     private final BuildingRepository buildingRepository;
     private final AddressRepository addressRepository;
 
+    /**
+     * Instantiates a new Building controller.
+     *
+     * @param buildingRepository the building repository
+     * @param addressRepository  the address repository
+     */
     @Autowired
     public BuildingController(BuildingRepository buildingRepository, AddressRepository addressRepository) {
         this.buildingRepository = buildingRepository;
         this.addressRepository = addressRepository;
     }
 
+    /**
+     * Handle building by id response entity.
+     *
+     * @param id the id
+     * @return the response entity
+     */
     @RequestMapping(value = "/info/{id}", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<?> handleBuildingById(@PathVariable Long id) {
 
@@ -77,6 +88,15 @@ public class BuildingController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    /**
+     * Handle buildings by coords response entity.
+     *
+     * @param maxLat the max lat
+     * @param maxLng the max lng
+     * @param minLat the min lat
+     * @param minLng the min lng
+     * @return the response entity
+     */
     @RequestMapping(value = "/max={maxLat},{maxLng}&min={minLat},{minLng}/", method = RequestMethod.GET)
     public ResponseEntity<?> handleBuildingsByCoords(@PathVariable Double maxLat,
                                      @PathVariable Double maxLng,
@@ -94,6 +114,12 @@ public class BuildingController {
     }
 
 
+    /**
+     * Handle buildings by coords response entity.
+     *
+     * @param id the id
+     * @return the response entity
+     */
     @RequestMapping(value = "/city={id}/", method = RequestMethod.GET)
     public ResponseEntity<?> handleBuildingsByCoords(@PathVariable Long id) {
 
@@ -102,6 +128,12 @@ public class BuildingController {
         return new ResponseEntity<>(buildings, HttpStatus.OK);
     }
 
+    /**
+     * Handle building by type response entity.
+     *
+     * @param id the id
+     * @return the response entity
+     */
     @RequestMapping(value = "/type/{id}", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<?> handleBuildingByType(@PathVariable Long id) {
         Collection<Address> allTypes = this.addressRepository.findByTypes_Id(id);

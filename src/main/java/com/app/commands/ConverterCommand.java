@@ -22,12 +22,21 @@ public class ConverterCommand {
     private OnlineConverter onlineConverter;
 
 
+    /**
+     * Instantiates a new Converter command.
+     *
+     * @param buildingRepository the building repository
+     * @param addressRepository  the address repository
+     */
     public ConverterCommand(BuildingRepository buildingRepository, AddressRepository addressRepository) {
         this.buildingRepository = buildingRepository;
         this.addressRepository = addressRepository;
         onlineConverter = new OnlineConverter();
     }
 
+    /**
+     * Converter task.
+     */
     @Scheduled
     public void converterTask() {
         System.out.println("Converting Swiss to Global coordinates...");

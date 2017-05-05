@@ -26,6 +26,14 @@ public class CityCreator {
     private City cityModel;
     private Document cityDocument;
 
+    /**
+     * Instantiates a new City creator.
+     *
+     * @param cityPath the city path
+     * @param name     the name
+     * @param zip      the zip
+     * @throws Exception the exception
+     */
     public CityCreator(String cityPath, String name, String zip) throws Exception {
         this.cityDocument = FileLoader.loadFile(cityPath);
         this.buildingList = new ArrayList<>();
@@ -34,6 +42,9 @@ public class CityCreator {
         this.create();
     }
 
+    /**
+     * Instantiates a new City creator.
+     */
     public CityCreator(){}
 
     private void initializeCity(String name, String zip) throws Exception {
@@ -75,13 +86,29 @@ public class CityCreator {
         return cityDocument;
     }
 
+    /**
+     * Gets city model.
+     *
+     * @return the city model
+     */
     public City getCityModel() {
         return cityModel;
     }
 
+    /**
+     * Gets building list.
+     *
+     * @return the building list
+     */
     public List<Building> getBuildingList() {
         return buildingList;
     }
+
+    /**
+     * Gets address list.
+     *
+     * @return the address list
+     */
     public List<Address> getAddressList() {
         return addressList;
     }

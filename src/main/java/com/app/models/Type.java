@@ -40,38 +40,81 @@ public class Type implements Serializable{
     @Column(name="name")
     private String typeName;
 
+    /**
+     * Instantiates a new Type.
+     */
     public Type(){}
 
+    /**
+     * Instantiates a new Type.
+     *
+     * @param typeName the type name
+     */
     public Type(String typeName){
         this.setTypeName(typeName);
         this.addresses = new HashSet<>();
     }
 
+    /**
+     * Gets type name.
+     *
+     * @return the type name
+     */
     public String getTypeName() {
         return typeName;
     }
 
+    /**
+     * Sets type name.
+     *
+     * @param typeName the type name
+     */
     public void setTypeName(String typeName) {
         this.typeName = typeName;
     }
 
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * Gets addresses.
+     *
+     * @return the addresses
+     */
     @JsonIgnore
     public Set<Address> getAddresses() {
         return addresses;
     }
 
+    /**
+     * Sets addresses.
+     *
+     * @param addresses the addresses
+     */
     public void setAddresses(Set<Address> addresses) {
         this.addresses = addresses;
     }
 
+    /**
+     * Add address.
+     *
+     * @param address the address
+     */
     public void addAddress(Address address) {
         this.addresses.add(address);
         if (!address.getTypes().contains(this)) {

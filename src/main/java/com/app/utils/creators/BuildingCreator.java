@@ -31,6 +31,28 @@ import javax.xml.transform.stream.StreamResult;
  */
 public class BuildingCreator {
 
+    private static final int OBJECTID = 0;
+    private static final int SHAPE = 1;
+    private static final int JOIN_COUNT = 2;
+    private static final int TARGET_FID = 3;
+    private static final int DESCRIPTION = 4;
+    private static final int SECTION = 5;
+    private static final int NUM_CIVIC_ID = 6;
+    private static final int ID_STABILE = 7;
+    private static final int EGID_UCA = 8;
+    private static final int EDID_UCA = 9;
+    private static final int FLOORS = 10;
+    private static final int SHAPE_LENGTH = 11;
+    private static final int SHAPE_AREA = 12;
+
+
+    /**
+     * Create pair.
+     *
+     * @param valuesList the values list
+     * @param city       the city
+     * @return the pair
+     */
     public Pair<Building, Address> create(NodeList valuesList, City city) {
         Building building = new Building(city);
         String houseNumber = null;
@@ -42,23 +64,32 @@ public class BuildingCreator {
             if (node.getFirstChild() != null) {
                 String value = node.getFirstChild().getTextContent();
                 switch (valueIdx) {
-                    case 1:
+                    case SHAPE:
                         this.getBuildingCoordinates(node, building);
                         break;
-                    case 4:
+                    case DESCRIPTION:
                         building.setDescription(value);
                         break;
-                    case 6:
+                    case SECTION:
+                        building.setSection(Long.parseLong(value));
+                        break;
+                    case NUM_CIVIC_ID:
                         roadNumber = getRoadNumber(value);
                         houseNumber = getCivicNumber(value);
                         break;
-                    case 10:
+                    case FLOORS:
                         building.setFloors(Integer.parseInt(value));
                         break;
-                    case 11:
+                    case EGID_UCA:
+                        building.setEgidUca(Long.parseLong(value));
+                        break;
+                    case EDID_UCA:
+                        building.setEdidUca(Long.parseLong(value));
+                        break;
+                    case SHAPE_LENGTH:
                         building.setShapeLength(Double.parseDouble(value));
                         break;
-                    case 12:
+                    case SHAPE_AREA:
                         building.setShapeArea(Double.parseDouble(value));
                         break;
                     default:

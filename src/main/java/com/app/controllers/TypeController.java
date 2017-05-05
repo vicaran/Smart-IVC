@@ -21,19 +21,28 @@ import java.util.Collection;
 /**
  * Created by Andrea on 02/05/2017.
  */
-
 @RestController
 @RequestMapping("/type")
 public class TypeController {
 
     private final TypeRepository typeRepository;
 
+    /**
+     * Instantiates a new Type controller.
+     *
+     * @param typeRepository the type repository
+     */
     @Autowired
     public TypeController(TypeRepository typeRepository) {
         this.typeRepository = typeRepository;
     }
 
 
+    /**
+     * Handle building by id response entity.
+     *
+     * @return the response entity
+     */
     @RequestMapping(value = "/getall", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<?> handleBuildingById() {
         Collection<Type> allTypes = this.typeRepository.findAll();

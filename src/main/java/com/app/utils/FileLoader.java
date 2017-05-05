@@ -10,9 +10,15 @@ import javax.xml.parsers.DocumentBuilderFactory;
 /**
  * Created by Andrea on 26/02/2017.
  */
-
 public class FileLoader {
 
+    /**
+     * Load file document.
+     *
+     * @param filePath the file path
+     * @return the document
+     * @throws Exception the exception
+     */
     static public Document loadFile(String filePath) throws Exception {
         File fXmlFile = new File(filePath);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();

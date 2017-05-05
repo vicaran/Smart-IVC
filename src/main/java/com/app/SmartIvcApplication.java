@@ -9,6 +9,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * The type Smart ivc application.
+ */
 @SpringBootApplication
 public class SmartIvcApplication implements CommandLineRunner{
 
@@ -16,14 +19,27 @@ public class SmartIvcApplication implements CommandLineRunner{
 	private final CityRepository cityRepository;
 	private final SuburbRepository suburbRepository;
 
-	@Autowired
+    /**
+     * Instantiates a new Smart ivc application.
+     *
+     * @param buildingRepository the building repository
+     * @param cityRepository     the city repository
+     * @param suburbRepository   the suburb repository
+     */
+    @Autowired
 	public SmartIvcApplication(BuildingRepository buildingRepository, CityRepository cityRepository, SuburbRepository suburbRepository) {
 		this.buildingRepository = buildingRepository;
 		this.cityRepository = cityRepository;
 		this.suburbRepository = suburbRepository;
 	}
 
-	public static void main(String[] args) throws Exception {
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     * @throws Exception the exception
+     */
+    public static void main(String[] args) throws Exception {
 		SpringApplication.run(SmartIvcApplication.class, args);
 	}
 

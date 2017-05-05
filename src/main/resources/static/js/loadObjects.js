@@ -48,14 +48,6 @@ var loadObjs = function (sectionExtremes) {
                                                                                        });
 
 
-                           // var buildingGeometry = new Cesium.BoxGeometry({
-                           //                                                   minimum : new Cesium.Cartesian3.fromDegrees(list[0], list[1]),
-                           //                                                       // vertexFormat: Cesium.VertexFormat.POSITION_ONLY,
-                           //                                                   maximum: new Cesium.Cartesian3.fromDegrees(list[2], list[3])
-                           //                                                   });
-
-                           // var buildingGeometry = Cesium.BoxGeometry.createGeometry(buildingGeometry);
-
                            var building = new Cesium.GeometryInstance({
                                                                           geometry: buildingGeometry,
                                                                           id: 'building_' + data[i].id,
@@ -68,13 +60,6 @@ var loadObjs = function (sectionExtremes) {
                                                                           vertexFormat: Cesium.VertexFormat.POSITION_ONLY,
                                                                       });
 
-                           // var hierarchy= new Cesium.PolygonHierarchy({});
-                           //
-                           // var building = new Cesium.PolygonGraphics({
-                           //                                               hierarchy:
-                           //                                            });
-
-                           // TODO TRY USING HIERARKIES
                            var primitive = new Cesium.Primitive({
                                                                     geometryInstances: building,
                                                                     appearance: new Cesium.MaterialAppearance({
@@ -100,7 +85,6 @@ var loadObjs = function (sectionExtremes) {
                                                                     asynchronous: true,
                                                                 });
                            primitivesArray.push(primitive);
-                           // scene.primitives.add(primitive);
 
                        }
                        // }

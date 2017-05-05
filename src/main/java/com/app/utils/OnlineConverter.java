@@ -1,7 +1,7 @@
 package com.app.utils;
 
+import com.app.API.SwissTopo.SwissTopoAPI;
 import com.app.API.SwissTopo.SwissTopoAPIServices;
-import com.app.API.SwissTopo.SwissTopoConverter;
 import com.app.models.Address;
 import com.app.models.Building;
 import com.app.utils.dataStructures.Pair;
@@ -15,11 +15,21 @@ public class OnlineConverter {
 
     private SwissTopoAPIServices swissTopo;
 
+    /**
+     * Instantiates a new Online converter.
+     */
     public OnlineConverter() {
-        this.swissTopo = new SwissTopoConverter();
+        this.swissTopo = new SwissTopoAPI();
     }
 
 
+    /**
+     * Convert building ring c hto wgs building.
+     *
+     * @param building the building
+     * @param ring     the ring
+     * @return the building
+     */
     public Building convertBuildingRingCHtoWGS(Building building, byte[] ring) {
         String globalCoordinates = "";
         String swissCoords = new String(ring, StandardCharsets.UTF_8);
@@ -45,6 +55,12 @@ public class OnlineConverter {
         return building;
     }
 
+    /**
+     * Convert building centroid c hto wgs building.
+     *
+     * @param building the building
+     * @return the building
+     */
     public Building convertBuildingCentroidCHtoWGS(Building building) {
         Pair<Double, Double> convertedCentroid = this.swissTopo.CHtoWGS(building.getCentroidLat(), building.getCentroidLng());
         building.setCentroidLat(convertedCentroid.getL());
@@ -52,6 +68,12 @@ public class OnlineConverter {
         return building;
     }
 
+    /**
+     * Convert address coordinates c hto wgs address.
+     *
+     * @param address the address
+     * @return the address
+     */
     public Address convertAddressCoordinatesCHtoWGS(Address address) {
         Pair<Double, Double> convertedCentroid = this.swissTopo.CHtoWGS(address.getLatitude(), address.getLongitude());
         address.setLatitude(convertedCentroid.getL());

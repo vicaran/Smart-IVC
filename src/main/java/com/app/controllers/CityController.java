@@ -20,18 +20,28 @@ import java.util.List;
 /**
  * Created by Andrea on 27/02/2017.
  */
-
 @RestController
 @RequestMapping("/city")
 public class CityController {
 
     private final CityRepository cityRepository;
 
+    /**
+     * Instantiates a new City controller.
+     *
+     * @param userRepository the user repository
+     */
     @Autowired
     public CityController(CityRepository userRepository) {
         this.cityRepository = userRepository;
     }
 
+    /**
+     * Handle city response entity.
+     *
+     * @param name the name
+     * @return the response entity
+     */
     @RequestMapping(value = "/{name}", method = RequestMethod.GET)
     public ResponseEntity handleCity (@PathVariable String name) {
 
@@ -40,6 +50,11 @@ public class CityController {
 
     }
 
+    /**
+     * Gets cities.
+     *
+     * @return the cities
+     */
     @RequestMapping(value = "/allCityNames", method = RequestMethod.GET)
     public ResponseEntity<?> getCities() {
         List<City> cityList = this.cityRepository.findAll();

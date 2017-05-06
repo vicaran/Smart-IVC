@@ -9,7 +9,7 @@ cache:
 
 notifications:
   email: false
-  slack: bsc-projects-reveal:1EY60bGB2FgypKQkejR0B47l
+#  slack: bsc-projects-reveal:1EY60bGB2FgypKQkejR0B47l
 
 jdk:
 - oraclejdk8

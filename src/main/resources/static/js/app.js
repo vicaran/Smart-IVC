@@ -23,9 +23,9 @@ var loadCities = function () {
            })
 };
 
-
 var addCredits = function () {
-    $(".cesium-credit-textContainer").remove();
+    var creditContainer = $(".cesium-credit-textContainer");
+    creditContainer.remove();
     var creditsReveal = '<span class="cesium-credit-image">'
                             + '<a href="http://reveal.inf.usi.ch/" target="_blank">'
                             + '<img src="/images/reveal/REVEALogo-black.png" alt="Reveal" title="Reveal" style="vertical-align: bottom;">'
@@ -78,13 +78,12 @@ var addCredits = function () {
 
     $(".cesium-viewer-toolbar").append(creditsButton);
 
-    $(".cesium-credit-imageContainer").append(creditsReveal);
-    $(".cesium-credit-imageContainer").append(creditsUsi);
+    creditContainer.append(creditsReveal);
+    creditContainer.append(creditsUsi);
     triggerCreditButton();
 };
 
 var loadTypes = function () {
-
     $.ajax({
                url: SERVER_URL + "type/getall",
                type: "GET",
@@ -99,5 +98,4 @@ var loadTypes = function () {
                    }
                }
            });
-
-}
+};

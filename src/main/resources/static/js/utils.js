@@ -167,7 +167,6 @@ var getCameraCoordinates = function () {
 };
 
 // USED IN LISTENERS
-
 var generateTable = function (data) {
     var miniCanvas = '<div id="miniCanvasZone" style="text-align: center;"><canvas id="renderMiniCanvas" style="margin: auto;"></canvas></div>';
     var table = '<div class="cesium-infoBox-description"><table class="cesium-infoBox-defaultTable"><tbody>';

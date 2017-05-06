@@ -82,7 +82,7 @@ var loadObjs = function (sectionExtremes) {
                                                                     releaseGeometryInstances: false,
                                                                     interleave: true,
                                                                     cull: false,
-                                                                    asynchronous: true,
+                                                                    asynchronous: true
                                                                 });
                            primitivesArray.push(primitive);
 

@@ -63,7 +63,7 @@ public class TasksScheduler {
                 cityInformationCommand.informationTaskFromSwissTopo();
             }
         };
-        updateTimer.schedule(myInformationTaskSwissTopo, 8000);
+//        updateTimer.schedule(myInformationTaskSwissTopo, 8000);
 
 
 

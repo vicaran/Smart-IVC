@@ -17,14 +17,17 @@ var viewer = new Cesium.Viewer('cesiumContainer', {
     projectionPicker: false
 });
 
-
 // //Add basic drag and drop functionality
-// viewer.extend(Cesium.viewerDragDropMixin);
-// //Show a pop-up alert if we encounter an error when processing a dropped file
-// viewer.dropError.addEventListener(function (dropHandler, name, error) {
-//     console.log(error);
-//     window.alert(error);
-// });
+viewer.extend(Cesium.viewerDragDropMixin);
+//Show a pop-up alert if we encounter an error when processing a dropped file
+viewer.dropError.addEventListener(function (dropHandler, name, error) {
+    console.log(error);
+    window.alert(error);
+});
+
+viewer.resolutionScale = 0.8;
+viewer.infoBox.frame.removeAttribute('sandbox');
+
 var scene = viewer.scene;
 scene.debugShowFramesPerSecond = true;
 scene.orderIndependentTranslucency = false;
@@ -45,7 +48,6 @@ scene.shadows = false;
 scene.fog = new Cesium.Fog({enabled: false});
 scene.fxaa = false;
 scene.moon = undefined;
-// scene.skyAtmosphere = undefined;
 
 var myLayerPicker = '<span id="baseLayerPickerContainer" class="cesium-navigationHelpButton-wrapper"></span>';
 $(myLayerPicker).insertBefore($(".cesium-navigationHelpButton-wrapper"));
@@ -110,10 +112,7 @@ var baseLayerPicker = new Cesium.BaseLayerPicker('baseLayerPickerContainer', {
     imageryProviderViewModels : imageryViewModels,
     terrainProviderViewModels: terrainViewModels
 });
-viewer.resolutionScale = 0.8;
 
-
-viewer.infoBox.frame.removeAttribute('sandbox');
 // var node = document.createElement("DIV");
 // node.id = "miniCanvasZone";
 // var canvas = document.createElement("CANVAS");

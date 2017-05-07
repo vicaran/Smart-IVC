@@ -3,47 +3,47 @@
  */
 
 $(document).ready(function () {
-    sessionStorage.setItem("buildingIDs", []);
-    sessionStorage.setItem("buildingElevations", []);
-    sessionStorage.setItem("buildingHeights", []);
     addCredits();
     loadCities();
     loadTypes();
 });
 
-var loadCities = function () {
+let loadCities = function () {
     $.ajax({
                url: SERVER_URL + "city/allCityNames",
                type: "GET",
-               success: function (data, textStatus, jqXHR) {
-                   for (var i = 0; i < data.length; i++) {
+               success: function (data) {
+                   for (let i = 0; i < data.length; i++) {
                        $("#zoomSelector").append('<option id="city_' + data[i].id + '" value="' + data[i].name + '">' + data[i].name + ' </option >');
                    }
                }
            })
 };
 
-var addCredits = function () {
-    var creditContainer = $(".cesium-credit-textContainer");
-    creditContainer.remove();
-    var creditsReveal = '<span class="cesium-credit-image">'
+let addCredits = function () {
+    $(".cesium-credit-textContainer").remove();
+    let creditContainer = $(".cesium-credit-imageContainer");
+    let creditsReveal = '<span class="cesium-credit-image">'
                             + '<a href="http://reveal.inf.usi.ch/" target="_blank">'
                             + '<img src="/images/reveal/REVEALogo-black.png" alt="Reveal" title="Reveal" style="vertical-align: bottom;">'
                             + '</a>'
                         + '</span>';
-    var creditsUsi = '<span class="cesium-credit-image">'
+    let creditsUsi = '<span class="cesium-credit-image">'
                          + '<a href="http://www.inf.usi.ch/" target="_blank">'
                          + '<img src="/images/reveal/logo_usi.png" alt="USI_INF" title="USI_INF" style="vertical-align: bottom;">'
                          + '</a>'
                      + '</span>';
+    creditContainer.append(creditsReveal);
+    creditContainer.append(creditsUsi);
 
-    var gitHubLogo = '<span class="cesium-credit-image">'
+
+    let gitHubLogo = '<span class="cesium-credit-image">'
                      + '<a href="https://github.com/vicaran/Smart-IVC" target="_blank">'
                      + '<img src="/images/reveal/githubLogo.png" alt="GITHUB_REPO" title="GITHUB_REPO" style="vertical-align: bottom;">'
                      + '</a>'
                      + '</span>';
 
-    var creditsButton =  '<span class"cesium-credits-wrapper">'
+    let creditsButton =  '<span class"cesium-credits-wrapper">'
                          + '<button type="button" class="cesium-button cesium-toolbar-button" title="Credits" id="credits-button">'
                             +'<image src="/images/copyright.png" width="32" height="32"/>'
                          + '</button>'
@@ -77,20 +77,20 @@ var addCredits = function () {
                  + '</span>';
 
     $(".cesium-viewer-toolbar").append(creditsButton);
-
-    creditContainer.append(creditsReveal);
-    creditContainer.append(creditsUsi);
     triggerCreditButton();
+
+
+
 };
 
-var loadTypes = function () {
+let loadTypes = function () {
     $.ajax({
                url: SERVER_URL + "type/getall",
                type: "GET",
-               success: function (data, textStatus, jqXHR) {
-                   for (var i = 0; i < data.length; i++) {
-                       var opt = document.createElement("OPTION");
-                       var val = document.createTextNode(formatText(data[i].typeName));
+               success: function (data) {
+                   for (let i = 0; i < data.length; i++) {
+                       let opt = document.createElement("OPTION");
+                       let val = document.createTextNode(formatText(data[i].typeName));
                        opt.id = data[i].id;
                        opt.value = data[i].typeName;
                        opt.appendChild(val);

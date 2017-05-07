@@ -17,7 +17,7 @@ var loadCities = function () {
                type: "GET",
                success: function (data, textStatus, jqXHR) {
                    for (var i = 0; i < data.length; i++) {
-                       $("#zoomSelector").append('<option id=city_' + data[i].id + 'value=' + data[i].name + '>' + data[i].name + ' </option >');
+                       $("#zoomSelector").append('<option id="city_' + data[i].id + '" value="' + data[i].name + '">' + data[i].name + ' </option >');
                    }
                }
            })

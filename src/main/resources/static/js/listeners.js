@@ -2,178 +2,93 @@
  * Created by Andrea on 08/04/2017.
  */
 
+let selectedEntity = undefined;
+let hoverEntity = undefined;
+let miniCanvasScene = undefined;
+let hoverPrevColor = undefined;
+let selectPrevColor = undefined;
+let translucenceStatus = 1;
 
-var selectedEntity = undefined;
-var hoverEntity = undefined;
-var miniCanvasScene = undefined;
-
-var translucenceStatus = 1;
-
-var prevColor;
-var GLOBALSELECTION;
+let GLOBALSELECTION;
 
 handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
 
-
 handler.setInputAction(function (click) {
-    var pickedObject = viewer.scene.pick(click.position);
-
+    let pickedObject = viewer.scene.pick(click.position);
     if (pickedObject !== undefined) {
         if (selectedEntity !== undefined) {
-            selectedEntity.primitive.appearance.material.uniforms.color = prevColor;
-            selectedEntity.primitive.appearance.material.uniforms.color.alpha = translucenceStatus;
+            selectedEntity.color = selectPrevColor;
         }
-        selectedEntity = pickedObject;
-        var complementColor = computeColorComplement($('#colorPicker').val());
-        selectedEntity.primitive.appearance.material.uniforms.color = Cesium.Color.fromCssColorString(complementColor);
-        if (translucenceStatus === 0.5) {
-            selectedEntity.primitive.appearance.material.uniforms.color.alpha = 1;
-        }
-        $.ajax({
-                   url: SERVER_URL + 'building/info/' + selectedEntity.id.substr(selectedEntity.id.indexOf("_") + 1),
-                   type: "GET",
-                   success: function (data, textStatus, jqXHR) {
-                       GLOBALSELECTION = data;
-                       viewer.selectedEntity = new Cesium.Entity({
-                                                                                   id: selectedEntity.id,
-                                                                                   description: generateTable(data)
-                                                                 });
-                       setTimeout(function () {
-                           if (miniCanvasScene !== undefined) {
-                               console.log("DISPOSING CANVAS");
-                               miniCanvasScene.dispose();
-                           }
-                           miniCanvasScene = createMiniCanvas(data);
-                           $.ajax({
-                                      url: SERVER_URL + "type/getall",
-                                      type: "GET",
-                                      success: function (data, textStatus, jqXHR) {
-                                          console.log("data is ");
-                                          console.log(data);
-                                          console.log(document.getElementsByClassName('cesium-infoBox-iframe'));
-
-                                          var iframe = document.getElementsByClassName('cesium-infoBox-iframe');
-                                          // var innerDoc = $('.cesium-infoBox-iframe').contents().find('buildingType')[0];
-
-                                          console.log(iframe[0].contentDocument || iframe[0].contentWindow.document);
-                                          var innerDoc = iframe[0].contentDocument || iframe[0].contentWindow.document;
-                                          for (var i = 0; i < data.length; i++) {
-                                              var opt = document.createElement("OPTION");
-                                              var val = document.createTextNode(formatText(data[i].typeName));
-                                              opt.id = data[i].id;
-                                              opt.value = data[i].typeName;
-                                              opt.appendChild(val);
-                                              innerDoc.getElementById('buildingType').appendChild(opt);
-                                          }
-                                      }
-                                  });
-
-                       }, 10)
-                   }
-               });
-
+        selectedEntity = getPrimitiveFromPrimitiveId(pickedObject.id);
+        selectPrevColor = hoverPrevColor;
+        selectedEntity.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.RED);
+        loadInfoBox(pickedObject.id.split("_")[1]);
     } else {
         if (selectedEntity !== undefined) {
-            selectedEntity.primitive.appearance.material.uniforms.color = prevColor;
-            selectedEntity.primitive.appearance.material.uniforms.color.alpha = translucenceStatus;
+            selectedEntity.color = selectPrevColor;
             selectedEntity = undefined;
         }
     }
-
 }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 
 handler.setInputAction(function (movement) {
-    var hoverObject = viewer.scene.pick(movement.endPosition);
+    let hoverObject = viewer.scene.pick(movement.endPosition);
 
-    if (hoverObject !== undefined && hoverObject !== selectedEntity) {
+    if (hoverObject !== undefined && getPrimitiveFromPrimitiveId(hoverObject.id) !== selectedEntity) {
         if (hoverEntity !== undefined && hoverEntity !== selectedEntity) {
-            hoverEntity.primitive.appearance.material.uniforms.color = prevColor;
-            hoverEntity.primitive.appearance.material.uniforms.color.alpha = translucenceStatus;
+            hoverEntity.color = hoverPrevColor;
         }
-        hoverEntity = hoverObject;
-
-        var complementColor = "#00ff23";
-        prevColor = hoverEntity.primitive.appearance.material.uniforms.color;
-        hoverEntity.primitive.appearance.material.uniforms.color = Cesium.Color.fromCssColorString(complementColor);
-        if (translucenceStatus === 1) {
-            hoverEntity.primitive.appearance.material.uniforms.color.alpha = 0.5;
-        } else {
-            hoverEntity.primitive.appearance.material.uniforms.color.alpha = 1;
-        }
+        hoverEntity = getPrimitiveFromPrimitiveId(hoverObject.id);
+        hoverPrevColor = hoverEntity.color;
+        hoverEntity.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.CHARTREUSE);
     }
     else {
         if (hoverEntity !== undefined && hoverEntity !== selectedEntity) {
-            hoverEntity.primitive.appearance.material.uniforms.color = prevColor;
-            hoverEntity.primitive.appearance.material.uniforms.color.alpha = translucenceStatus;
+            hoverEntity.color = hoverPrevColor;
             hoverEntity = undefined;
         }
     }
 }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
-//
-// handler.setInputAction(function (click) {
-//     var pickedObject = viewer.scene.pick(click.position);
-//
-//     if (pickedObject !== undefined) {
-//         viewer.camera.flyTo({
-//                                 destination: Cesium.Cartesian3.fromRadians(
-//                                     pickedObject.primitive.geometryInstances.geometry._polygonHierarchy.positions[0].x,
-//                                     pickedObject.primitive.geometryInstances.geometry._polygonHierarchy.positions[0].y,
-//                                     pickedObject.primitive.geometryInstances.geometry._polygonHierarchy.positions[0].z
-//                                 )
-//                             });
-//     }
-//
-// }, Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
 
+let getPrimitiveFromPrimitiveId = function (primitiveId) {
+    return scene.primitives.get(1).getGeometryInstanceAttributes(primitiveId);
+};
 
 
 $("#zoomSelector").change(function () {
-    var cityName = $("#zoomSelector option:selected").text();
-    if (cityName.localeCompare("Choose...") !== 0) {
+    let selectedCityBox = $("#zoomSelector").find("option:selected");
+    let cityName = selectedCityBox.val();
+    if (cityName.localeCompare("") !== 0) {
+        let cityId = selectedCityBox.attr('id').split('_')[1];
         $.ajax({
                    url: SERVER_URL + "city/" + cityName,
                    type: "GET",
-                   success: function (data, textStatus, jqXHR) {
-                       var coords = createRing(data.boundCoords);
-                       var maxLat = Number(coords[0].split(" ")[0]);
-                       var maxLng = Number(coords[1].split(" ")[1]);
+                   success: function (data) {
+                       let coords = createRing(data.boundCoords);
+                       let maxLat = Number(coords[0].split(" ")[0]);
+                       let maxLng = Number(coords[1].split(" ")[1]);
 
-                       var minLat = Number(coords[1].split(" ")[0]);
-                       var minLng = Number(coords[0].split(" ")[1]);
+                       let minLat = Number(coords[1].split(" ")[0]);
+                       let minLng = Number(coords[0].split(" ")[1]);
 
-
-
-                       var centroidLat = (maxLat + minLat) / 2;
-                       var centroidLng = (maxLng + minLng) / 2;
-
-                       console.log(maxLat);
-                       console.log(maxLng);
-                       console.log(minLat);
-                       console.log(minLng);
+                       let centroidLat = (maxLat + minLat) / 2;
+                       let centroidLng = (maxLng + minLng) / 2;
                        viewer.camera.flyTo({
-                                                             destination: Cesium.Cartesian3.fromDegrees(centroidLng,
-                                                                                                        centroidLat,
-                                                                                                        15000),
-                                                             maximumHeight: 10000,
-                                                             // TODO: Pass max bounds of city and centroid to load city
-                                                             // complete: cityLoader(maxLat, maxLng, minLat, minLng, centroidLat, centroidLng)
-                                               // complete: cityLoader(maxLat, maxLng, minLat, minLng, 46.009447, 8.960488)
-                                               complete: loadObjs()
-
-                                                         });
+                                               destination: Cesium.Cartesian3.fromDegrees(centroidLng, centroidLat, 10000),
+                                           });
+                       loadObjs(cityId)
                    }
                })
     }
-
 }).change();
 
 $("#shadows").change(function () {
-    var shadowsStatus = false;
+    let shadowsStatus = false;
     if (this.checked) {
         shadowsStatus = true;
     }
 
-    for (var i = 0; i < viewer.scene.primitives.length; i++) {
+    for (let i = 0; i < viewer.scene.primitives.length; i++) {
         if (viewer.scene.primitives.get(i).appearance !== undefined) {
             viewer.scene.primitives.get(i).appearance.translucent = shadowsStatus;
         }
@@ -187,7 +102,7 @@ $("#translucence").change(function () {
         translucenceStatus = 1;
     }
 
-    for (var i = 0; i < viewer.scene.primitives.length; i++) {
+    for (let i = 0; i < viewer.scene.primitives.length; i++) {
         if (viewer.scene.primitives.get(i).appearance !== undefined) {
             viewer.scene.primitives.get(i).appearance.material.uniforms.color.alpha = translucenceStatus;
         }
@@ -198,49 +113,63 @@ $("#translucence").change(function () {
 
 });
 
-$('#coloring input').on('change', function () {
-    var selectedRadio = $('input[name=coloring]:checked', '#coloring').val();
-    if (selectedRadio === "height") {
-        $('#colorPicker').attr("disabled", true);
-        for (var i = 0; i < viewer.scene.primitives.length; i++) {
-            if (viewer.scene.primitives.get(i).geometryInstances !== undefined) {
-                var buildingHeight = viewer.scene.primitives.get(i).geometryInstances.geometry._height
-                                     - viewer.scene.primitives.get(i).geometryInstances.geometry._extrudedHeight;
-                var newRGB = interpolateColors(parseInt(buildingHeight) , parseInt(MAX_HEIGHT), [0, 0, 1], [1, 0, 0]);
-                viewer.scene.primitives.get(i).appearance.material.uniforms.color = new Cesium.Color(newRGB[0], newRGB[1], newRGB[2], 1.0)
+
+$("#colorByHeight").change(function () {
+    if (this.checked) {
+        for (let i = 0; i < viewer.scene.primitives.get(1).geometryInstances.length; i++) {
+            let primitive = getPrimitiveFromPrimitiveId(viewer.scene.primitives.get(1).geometryInstances[i].id);
+            if (viewer.scene.primitives.get(1).geometryInstances[i].geometry !== undefined) {
+                let buildingHeight = viewer.scene.primitives.get(1).geometryInstances[i].geometry._height
+                                     - viewer.scene.primitives.get(1).geometryInstances[i].geometry._extrudedHeight;
+                let newRGB = interpolateColors(parseInt(buildingHeight), parseInt(MAX_HEIGHT), [0, 0, 1], [1, 0, 0]);
+                primitive.color = Cesium.ColorGeometryInstanceAttribute.toValue(new Cesium.Color(newRGB[0], newRGB[1], newRGB[2], 1.0));
             }
         }
-
     } else {
-        $('#colorPicker').attr("disabled", false);
         setDefaultColors();
     }
 });
 
+// $('#coloring input').on('change', function () {
+//     let selectedRadio = $('input[name=coloring]:checked', '#coloring').val();
+//     if (selectedRadio === "height") {
+//         $('#colorPicker').attr("disabled", true);
+//
+//     } else {
+//         $('#colorPicker').attr("disabled", false);
+//         setDefaultColors();
+//     }
+// });
+
 $('#colorPicker').on('change', function () {
-    var selectedRadio = $('input[name=coloring]:checked', '#coloring').val();
+    let selectedRadio = $('input[name=coloring]:checked', '#coloring').val();
     if (selectedRadio === "default") {
         setDefaultColors();
     }
 });
 
-var setDefaultColors = function () {
-    for (var i = 0; i < viewer.scene.primitives.length; i++) {
-        if (viewer.scene.primitives.get(i).appearance !== undefined) {
-            var alphaStatus = viewer.scene.primitives.get(i).appearance.material.uniforms.color.alpha;
-            viewer.scene.primitives.get(i).appearance.material.uniforms.color = Cesium.Color.fromCssColorString($('#colorPicker').val());
-            viewer.scene.primitives.get(i).appearance.material.uniforms.color.alpha = alphaStatus;
-            if (selectedEntity !== undefined) {
-                var complementColor = computeColorComplement($('#colorPicker').val());
-                selectedEntity.primitive.appearance.material.uniforms.color = Cesium.Color.fromCssColorString(complementColor);
+$('#resetColors').click(function () {
+    setDefaultColors();
+});
+
+let setDefaultColors = function () {
+    for (let i = 0; i < viewer.scene.primitives.get(1).geometryInstances.length; i++) {
+        let primitive = getPrimitiveFromPrimitiveId(viewer.scene.primitives.get(1).geometryInstances[i].id);
+        if (primitive !== undefined) {
+            primitive.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.WHITE);
+            if (primitive === selectedEntity) {
+                primitive.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.RED);
+
             }
         }
     }
+    hoverPrevColor = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.WHITE);
+    selectPrevColor = hoverPrevColor;
 };
 
-var triggerCreditButton = function () {
+let triggerCreditButton = function () {
 
-    var creditsBox = $("#credits-box");
+    let creditsBox = $("#credits-box");
     $("#credits-button").click(function (e) {
         e.stopPropagation();
 
@@ -253,7 +182,7 @@ var triggerCreditButton = function () {
 };
 
 $('#cesiumContainer').click(function () {
-    var creditsBox = $("#credits-box");
+    let creditsBox = $("#credits-box");
     if (creditsBox.hasClass("cesium-navigation-help-visible")) {
         creditsBox.removeClass("cesium-navigation-help-visible");
     }
@@ -261,14 +190,14 @@ $('#cesiumContainer').click(function () {
 
 $('#queryFromBuildingCity').click(function () {
     setDefaultColors();
-    var typeId = $("#buildingTypeCity option:selected").attr("id");
+    let typeId = $("#buildingTypeCity option:selected").attr("id");
     if (typeId !== undefined) {
         $.ajax({
                    url: SERVER_URL + "building/type/" + typeId,
                    type: "GET",
-                   success: function (data, textStatus, jqXHR) {
-                       for (var j = 0; j < data.buildingIds.length; j++) {
-                           for (var i = 0; i < viewer.scene.primitives.length; i++) {
+                   success: function (data) {
+                       for (let j = 0; j < data.buildingIds.length; j++) {
+                           for (let i = 0; i < viewer.scene.primitives.length; i++) {
                                if (viewer.scene.primitives.get(i).geometryInstances !== undefined) {
                                    if (parseInt((viewer.scene.primitives.get(i).geometryInstances.id).split("_")[1]) === parseInt(data.buildingIds[j])) {
                                        console.log("Match");
@@ -284,5 +213,45 @@ $('#queryFromBuildingCity').click(function () {
 })
 ;
 
-// TODO: Optimize query to visualize entire city
-// TODO: refactor global variable MAX_HEIGHT
+let loadInfoBox = function (buildingId) {
+    $.ajax({
+               url: SERVER_URL + 'building/info/' + buildingId,
+               type: "GET",
+               success: function (data) {
+                   GLOBALSELECTION = data;
+                   viewer.selectedEntity = new Cesium.Entity({
+                                                                 id: selectedEntity.id,
+                                                                 description: generateTable(data)
+                                                             });
+                   setTimeout(function () {
+                       if (miniCanvasScene !== undefined) {
+                           miniCanvasScene.dispose();
+                       }
+                       miniCanvasScene = createMiniCanvas(data);
+                       loadTypesForInfoBox();
+                   }, 50)
+               }
+           });
+};
+
+let loadTypesForInfoBox = function () {
+    $.ajax({
+               url: SERVER_URL + "type/getall",
+               type: "GET",
+               success: function (data) {
+                   let iframe = document.getElementsByClassName('cesium-infoBox-iframe');
+                   let innerDoc = iframe[0].contentDocument || iframe[0].contentWindow.document;
+                   for (let i = 0; i < data.length; i++) {
+                       let opt = document.createElement("OPTION");
+                       let val = document.createTextNode(formatText(data[i].typeName));
+                       opt.id = data[i].id;
+                       opt.value = data[i].typeName;
+                       opt.appendChild(val);
+                       innerDoc.getElementById('buildingType').appendChild(opt);
+                   }
+               }
+           });
+};
+
+// TODO: ALL BUILDINGS WHITE IS A BUTTON
+// TODO: COLOR BY HEIGHT IS ONE OF THE QUERIES

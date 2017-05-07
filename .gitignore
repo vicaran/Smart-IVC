@@ -29,6 +29,7 @@ dbDumps/*
 .clover
 .clover/
 .clover/*
+node_modules
+node_modules/
 node_modules/*
-
 

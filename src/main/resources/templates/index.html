@@ -52,31 +52,22 @@
     <h3 class="sectionHeader">Colors</h3>
     <div class="nowrap sectionContent">
         <form class="nowrap" id="coloring">
-            <div style="display: table;">
-                <input id="osmColors" name="coloring" type="radio" value="default" checked=""/>
-                <label for="osmColors">Uniform</label>
-                <input id="colorPicker" type="color" name="favcolor" value="#FFFFFF" list="colors"/>
-                <datalist id="colors">
-                    <option>#ff0000</option>
-                    <option>#0000ff</option>
-                    <option>#00ff00</option>
-                    <option>#ffff00</option>
-                    <option>#00ffff</option>
-                </datalist>
-            </div>
-            <br/>
-            <input id="colorByHeight" name="coloring" value="height" type="radio"/>
+            <!--<div style="display: table;">-->
+                <!--<button type="button" id="resetColors">Reset Colors</button>-->
+            <!--</div>-->
+            <!--<br/>-->
+            <input id="colorByHeight" name="coloring" value="height" type="checkbox"/>
             <label for="colorByHeight">By height</label>
         </form>
     </div>
     <span class="divider"></span>
-    <h3 class="sectionHeader">Styles</h3>
-    <div class="nowrap sectionContent">
-        <div class="nowrap">
-            <input id="translucence" type="checkbox"/>
-            <label for="translucence">Translucence</label>
-        </div>
-    </div>
+    <!--<h3 class="sectionHeader">Styles</h3>-->
+    <!--<div class="nowrap sectionContent">-->
+        <!--<div class="nowrap">-->
+            <!--<input id="translucence" type="checkbox"/>-->
+            <!--<label for="translucence">Translucence</label>-->
+        <!--</div>-->
+    <!--</div>-->
     <h3 class="sectionHeader">Queries</h3>
     <div class="nowrap sectionContent">
         <select id="buildingSelectorCity">
@@ -88,16 +79,6 @@
         </select>
         <button type="button" id="queryFromBuildingCity">Search</button>
     </div>
-    <!--<span class="divider"></span>-->
-    <!--<h3 class="sectionHeader">Show</h3>-->
-    <!--<div class="nowrap sectionContent">-->
-        <!--<div class="nowrap">-->
-            <!--<label id="heightSliderLabel" for="heightSlider">Heights</label><br/>-->
-            <!--<div>-->
-                <!--<input id="heightSlider" type="range" min="10" max="400" value="400" step="10"/>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
 
 </div>
 

@@ -8,13 +8,14 @@ Cesium.MapboxApi.defaultAccessToken = "pk.eyJ1IjoidmljYXJhIiwiYSI6ImNqMmYxbWx0Nj
 let viewer = new Cesium.Viewer('cesiumContainer', {
     animation: false,
     baseLayerPicker: false,
-    fullscreenButton: true,
-    vrButton: true,
+    fullscreenButton: false,
+    vrButton: false,
     geocoder: false,
     timeline: false,
     navigationInstructionsInitiallyVisible: false,
     scene3DOnly: true,
     imageryProvider: false,
+    creditContainer : "cesium_credits_div",
     terrainShadows: Cesium.ShadowMode.ENABLED,
     projectionPicker: false
 });

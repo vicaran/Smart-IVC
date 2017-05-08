@@ -8,7 +8,10 @@
     <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
 
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/sidebarStyle.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/Cesium//Build/Cesium/Widgets/widgets.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/Cesium//Build/Cesium/Widgets/BaseLayerPicker/BaseLayerPicker.css}"/>
 
@@ -32,64 +35,88 @@
 
     <title>SMART-IVC</title>
 
-
-
-
-
-
 </head>
 <body>
-<div id="cesiumContainer"></div>
+<div id="loadingSpinnerBackground"></div>
 
-<div class="backdrop" id="side_menu" style="display: inline-block;">
-    <h3 class="sectionHeader">Load city</h3>
-    <div class="nowrap sectionContent">
-            <select id="zoomSelector">
-                <option selected="" disabled="" hidden="" value="">Choose...</option>
-            </select>
-    </div>
-    <span class="divider"></span>
-    <h3 class="sectionHeader">Colors</h3>
-    <div class="nowrap sectionContent">
-        <form class="nowrap" id="coloring">
-            <!--<div style="display: table;">-->
-                <!--<button type="button" id="resetColors">Reset Colors</button>-->
-            <!--</div>-->
-            <!--<br/>-->
-            <input id="colorByHeight" name="coloring" value="height" type="checkbox"/>
-            <label for="colorByHeight">By height</label>
-        </form>
-    </div>
-    <span class="divider"></span>
-    <!--<h3 class="sectionHeader">Styles</h3>-->
-    <!--<div class="nowrap sectionContent">-->
-        <!--<div class="nowrap">-->
-            <!--<input id="translucence" type="checkbox"/>-->
-            <!--<label for="translucence">Translucence</label>-->
-        <!--</div>-->
-    <!--</div>-->
-    <h3 class="sectionHeader">Queries</h3>
-    <div class="nowrap sectionContent">
-        <select id="buildingSelectorCity">
-            <option selected="" disabled="" hidden="" value="">Choose...</option>
-            <option value="Nearest">All</option>
-        </select>
-        <select id="buildingTypeCity">
-            <option selected="" disabled="" hidden="" value="">Choose...</option>
-        </select>
-        <button type="button" id="queryFromBuildingCity">Search</button>
+<div id="sidebar" class="sidebar collapsed">
+    <!-- Nav tabs -->
+    <div class="sidebar-tabs">
+        <ul role="tablist">
+            <li><a href="#visualize" role="tab"><i class="fa fa-eye" aria-hidden="true"></i></a></li>
+            <li><a href="#query" role="tab"><i class="fa fa-building" aria-hidden="true"></i></a></li>
+            <li><a href="#history" role="tab"><i class="fa fa-history" aria-hidden="true"></i></a></li>
+        </ul>
+        <ul role="tablist">
+            <li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
+        </ul>
     </div>
 
+    <!-- Tab panes -->
+    <div class="sidebar-content">
+        <div class="sidebar-pane" id="visualize">
+            <h1 class="sidebar-header">
+                Visualize
+                <span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+            </h1>
+            <h3 class="sectionHeader">Load city</h3>
+            <div class="nowrap sectionContent">
+                <select id="zoomSelector">
+                    <option selected="" disabled="" hidden="" value="">Choose...</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="sidebar-pane" id="query">
+            <h1 class="sidebar-header">Query City<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+            <form class="nowrap" id="coloring">
+                <input id="colorByHeight" name="coloring" value="height" type="checkbox"/>
+                <label for="colorByHeight">By height</label>
+                <div id="side_menu_legend" style="display: inline-block;"></div>
+            </form>
+            <div class="nowrap sectionContent">
+                <select id="buildingSelectorCity">
+                    <option selected="" disabled="" hidden="" value="">Choose...</option>
+                    <option value="Nearest">All</option>
+                </select>
+                <select id="buildingTypeCity">
+                    <option selected="" disabled="" hidden="" value="">Choose...</option>
+                </select>
+                <button type="button" id="queryFromBuildingCity">Search</button>
+            </div>
+
+        </div>
+
+        <div class="sidebar-pane" id="history">
+            <h1 class="sidebar-header">Query History<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+
+        </div>
+
+        <div class="sidebar-pane" id="settings">
+            <h1 class="sidebar-header">Settings<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+        </div>
+    </div>
 </div>
 
+<div id="cesiumContainer"></div>
+<div style="visibility: hidden;" id="cesium_credits_div"></div>
 </body>
 <script th:src="@{/js/jquery-3.2.0.min.js}" type="text/javascript"></script>
-<script th:src="@{/Cesium/Build/Cesium/Cesium.js}" type="text/javascript"></script>
-<script th:src="@{/js/utils.js}" type="text/javascript"></script>
+<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
 <script th:src="@{/js/app.js}" type="text/javascript"></script>
+<script th:src="@{/js/sidebar.js}" type="text/javascript"></script>
+<script th:src="@{/Cesium/Build/Cesium/Cesium.js}" type="text/javascript"></script>
 <script th:src="@{/js/environment.js}" type="text/javascript"></script>
+<script th:src="@{/js/utils.js}" type="text/javascript"></script>
 <script th:src="@{/js/listeners.js}" type="text/javascript"></script>
 <script th:src="@{/js/loadObjects.js}" type="text/javascript"></script>
+
+<script>
+    var map = L.map('cesiumContainer');
+    var sidebar = L.control.sidebar('sidebar').addTo(map);
+    $(".leaflet-control-container").remove();
+
+</script>
 
 
 <!--Import babilonjs scripts-->

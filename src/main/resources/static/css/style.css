@@ -4,6 +4,7 @@ html, body, #cesiumContainer {
     margin: 0;
     padding: 0;
     overflow: hidden;
+    font: 10pt "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
 
 .backdrop {
@@ -34,6 +35,15 @@ html, body, #cesiumContainer {
     position: absolute;
     left: 10px;
     top: 10px;
+    float:left;
+}
+
+#side_menu_legend{
+    display: none;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    float:left;
 }
 
 input[type="color"] {
@@ -73,8 +83,8 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 .links_style{
-    text-decoration: none;
-    color: white;
+    text-decoration: none !important;
+    color: white !important;;
 }
 
 .links_style:hover{
@@ -83,4 +93,40 @@ input[type="color"]::-webkit-color-swatch {
 
 .cesium-infoBox-defaultTable td{
     color: tomato !important;
+}
+
+#loadingSpinnerBackground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    cursor: not-allowed;
+    opacity: 0.5;
+    background: white url("../images/loading.gif") center no-repeat;
+    z-index: 99;
+}
+
+.legend {
+    list-style: none;
+}
+
+.legend li {
+    float: left;
+    margin-right: 10px;
+}
+
+.legend span {
+    border: 1px solid #ccc;
+    float: left;
+    width: 12px;
+    height: 12px;
+    margin: 2px;
+}
+
+#side_wrapper{
+    margin-left:auto;
+    margin-right:auto;
+    height:auto;
+    width:auto;
 }

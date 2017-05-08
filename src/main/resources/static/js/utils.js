@@ -1,33 +1,31 @@
 /**
  * Created by Andrea on 08/04/2017.
  */
-var SERVER_URL = "http://" + window.location.host + "/";
-var MAX_HEIGHT = -10;
-var POINTS = 0;
+let SERVER_URL = "http://" + window.location.host + "/";
+let MAX_HEIGHT = Number.NEGATIVE_INFINITY;
 
-
-var createRing = function (binaryCoordinates) {
+let createRing = function (binaryCoordinates) {
     return (atob(binaryCoordinates)).split(",");
 };
 
-var getFirstCoordinate = function (ringCoordinate) {
+let getFirstCoordinate = function (ringCoordinate) {
     return {
         'Lat': ringCoordinate[0].split(" ")[0],
         'Lng': ringCoordinate[0].split(" ")[1]
     }
 };
 
-var createShape = function (binaryCoordinates, coordinateZero) {
-    var shape = [];
-    var ringCoordinate = createRing(binaryCoordinates);
-    // var firstCoords = getFirstCoordinate(ringCoordinate);
-    // var adjusts = latLngToXYZ(firstCoords.Lat, firstCoords.Lng);
-    // var adjusts = latLngToArr(firstLatCoord, firstLngCoord);
+let createShape = function (binaryCoordinates, coordinateZero) {
+    let shape = [];
+    let ringCoordinate = createRing(binaryCoordinates);
+    // let firstCoords = getFirstCoordinate(ringCoordinate);
+    // let adjusts = latLngToXYZ(firstCoords.Lat, firstCoords.Lng);
+    // let adjusts = latLngToArr(firstLatCoord, firstLngCoord);
 
     ringCoordinate.forEach(function (data) {
         data = data.split(" ");
-        var coord = latLngToXYZ(data[0], data[1]);
-        // var coord = latLngToArr(data[0], data[1]);
+        let coord = latLngToXYZ(data[0], data[1]);
+        // let coord = latLngToArr(data[0], data[1]);
         // shape.push(new BABYLON.Vector3((coord.x - adjusts.x), (coord.y - adjusts.y), 0));
         shape.push(
             new BABYLON.Vector3(coord.x - coordinateZero.x, coord.y - coordinateZero.y, 0));
@@ -35,20 +33,20 @@ var createShape = function (binaryCoordinates, coordinateZero) {
     return shape;
 };
 
-var createPath = function (floors) {
-    var path = [];
-    for (var i = 0; i < (floors + 2); i++) {
-        var point = new BABYLON.Vector3(0, i / 4, 0);
+let createPath = function (floors) {
+    let path = [];
+    for (let i = 0; i < (floors + 2); i++) {
+        let point = new BABYLON.Vector3(0, i / 4, 0);
         path.push(point);
     }
     return path;
 };
 
-var latLngToXYZ = function (lat, lng) {
-    var R = 6371;
-    var x = R * Math.cos(lat) * Math.cos(lng);
-    var y = R * Math.cos(lat) * Math.sin(lng);
-    var z = R * Math.sin(lat);
+let latLngToXYZ = function (lat, lng) {
+    let R = 6371;
+    let x = R * Math.cos(lat) * Math.cos(lng);
+    let y = R * Math.cos(lat) * Math.sin(lng);
+    let z = R * Math.sin(lat);
 
     return {
         'x': x,
@@ -57,9 +55,9 @@ var latLngToXYZ = function (lat, lng) {
     }
 };
 
-var createList = function (binaryCoordinates) {
-    var shape = [];
-    var ringCoordinate = createRing(binaryCoordinates);
+let createList = function (binaryCoordinates) {
+    let shape = [];
+    let ringCoordinate = createRing(binaryCoordinates);
     ringCoordinate.forEach(function (data) {
         data = data.split(" ");
         shape.push(data[1]);
@@ -68,15 +66,20 @@ var createList = function (binaryCoordinates) {
     return shape;
 };
 
-var RGBToHex = function (r, g, b) {
-    var bin = r << 16 | g << 8 | b;
+let RGBToHex = function (r, g, b) {
+    if (r <= 1 && g <= 1 && b <= 1) {
+        r *= 255;
+        g *= 255;
+        b *= 255;
+    }
+    let bin = r << 16 | g << 8 | b;
     return (function (h) {
         return new Array(7 - h.length).join("0") + h
     })(bin.toString(16).toUpperCase())
 };
 
-var computeColorComplement = function (first, second, third) {
-    var hex;
+let computeColorComplement = function (first, second, third) {
+    let hex;
 
     if (first !== undefined && second !== undefined && third !== undefined) {
         hex = RGBToHex(first * 255, second * 255, third * 255);
@@ -98,7 +101,7 @@ var computeColorComplement = function (first, second, third) {
     if (hex.length !== 6) {
         throw new Error('Invalid HEX color.');
     }
-    var r = parseInt(hex.slice(0, 2), 16),
+    let r = parseInt(hex.slice(0, 2), 16),
         g = parseInt(hex.slice(2, 4), 16),
         b = parseInt(hex.slice(4, 6), 16);
     // invert color components
@@ -109,18 +112,18 @@ var computeColorComplement = function (first, second, third) {
     return "#" + padZero(r) + padZero(g) + padZero(b);
 };
 
-var padZero = function (str, len) {
+let padZero = function (str, len) {
     len = len || 2;
-    var zeros = new Array(len).join('0');
+    let zeros = new Array(len).join('0');
     return (zeros + str).slice(-len);
 };
 
-var interpolate = function (value, maximum, start_point, end_point) {
+let interpolate = function (value, maximum, start_point, end_point) {
     return start_point + (end_point - start_point) * value / maximum;
 };
 
-var interpolateColors = function (value, maximum, startRGB, endRGB) {
-    var interpolatedColors = [];
+let interpolateColors = function (value, maximum, startRGB, endRGB) {
+    let interpolatedColors = [];
     if (startRGB.length === 3 && endRGB.length === 3) {
         interpolatedColors[0] = interpolate(value, maximum, startRGB[0], endRGB[0]);
         interpolatedColors[1] = interpolate(value, maximum, startRGB[1], endRGB[1]);
@@ -130,32 +133,32 @@ var interpolateColors = function (value, maximum, startRGB, endRGB) {
     return interpolatedColors;
 };
 
-var getCameraCoordinates = function () {
-    var posUL = viewer.camera.pickEllipsoid(new Cesium.Cartesian2(0, 0), Cesium.Ellipsoid.WGS84);
-    var posLR = viewer.camera.pickEllipsoid(new Cesium.Cartesian2(viewer.canvas.width, viewer.canvas.height), Cesium.Ellipsoid.WGS84);
-    var posLL = viewer.camera.pickEllipsoid(new Cesium.Cartesian2(0, viewer.canvas.height), Cesium.Ellipsoid.WGS84);
-    var posUR = viewer.camera.pickEllipsoid(new Cesium.Cartesian2(viewer.canvas.width, 0), Cesium.Ellipsoid.WGS84);
+let getCameraCoordinates = function () {
+    let posUL = viewer.camera.pickEllipsoid(new Cesium.Cartesian2(0, 0), Cesium.Ellipsoid.WGS84);
+    let posLR = viewer.camera.pickEllipsoid(new Cesium.Cartesian2(viewer.canvas.width, viewer.canvas.height), Cesium.Ellipsoid.WGS84);
+    let posLL = viewer.camera.pickEllipsoid(new Cesium.Cartesian2(0, viewer.canvas.height), Cesium.Ellipsoid.WGS84);
+    let posUR = viewer.camera.pickEllipsoid(new Cesium.Cartesian2(viewer.canvas.width, 0), Cesium.Ellipsoid.WGS84);
 
-    var cartographic;
+    let cartographic;
 
     if (posUL !== undefined) {
         cartographic = this.viewer.scene.globe.ellipsoid.cartesianToCartographic(posUL);
-        var maxLat = Cesium.Math.toDegrees(cartographic.latitude).toFixed(6);
+        let maxLat = Cesium.Math.toDegrees(cartographic.latitude).toFixed(6);
     }
 
     if (posUR !== undefined) {
     cartographic = this.viewer.scene.globe.ellipsoid.cartesianToCartographic(posUR);
-    var minLon = Cesium.Math.toDegrees(cartographic.longitude).toFixed(6);
+        let minLon = Cesium.Math.toDegrees(cartographic.longitude).toFixed(6);
     }
 
     if (posLR !== undefined) {
     cartographic = this.viewer.scene.globe.ellipsoid.cartesianToCartographic(posLR);
-    var minLat = Cesium.Math.toDegrees(cartographic.latitude).toFixed(6);
+        let minLat = Cesium.Math.toDegrees(cartographic.latitude).toFixed(6);
     }
 
     if (posLL !== undefined) {
     cartographic = this.viewer.scene.globe.ellipsoid.cartesianToCartographic(posLL);
-    var maxLon = Cesium.Math.toDegrees(cartographic.longitude).toFixed(6);
+        let maxLon = Cesium.Math.toDegrees(cartographic.longitude).toFixed(6);
     }
 
     return {
@@ -167,12 +170,12 @@ var getCameraCoordinates = function () {
 };
 
 // USED IN LISTENERS
-var generateTable = function (data) {
-    var miniCanvas = '<div id="miniCanvasZone" style="text-align: center;"><canvas id="renderMiniCanvas" style="margin: auto;"></canvas></div>';
-    var table = '<div class="cesium-infoBox-description"><table class="cesium-infoBox-defaultTable"><tbody>';
-    for (var field in data) {
+let generateTable = function (data) {
+    let miniCanvas = '<div id="miniCanvasZone" style="text-align: center;"><canvas id="renderMiniCanvas" style="margin: auto;"></canvas></div>';
+    let table = '<div class="cesium-infoBox-description"><table class="cesium-infoBox-defaultTable"><tbody>';
+    for (let field in data) {
         if (field !== undefined && field !== 'ringCoords' && field !== 'id') {
-            var value = createValuesForTable(data, field);
+            let value = createValuesForTable(data, field);
             table += '<tr>'
                      + '<th>' + formatText(field) + '</th>'
                      + '<td>' + formatText(value) + '</td>'
@@ -184,7 +187,7 @@ var generateTable = function (data) {
     return miniCanvas + table + generateQuerieSelector();
 };
 
-var generateQuerieSelector = function () {
+let generateQuerieSelector = function () {
     return '<div class="nowrap sectionContent"><span>Select</span>'
            + '<select id="buildingSelector">'
            + '<option selected="" disabled="" hidden="" value="">Choose...</option>'
@@ -197,14 +200,14 @@ var generateQuerieSelector = function () {
            + '</div>';
 };
 
-var createValuesForTable = function (data, field) {
-    var value = '';
+let createValuesForTable = function (data, field) {
+    let value = '';
     switch (typeof data[field]) {
         case 'number':
             value = data[field];
             break;
         case 'object':
-            for (var entry in data[field]) {
+            for (let entry in data[field]) {
                 if (data[field][entry][0] !== null) {
                     value += data[field][entry][0];
                 }
@@ -219,18 +222,25 @@ var createValuesForTable = function (data, field) {
     return value.toString();
 };
 
-var formatText = function (txt) {
+let showLoadingGif = function () {
+    $("#loadingSpinnerBackground").show()
+};
 
-    var frags = txt.split('_');
-    for (var i = 0; i < frags.length; i++) {
+let hideLoadingGif = function () {
+    $("#loadingSpinnerBackground").hide()
+};
+
+let formatText = function (txt) {
+
+    let frags = txt.split('_');
+    for (let i = 0; i < frags.length; i++) {
         frags[i] = frags[i].charAt(0).toUpperCase() + frags[i].slice(1);
     }
 
     frags = frags.join(' ').toString().split(', ');
-    for (var i = 0; i < frags.length; i++) {
+    for (let i = 0; i < frags.length; i++) {
         frags[i] = frags[i].charAt(0).toUpperCase() + frags[i].slice(1);
     }
 
     return frags.join(', ');
-
 };

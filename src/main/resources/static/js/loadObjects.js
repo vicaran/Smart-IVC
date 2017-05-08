@@ -6,7 +6,9 @@ let buildingsID = [];
 let positions = [];
 let buildingsHeight = [];
 
+
 let loadObjs = function (cityID) {
+    showLoadingGif();
     $.ajax({
                url: SERVER_URL + "/building/city=" + cityID + "/",
                type: "GET",
@@ -21,7 +23,7 @@ let loadObjs = function (cityID) {
 
 let generateGeometry = function (data) {
     let list = createList(data.ringGlobalCoords);
-    let buildingHeight = (data.floors + 2) * 2;
+    let buildingHeight = data.floors === 0 ? 1 : (data.floors * 3);
     let buildingID = 'building_' + data.id;
 
     buildingsID.push(buildingID);
@@ -65,7 +67,7 @@ let updateGeometryHeights = function () {
 };
 
 let addGeometriesToPrimitives = function () {
-    scene.primitives.add(new Cesium.Primitive({
+    let primitivesArray = scene.primitives.add(new Cesium.Primitive({
                                                   geometryInstances: buildingsArray,
                                                   appearance: new Cesium.PerInstanceColorAppearance({
                                                                                                         translucent: false,
@@ -74,6 +76,9 @@ let addGeometriesToPrimitives = function () {
                                                   compressVertices: false,
                                                   interleave: true,
                                                   releaseGeometryInstances: false,
-                                                  shadows: Cesium.ShadowMode.ENABLED
+                                                                        shadows: Cesium.ShadowMode.ENABLED,
                                               }));
+    primitivesArray.readyPromise.then(function () {
+        hideLoadingGif();
+    });
 };

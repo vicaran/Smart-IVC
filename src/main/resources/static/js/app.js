@@ -7,10 +7,12 @@ $("#menu-toggle").click(function (e) {
 });
 
 window.onload = function () {
+    $(".cesium-viewer-toolbar").css("display", "inline-flex");
     hideLoadingGif();
     addCredits();
     loadCities();
     loadTypes();
+    loadObjs("1");
 };
 
 let loadCities = function () {
@@ -59,22 +61,22 @@ let addCredits = function () {
                      + '</span>';
 
     let creditsButton = '<span class"cesium-credits-wrapper">'
-                         + '<button type="button" class="cesium-button cesium-toolbar-button" title="Credits" id="credits-button">'
-                            +'<image src="/images/copyright.png" width="32" height="32"/>'
-                         + '</button>'
-                         + '<div class="cesium-navigation-help" id="credits-box">'
-                            + '<div class="cesium-click-navigation-help cesium-navigation-help-instructions cesium-click-navigation-help-visible">'
-                            + '<table>'
-                                + '<tbody>'
-                                    + '<tr>'
-                                         + '<td>'
-                                             + '<div class="cesium-navigation-help-pan">Developed by</div>'
-                                             + '<div class="cesium-navigation-help-details">Andrea Vicari</div>'
-                                         + '</td>'
-                                    + '</tr>'
-                                    + '<tr>'
-                                         + '<td>'
-                                            + '<div class="cesium-navigation-help-pan">Under the supervision of</div>'
+                        + '<button type="button" class="cesium-button cesium-toolbar-button" title="Credits" id="credits-button">'
+                        + '<image src="/images/copyright.png" width="32" height="32"/>'
+                        + '</button>'
+                        + '<div class="cesium-navigation-help" id="credits-box">'
+                        + '<div class="cesium-click-navigation-help cesium-navigation-help-instructions cesium-click-navigation-help-visible">'
+                        + '<table class="credits-box">'
+                        + '<tbody>'
+                        + '<tr>'
+                        + '<td>'
+                        + '<div class="cesium-navigation-help-pan">Developed by</div>'
+                        + '<div class="cesium-navigation-help-details">Andrea Vicari</div>'
+                        + '</td>'
+                        + '</tr>'
+                        + '<tr>'
+                        + '<td>'
+                        + '<div class="cesium-navigation-help-pan">Under the supervision of</div>'
                         + '<div class="cesium-navigation-help-details">Prof. Dr. <a href="http://www.inf.usi.ch/faculty/lanza/" target="_blank" class="links_style">Michele Lanza</a></div>'
                         + '<div class="cesium-navigation-help-details">Dr.  <a href="http://www.inf.usi.ch/postdoc/mocci/" target="_blank" class="links_style">Andrea Mocci</a></div>'
                         + '</td>'

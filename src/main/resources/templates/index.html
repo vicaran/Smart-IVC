@@ -11,9 +11,11 @@
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/sidebarStyle.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/Cesium//Build/Cesium/Widgets/widgets.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/Cesium//Build/Cesium/Widgets/BaseLayerPicker/BaseLayerPicker.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/component.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/demo.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/Cesium/Build/Cesium/Widgets/widgets.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/Cesium/Build/Cesium/Widgets/BaseLayerPicker/BaseLayerPicker.css}"/>
 
     <link rel="apple-touch-icon" sizes="57x57" th:href="@{images/SIVC-logo/apple-icon-57x57.png}"/>
     <link rel="apple-touch-icon" sizes="60x60" th:href="@{images/SIVC-logo/apple-icon-60x60.png}"/>
@@ -33,91 +35,149 @@
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png"/>
     <meta name="theme-color" content="#ffffff"/>
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}"/>
+
+    <script th:src="@{/js/modernizr.custom.js}" type="text/javascript"></script>
+
     <title>SMART-IVC</title>
 
 </head>
 <body>
 <div id="loadingSpinnerBackground"></div>
+<div class="container fullscreen-Cesium">
+    <ul id="gn-menu" class="gn-menu-main" style="max-width: 59px; z-index: 9999999;">
+        <li class="gn-trigger">
+            <a class="gn-icon gn-icon-menu" id="menu-hamburger"><span>Menu</span></a>
+            <nav class="gn-menu-wrapper" id="sidebar_menu">
+                <ul class="nav nav-tabs">
+                    <li class="icon-size" id="visualize_menu_selector"><a data-toggle="tab" id="visualize_menu_tab"><i class="fa fa-eye" aria-hidden="true"></i></a></li>
+                    <li class="icon-size" id="queryCity_menu_selector"><a data-toggle="tab" id="queryCity_menu_tab"><i class="fa fa-building" aria-hidden="true"></i></a></li>
+                    <li class="icon-size" id="queryHistory_menu_selector"><a data-toggle="tab" id="queryHistory_menu_tab"><i class="fa fa-history" aria-hidden="true"></i></a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="initial_menu" class="tab-pane fade">
+                        <h2>Welcome to Smart-IVC</h2>
+                        <img src="/images/logo.png" alt="Application Logo" class="logo_style"/>
+                        <p>An interactive tool of visualization for the City of Lugano</p>
+                        <h3>Start querying the city by selecting the tabs above</h3>
+                    </div>
+                    <div id="visualize_menu" class="tab-pane fade">
+                        <h3>Visualize</h3>
+                        Here the usere will be able to select the city one suburb at a time.
+                        <!--<div class="nowrap sectionContent">-->
+                            <!--<select id="zoomSelector">-->
+                                <!--<option selected="" disabled="" hidden="" value="">Choose...</option>-->
+                            <!--</select>-->
+                        <!--</div>-->
+                    </div>
+                    <div id="queryCity_menu" class="tab-pane fade">
+                        <h3>Query City</h3>
+                        <form class="nowrap" id="coloring">
+                            <input id="colorByHeight" name="coloring" value="height" type="checkbox"/>
+                            <label for="colorByHeight">By height</label>
+                            <!--<div id="side_menu_legend" style="display: inline-block;"></div>-->
+                        </form>
 
-<div id="sidebar" class="sidebar collapsed">
-    <!-- Nav tabs -->
-    <div class="sidebar-tabs">
-        <ul role="tablist">
-            <li><a href="#visualize" role="tab"><i class="fa fa-eye" aria-hidden="true"></i></a></li>
-            <li><a href="#query" role="tab"><i class="fa fa-building" aria-hidden="true"></i></a></li>
-            <li><a href="#history" role="tab"><i class="fa fa-history" aria-hidden="true"></i></a></li>
-        </ul>
-        <ul role="tablist">
-            <li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li>
-        </ul>
-    </div>
+                        <div style="float: left; margin-left: 10px;">
 
-    <!-- Tab panes -->
-    <div class="sidebar-content">
-        <div class="sidebar-pane" id="visualize">
-            <h1 class="sidebar-header">
-                Visualize
-                <span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
-            </h1>
-            <h3 class="sectionHeader">Load city</h3>
-            <div class="nowrap sectionContent">
-                <select id="zoomSelector">
-                    <option selected="" disabled="" hidden="" value="">Choose...</option>
-                </select>
-            </div>
-        </div>
+                            <table class="tg">
+                                <tr>
+                                    <th class="tg-0ord"></th>
+                                    <th class="tg-031e">
+                                        <div class="querySection">
+                                            <p>Select</p>
+                                            <select id="buildingSelectorCity">
+                                                <option selected="" disabled="" hidden="" value="">Choose...</option>
+                                                <option value="All">All</option>
+                                            </select>
+                                            <p>buildings</p>
+                                        </div>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td class="tg-0ord">
+                                        <form class="nowrap" id="byType">
+                                            <input id="byTypeSelection" name="byType" value="type" type="checkbox"/>
+                                        </form>
+                                    </td>
+                                    <td class="tg-031e">
+                                        <div class="querySection">
+                                            <p>Where type is: </p>
+                                            <select id="buildingTypeCity">
+                                                <option selected="" disabled="" hidden="" value="">Choose...</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-0ord">
+                                        <form class="nowrap" id="byFloors">
+                                            <input id="byFloorsSelection" name="byFloors" value="floors" type="checkbox"/>
+                                        </form>
+                                    </td>
+                                    <td class="tg-031e" style="padding-left: 10pt;">
+                                        <div class="querySection">
+                                            <p>Where number of floors is: </p>
+                                            <select id="buildingFloorsComparisonCity">
+                                                <option selected="" disabled="" hidden="" value="">Choose...</option>
+                                                <option value="greater"> &#62; </option>
+                                                <!--<option value="greaterEqual"> &#62;&#61; </option>-->
+                                                <option value="equal"> &#61;</option>
+                                                <!--<option value="lessEqual"> &#60;&#61; </option>-->
+                                                <option value="less"> &#60; </option>
+                                            </select>
+                                            <input id="floorsNumber" type="text" name="numberOfFloors" size="2" maxlength="2" style="height: 25px;"/>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-0ord"></td>
+                                    <td class="tg-031e"></td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-0ord"></td>
+                                    <td class="tg-031e"></td>
+                                </tr>
+                            </table>
 
-        <div class="sidebar-pane" id="query">
-            <h1 class="sidebar-header">Query City<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
-            <form class="nowrap" id="coloring">
-                <input id="colorByHeight" name="coloring" value="height" type="checkbox"/>
-                <label for="colorByHeight">By height</label>
-                <div id="side_menu_legend" style="display: inline-block;"></div>
-            </form>
-            <div class="nowrap sectionContent">
-                <select id="buildingSelectorCity">
-                    <option selected="" disabled="" hidden="" value="">Choose...</option>
-                    <option value="Nearest">All</option>
-                </select>
-                <select id="buildingTypeCity">
-                    <option selected="" disabled="" hidden="" value="">Choose...</option>
-                </select>
-                <button type="button" id="queryFromBuildingCity">Search</button>
-            </div>
-
-        </div>
-
-        <div class="sidebar-pane" id="history">
-            <h1 class="sidebar-header">Query History<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
-
-        </div>
-
-        <div class="sidebar-pane" id="settings">
-            <h1 class="sidebar-header">Settings<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
-        </div>
-    </div>
+                            <button type="button" id="queryFromBuildingCity">Search</button>
+                        </div>
+                    </div>
+                    <div id="queryHistory_menu" class="tab-pane fade">
+                        <h3>Query History</h3>
+                        <p>The history of your queries is going to appear here. This section is Work In Progress</p>
+                    </div>
+                </div>
+            </nav>
+        </li>
+    </ul>
+    <header class="fullscreen-Cesium">
+        <div id="cesiumContainer"></div>
+        <div style="visibility: hidden;" id="cesium_credits_div"></div>
+    </header>
 </div>
 
-<div id="cesiumContainer"></div>
-<div style="visibility: hidden;" id="cesium_credits_div"></div>
 </body>
-<script th:src="@{/js/jquery-3.2.0.min.js}" type="text/javascript"></script>
-<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
-<script th:src="@{/js/app.js}" type="text/javascript"></script>
+
+<script th:src="@{/js/classie.js}" type="text/javascript"></script>
+<script th:src="@{/js/gnmenu.js}" type="text/javascript"></script>
 <script th:src="@{/js/sidebar.js}" type="text/javascript"></script>
+
+
+<script th:src="@{/js/app.js}" type="text/javascript"></script>
 <script th:src="@{/Cesium/Build/Cesium/Cesium.js}" type="text/javascript"></script>
 <script th:src="@{/js/environment.js}" type="text/javascript"></script>
 <script th:src="@{/js/utils.js}" type="text/javascript"></script>
 <script th:src="@{/js/listeners.js}" type="text/javascript"></script>
 <script th:src="@{/js/loadObjects.js}" type="text/javascript"></script>
 
+
 <script>
-    var map = L.map('cesiumContainer');
-    var sidebar = L.control.sidebar('sidebar').addTo(map);
-    $(".leaflet-control-container").remove();
-
+    new gnMenu(document.getElementById('gn-menu'));
 </script>
-
 
 <!--Import babilonjs scripts-->
 <script th:src="@{/js/miniCanvas.js}" type="text/javascript"></script>

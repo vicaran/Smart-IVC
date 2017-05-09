@@ -53,4 +53,9 @@ public interface BuildingRepository extends JpaRepository<Building, Long> {
          * @return the list
          */
         List<Building> findBuildingsByEgidUcaIsNotNull();
+
+        List<Building> findBuildingsByFloorsLessThan(int floors);
+        List<Building> findBuildingsByFloorsEquals(int floors);
+        List<Building> findBuildingsByFloorsGreaterThan(int floors);
+
 }

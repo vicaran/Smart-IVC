@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -143,6 +144,36 @@ public class BuildingController {
             buildingIds.add(address.getBuilding().getId());
         }
 
+        String result = new JSONObject()
+                .put("buildingIds",buildingIds).toString();
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/floors/{comparisonVal}/{floorsNumber}/", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<?> handleBuildingByFloors(
+            @PathVariable String comparisonVal,
+            @PathVariable int floorsNumber) {
+
+        Collection<Building> buildings = null;
+        Set<Long> buildingIds = new HashSet<>();
+        switch (comparisonVal) {
+            case "greater":
+                buildings = buildingRepository.findBuildingsByFloorsGreaterThan(floorsNumber);
+                break;
+            case "equal":
+                buildings = buildingRepository.findBuildingsByFloorsEquals(floorsNumber);
+                break;
+            case "less":
+                buildings = buildingRepository.findBuildingsByFloorsLessThan(floorsNumber);
+                break;
+            default:
+                buildings = new ArrayList<>();
+        }
+
+        for (Building building : buildings) {
+            buildingIds.add(building.getId());
+        }
         String result = new JSONObject()
                 .put("buildingIds",buildingIds).toString();
 

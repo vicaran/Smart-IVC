@@ -77,6 +77,8 @@ $("#zoomSelector").change(function () {
 
                        let centroidLat = (maxLat + minLat) / 2;
                        let centroidLng = (maxLng + minLng) / 2;
+                       console.log(maxLat + " " + maxLng);
+                       console.log(minLat + " " + minLng);
                        viewer.camera.flyTo({
                                                destination: Cesium.Cartesian3.fromDegrees(centroidLng - 0.031177, centroidLat - 0.034978, 9000),
                                                orientation: {
@@ -166,12 +168,19 @@ let destroyLegend = function () {
 };
 
 let setDefaultColors = function () {
-    for (let i = 0; i < viewer.scene.primitives.get(1).geometryInstances.length; i++) {
-        let primitive = getPrimitiveFromPrimitiveId(viewer.scene.primitives.get(1).geometryInstances[i].id);
-        if (primitive !== undefined) {
-            primitive.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.WHITE);
-            if (primitive === selectedEntity) {
-                primitive.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.RED);
+
+    if ($("#colorByHeight:checked").length === 1) {
+        $("#colorByHeight").prop('checked', false);
+    }
+
+    for (let j = 1; j < scene.primitives.length; j++) {
+        for (let i = 0; i < viewer.scene.primitives.get(j).geometryInstances.length; i++) {
+            let primitive = getPrimitiveFromPrimitiveId(viewer.scene.primitives.get(j).geometryInstances[i].id);
+            if (primitive !== undefined) {
+                primitive.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.WHITE);
+                if (primitive === selectedEntity) {
+                    primitive.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.RED);
+                }
             }
         }
     }
@@ -190,28 +199,44 @@ $('#cesiumContainer').click(function () {
 //language=JQuery-CSS
 $('#queryFromBuildingCity').click(function () {
     setDefaultColors();
-    let typeId = $("#buildingTypeCity").find("option:selected").attr("id");
-    if (typeId !== undefined) {
-        $.ajax({
-                   url: SERVER_URL + "building/type/" + typeId,
-                   type: "GET",
-                   success: function (data) {
-                       for (let j = 0; j < data.buildingIds.length; j++) {
-                           for (let i = 0; i < viewer.scene.primitives.length; i++) {
-                               if (viewer.scene.primitives.get(i).geometryInstances !== undefined) {
-                                   if (parseInt((viewer.scene.primitives.get(i).geometryInstances.id).split("_")[1]) === parseInt(data.buildingIds[j])) {
-                                       console.log("Match");
-                                       viewer.scene.primitives.get(i).appearance.material.uniforms.color = Cesium.Color.fromCssColorString("#FF0000");
-                                   }
-                               }
-                           }
+
+    let queryVal = queryBuilder();
+    if (queryVal === "") {
+        return;
+    }
+    $.ajax({
+               url: SERVER_URL + "building/" + queryVal + "/",
+               type: "GET",
+               success: function (data) {
+                   for (let i = 0; i < data.buildingIds.length; i++) {
+                       let primitive = getPrimitiveFromPrimitiveId("building_" + data.buildingIds[i]);
+                       if (primitive !== undefined) {
+                           console.log("Match");
+                           primitive.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.DARKORANGE);
                        }
                    }
+               }
+           })
 
-               })
-    }
 })
 ;
+
+let queryBuilder = function () {
+    let query = '';
+    if ($("#byTypeSelection:checked").length === 1) {
+        query += "type/" + $("#buildingTypeCity").find("option:selected").attr("id");
+        return query;
+    }
+    if ($("#byFloorsSelection:checked").length === 1) {
+        let comparisonVal = $("#buildingFloorsComparisonCity").val();
+        let floorsNumber = $("#floorsNumber").val();
+        if (comparisonVal !== null && floorsNumber !== "") {
+            return query += "floors/" + comparisonVal + "/" + floorsNumber;
+        }
+        return query;
+    }
+    return query;
+};
 
 let loadInfoBox = function (buildingId) {
     $.ajax({
@@ -219,7 +244,7 @@ let loadInfoBox = function (buildingId) {
                type: "GET",
                success: function (data) {
                    viewer.selectedEntity = new Cesium.Entity({
-                                                                 id: selectedEntity.id,
+                                                                 id: "Selected Building",
                                                                  description: generateTable(data)
                                                              });
                    setTimeout(function () {
@@ -259,3 +284,5 @@ let loadTypesForInfoBox = function () {
 
 // TODO: QUERY TO FIND THE NEAREST POINT (PUT SUBURB IN EVERY BUILDING)
 // TODO: SIDE MENU WHERE YOU CAN FIND THE HISTORY OF YOUR QUERIES AND EXECUTE QUERIES ON THEM
+// TODO: IN FIRST TAB YOU HAVE THE POSSIBILITY TO SELECT SUBURBS WITH CHECKBOXES
+// TODO: IN SECOND TAB YOU HAVE QUERY SQL LIKE : SELECT ALL BUILDINGS WHERE FLOORS > 3

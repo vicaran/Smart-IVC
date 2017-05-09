@@ -5,6 +5,13 @@
 Cesium.BingMapsApi.defaultKey = "AibFjJSh0jKod09GGPlExgM-mBd5DEah5hPAeIVTDHQhEuUHi0PAhYKS3vmFi-i9";
 Cesium.MapboxApi.defaultAccessToken = "pk.eyJ1IjoidmljYXJhIiwiYSI6ImNqMmYxbWx0NjA3cHgzNnF5eDB2M2p3ZHoifQ.T97LWm5-1lUxOKfz048CNg";
 
+
+// Cesium.Camera.DEFAULT_OFFSET = new Cesium.HeadingPitchRange(0.0, Cesium.Math.toRadians(-70.0), Cesium.Math.toRadians(-70.0));
+// Cesium.Camera.DEFAULT_VIEW_FACTOR = 0;
+// Cesium.Camera.DEFAULT_VIEW_RECTANGLE = Cesium.Rectangle.fromDegrees(8.893699999999999, 46.1191401, 9.089630099999999, 45.93971);
+
+
+
 let viewer = new Cesium.Viewer('cesiumContainer', {
     animation: false,
     baseLayerPicker: false,
@@ -17,7 +24,10 @@ let viewer = new Cesium.Viewer('cesiumContainer', {
     imageryProvider: false,
     creditContainer : "cesium_credits_div",
     terrainShadows: Cesium.ShadowMode.ENABLED,
-    projectionPicker: false
+    projectionPicker: false,
+
+    homeButton: false,
+    // navigationHelpButton: false
 });
 
 // //Add basic drag and drop functionality
@@ -28,11 +38,20 @@ viewer.dropError.addEventListener(function (dropHandler, name, error) {
     window.alert(error);
 });
 
-// viewer.resolutionScale = 0.8;
 viewer.infoBox.frame.removeAttribute('sandbox');
+
+viewer.camera.setView({
+                          destination : Cesium.Rectangle.fromDegrees(8.893699999999999, 46.0101401, 9.039630099999999, 45.98971),
+                          orientation: {
+                              heading : 0.0,
+                              pitch : Cesium.Math.toRadians(-70),
+                              roll : viewer.camera.roll
+                          }
+                      });
+
 //
 let scene = viewer.scene;
-scene.debugShowFramesPerSecond = true;
+// scene.debugShowFramesPerSecond = true;
 scene.orderIndependentTranslucency = false;
 scene.contextOptions = {
     allowTextureFilterAnisotropic: false,

@@ -1,214 +1,98 @@
 /**
- * @name Sidebar
- * @class L.Control.Sidebar
- * @extends L.Control
- * @param {string} id - The id of the sidebar element (without the # character)
- * @param {Object} [options] - Optional options object
- * @param {string} [options.position=left] - Position of the sidebar: 'left' or 'right'
- * @see L.control.sidebar
+ * Created by Andrea on 09/05/2017.
  */
-L.Control.Sidebar = L.Control.extend(/** @lends L.Control.Sidebar.prototype */ {
-    includes: L.Mixin.Events,
 
-    options: {
-        position: 'left'
-    },
+let activeMenu = undefined;
+let opened = false;
 
-    initialize: function (id, options) {
-        var i, child;
+let isSelected = function (activeSelector) {
+    if (activeSelector.hasClass("active")) {
+        return true;
+    }
+    if ($("#visualize_menu_selector").hasClass("active")) {
+        $("#visualize_menu_selector").removeClass("active");
+        $("#visualize_menu").removeClass("in active");
+    } else if ($("#queryCity_menu_selector").hasClass("active")) {
+        $("#queryCity_menu_selector").removeClass("active");
+        $("#queryCity_menu").removeClass("in active");
+    } else if ($("#queryHistory_menu_selector").hasClass("active")) {
+        $("#queryHistory_menu_selector").removeClass("active");
+        $("#queryHistory_menu").removeClass("in active");
+    } else if ($("#initial_menu").hasClass("in active")) {
+        $("#initial_menu").removeClass("in active");
+    }
+    return false;
+};
 
-        L.setOptions(this, options);
-
-        // Find sidebar HTMLElement
-        this._sidebar = L.DomUtil.get(id);
-
-        // Attach .sidebar-left/right class
-        L.DomUtil.addClass(this._sidebar, 'sidebar-' + this.options.position);
-
-        // Attach touch styling if necessary
-        if (L.Browser.touch)
-            L.DomUtil.addClass(this._sidebar, 'leaflet-touch');
-
-        // Find sidebar > div.sidebar-content
-        for (i = this._sidebar.children.length - 1; i >= 0; i--) {
-            child = this._sidebar.children[i];
-            if (child.tagName == 'DIV' &&
-                L.DomUtil.hasClass(child, 'sidebar-content'))
-                this._container = child;
+let handleSidebar = function () {
+    if (opened) {
+        hideActive();
+    } else {
+        if (activeMenu !== undefined) {
+            activeMenu.show();
         }
+    }
+    opened = !opened;
+};
 
-        // Find sidebar ul.sidebar-tabs > li, sidebar .sidebar-tabs > ul > li
-        this._tabitems = this._sidebar.querySelectorAll('ul.sidebar-tabs > li, .sidebar-tabs > ul > li');
-        for (i = this._tabitems.length - 1; i >= 0; i--) {
-            this._tabitems[i]._sidebar = this;
-        }
+let hideActive = function () {
+    if ($("#visualize_menu_selector").hasClass("active")) {
+        $("#visualize_menu").hide();
+        activeMenu = $("#visualize_menu");
+    } else if ($("#queryCity_menu_selector").hasClass("active")) {
+        $("#queryCity_menu").hide();
+        activeMenu = $("#queryCity_menu");
+    } else if ($("#queryHistory_menu_selector").hasClass("active")) {
+        $("#queryHistory_menu").hide();
+        activeMenu = $("#queryHistory_menu");
+    } else if ($("#initial_menu").hasClass("in active")) {
+        $("#initial_menu").hide();
+        activeMenu = $("#initial_menu");
+    }
+};
 
-        // Find sidebar > div.sidebar-content > div.sidebar-pane
-        this._panes = [];
-        this._closeButtons = [];
-        for (i = this._container.children.length - 1; i >= 0; i--) {
-            child = this._container.children[i];
-            if (child.tagName == 'DIV' &&
-                L.DomUtil.hasClass(child, 'sidebar-pane')) {
-                this._panes.push(child);
-
-                var closeButtons = child.querySelectorAll('.sidebar-close');
-                for (var j = 0, len = closeButtons.length; j < len; j++)
-                    this._closeButtons.push(closeButtons[j]);
-            }
-        }
-    },
-
-    /**
-     * Add this sidebar to the specified map.
-     *
-     * @param {L.Map} map
-     * @returns {Sidebar}
-     */
-    addTo: function (map) {
-        var i, child;
-
-        this._map = map;
-
-        for (i = this._tabitems.length - 1; i >= 0; i--) {
-            child = this._tabitems[i];
-            var sub = child.querySelector('a');
-            if (sub.hasAttribute('href') && sub.getAttribute('href').slice(0,1) == '#') {
-                L.DomEvent
-                    .on(sub, 'click', L.DomEvent.preventDefault )
-                    .on(sub, 'click', this._onClick, child);
-            }
-        }
-
-        for (i = this._closeButtons.length - 1; i >= 0; i--) {
-            child = this._closeButtons[i];
-            L.DomEvent.on(child, 'click', this._onCloseClick, this);
-        }
-
-        return this;
-    },
-
-    /**
-     * @deprecated - Please use remove() instead of removeFrom(), as of Leaflet 0.8-dev, the removeFrom() has been replaced with remove()
-     * Removes this sidebar from the map.
-     * @param {L.Map} map
-     * @returns {Sidebar}
-     */
-    removeFrom: function(map) {
-        console.log('removeFrom() has been deprecated, please use remove() instead as support for this function will be ending soon.');
-        this.remove(map);
-    },
-
-    /**
-     * Remove this sidebar from the map.
-     *
-     * @param {L.Map} map
-     * @returns {Sidebar}
-     */
-    remove: function (map) {
-        var i, child;
-
-        this._map = null;
-
-        for (i = this._tabitems.length - 1; i >= 0; i--) {
-            child = this._tabitems[i];
-            L.DomEvent.off(child.querySelector('a'), 'click', this._onClick);
-        }
-
-        for (i = this._closeButtons.length - 1; i >= 0; i--) {
-            child = this._closeButtons[i];
-            L.DomEvent.off(child, 'click', this._onCloseClick, this);
-        }
-
-        return this;
-    },
-
-    /**
-     * Open sidebar (if necessary) and show the specified tab.
-     *
-     * @param {string} id - The id of the tab to show (without the # character)
-     */
-    open: function(id) {
-        var i, child;
-
-        // hide old active contents and show new content
-        for (i = this._panes.length - 1; i >= 0; i--) {
-            child = this._panes[i];
-            if (child.id == id)
-                L.DomUtil.addClass(child, 'active');
-            else if (L.DomUtil.hasClass(child, 'active'))
-                L.DomUtil.removeClass(child, 'active');
-        }
-
-        // remove old active highlights and set new highlight
-        for (i = this._tabitems.length - 1; i >= 0; i--) {
-            child = this._tabitems[i];
-            if (child.querySelector('a').hash == '#' + id)
-                L.DomUtil.addClass(child, 'active');
-            else if (L.DomUtil.hasClass(child, 'active'))
-                L.DomUtil.removeClass(child, 'active');
-        }
-
-        this.fire('content', { id: id });
-
-        // open sidebar (if necessary)
-        if (L.DomUtil.hasClass(this._sidebar, 'collapsed')) {
-            this.fire('opening');
-            L.DomUtil.removeClass(this._sidebar, 'collapsed');
-        }
-
-        return this;
-    },
-
-    /**
-     * Close the sidebar (if necessary).
-     */
-    close: function() {
-        // remove old active highlights
-        for (var i = this._tabitems.length - 1; i >= 0; i--) {
-            var child = this._tabitems[i];
-            if (L.DomUtil.hasClass(child, 'active'))
-                L.DomUtil.removeClass(child, 'active');
-        }
-
-        // close sidebar
-        if (!L.DomUtil.hasClass(this._sidebar, 'collapsed')) {
-            this.fire('closing');
-            L.DomUtil.addClass(this._sidebar, 'collapsed');
-        }
-
-        return this;
-    },
-
-    /**
-     * @private
-     */
-    _onClick: function() {
-        if (L.DomUtil.hasClass(this, 'active'))
-            this._sidebar.close();
-        else if (!L.DomUtil.hasClass(this, 'disabled'))
-            this._sidebar.open(this.querySelector('a').hash.slice(1));
-    },
-
-    /**
-     * @private
-     */
-    _onCloseClick: function () {
-        this.close();
+$("#visualize_menu_tab").click(function () {
+    if (!isSelected($("#visualize_menu_selector"))) {
+        $("#visualize_menu_selector").addClass("active");
+        $("#visualize_menu").addClass("in active");
     }
 });
 
-/**
- * Creates a new sidebar.
- *
- * @example
- * var sidebar = L.control.sidebar('sidebar').addTo(map);
- *
- * @param {string} id - The id of the sidebar element (without the # character)
- * @param {Object} [options] - Optional options object
- * @param {string} [options.position=left] - Position of the sidebar: 'left' or 'right'
- * @returns {Sidebar} A new sidebar instance
- */
-L.control.sidebar = function (id, options) {
-    return new L.Control.Sidebar(id, options);
-};
+$("#queryCity_menu_tab").click(function () {
+    if (!isSelected($("#queryCity_menu_selector"))) {
+        $("#queryCity_menu_selector").addClass("active");
+        $("#queryCity_menu").addClass("in active");
+    }
+});
+
+$("#queryHistory_menu_tab").click(function () {
+    if (!isSelected($("#queryHistory_menu_selector"))) {
+        $("#queryHistory_menu_selector").addClass("active");
+        $("#queryHistory_menu").addClass("in active");
+    }
+});
+
+$("#menu-hamburger").click(function () {
+    if (!($("#visualize_menu_selector").hasClass("active") || $("#queryHistory_menu_selector").hasClass("active") || $("#queryCity_menu_selector")
+            .hasClass("active"))) {
+        $("#initial_menu").addClass("in active");
+    }
+    handleSidebar();
+});
+
+$("#sidebar_menu").hover(function(){
+    if (!($("#visualize_menu_selector").hasClass("active") || $("#queryHistory_menu_selector").hasClass("active") || $("#queryCity_menu_selector")
+            .hasClass("active"))) {
+        $("#initial_menu").addClass("in active");
+    }
+    if (!opened) {
+        if (activeMenu !== undefined) {
+            activeMenu.show();
+        }
+        opened = !opened;
+    }
+});
+
+$(document).click(function () {
+    handleSidebar();
+});

@@ -20,6 +20,9 @@ let isSelected = function (activeSelector) {
         $("#queryHistory_menu").removeClass("in active");
     } else if ($("#initial_menu").hasClass("in active")) {
         $("#initial_menu").removeClass("in active");
+    } else if ($("#credits_menu").hasClass("in active")) {
+        $("#credits_menu_selector").removeClass("active");
+        $("#credits_menu").removeClass("in active");
     }
     return false;
 };
@@ -48,6 +51,9 @@ let hideActive = function () {
     } else if ($("#initial_menu").hasClass("in active")) {
         $("#initial_menu").hide();
         activeMenu = $("#initial_menu");
+    } else if ($("#credits_menu").hasClass("in active")) {
+        $("#credits_menu").hide();
+        activeMenu = $("#credits_menu");
     }
 };
 
@@ -72,9 +78,16 @@ $("#queryHistory_menu_tab").click(function () {
     }
 });
 
+$("#credits_menu_tab").click(function () {
+    if (!isSelected($("#credits_menu_selector"))) {
+        $("#credits_menu_selector").addClass("active");
+        $("#credits_menu").addClass("in active");
+    }
+});
+
 $("#menu-hamburger").click(function () {
     if (!($("#visualize_menu_selector").hasClass("active") || $("#queryHistory_menu_selector").hasClass("active") || $("#queryCity_menu_selector")
-            .hasClass("active"))) {
+            .hasClass("active") || $("#credits_menu_selector").hasClass("active"))) {
         $("#initial_menu").addClass("in active");
     }
     handleSidebar();
@@ -82,7 +95,7 @@ $("#menu-hamburger").click(function () {
 
 $("#sidebar_menu").hover(function(){
     if (!($("#visualize_menu_selector").hasClass("active") || $("#queryHistory_menu_selector").hasClass("active") || $("#queryCity_menu_selector")
-            .hasClass("active"))) {
+            .hasClass("active") || $("#credits_menu_selector").hasClass("active"))) {
         $("#initial_menu").addClass("in active");
     }
     if (!opened) {

@@ -42,6 +42,7 @@ let triggerCreditButton = function () {
 
 let addCredits = function () {
     let cesiumCredits = $("#cesium_credits_div .cesium-credit-image");
+    $("#powered_div").append(cesiumCredits.html());
     let creditButton = $(".cesium-viewer-toolbar");
     let creditsReveal = '<span class="cesium-credit-image">'
                             + '<a href="http://reveal.inf.usi.ch/" target="_blank">'
@@ -110,9 +111,10 @@ let addCredits = function () {
                         + '</div>'
                         + '</div>'
                         + '</span>';
-    creditButton.append(creditsButton);
+    // creditButton.append(creditsButton);
     $("#cesium_credits_div").remove();
-    triggerCreditButton();
+    // $("#credits_menu").append(creditsButton);
+    // triggerCreditButton();
 };
 
 

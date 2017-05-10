@@ -211,7 +211,6 @@ $('#queryFromBuildingCity').click(function () {
                    for (let i = 0; i < data.buildingIds.length; i++) {
                        let primitive = getPrimitiveFromPrimitiveId("building_" + data.buildingIds[i]);
                        if (primitive !== undefined) {
-                           console.log("Match");
                            primitive.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.DARKORANGE);
                        }
                    }

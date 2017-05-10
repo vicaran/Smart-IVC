@@ -56,6 +56,9 @@
                     <li class="icon-size" id="visualize_menu_selector"><a data-toggle="tab" id="visualize_menu_tab"><i class="fa fa-eye" aria-hidden="true"></i></a></li>
                     <li class="icon-size" id="queryCity_menu_selector"><a data-toggle="tab" id="queryCity_menu_tab"><i class="fa fa-building" aria-hidden="true"></i></a></li>
                     <li class="icon-size" id="queryHistory_menu_selector"><a data-toggle="tab" id="queryHistory_menu_tab"><i class="fa fa-history" aria-hidden="true"></i></a></li>
+                    <li class="icon-size" id="credits_menu_selector"><a data-toggle="tab" id="credits_menu_tab"><i class="fa fa-info"
+                                                                                                                   aria-hidden="true"></i></a></li>
+
                 </ul>
                 <div class="tab-content">
                     <div id="initial_menu" class="tab-pane fade">
@@ -149,6 +152,58 @@
                     <div id="queryHistory_menu" class="tab-pane fade">
                         <h3>Query History</h3>
                         <p>The history of your queries is going to appear here. This section is Work In Progress</p>
+                    </div>
+                    <div id="credits_menu" class="tab-pane fade">
+                        <h3>Credits</h3>
+                        <table class="credits-box" id="credits_table">
+                            <tbody style=" text-align: -webkit-left;">
+                            <tr>
+                                <td>
+                                    <div class="cesium-navigation-help-pan">Developed by</div>
+                                    <p>Andrea Vicari</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="cesium-navigation-help-pan">Under the supervision of</div>
+                                    <div class="">Prof. Dr. <a href="http://www.inf.usi.ch/faculty/lanza/"
+                                                                                             target="_blank" class="links_style">Michele Lanza</a>
+                                    </div>
+                                    <div class="">Dr. <a href="http://www.inf.usi.ch/postdoc/mocci/" target="_blank"
+                                                                                       class="links_style">Andrea Mocci</a></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="cesium-navigation-help-pan">Find it on GitHub</div>
+                                    <span class="cesium-credit-image">
+                                        <a href="https://github.com/vicaran/Smart-IVC" target="_blank">
+                                            <img src="/images/reveal/githubLogo.png" alt="GITHUB_REPO" title="GITHUB_REPO"
+                                                 style="vertical-align: bottom;"/>
+                                         </a>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="cesium-navigation-help-pan" id="powered_div">Powered by
+                                        <span class="cesium-credit-image">
+                                        <a href="http://reveal.inf.usi.ch/" target="_blank">
+                                            <img src="/images/reveal/REVEALogo-black.png" alt="Reveal" title="Reveal"
+                                                 style="vertical-align: bottom;"/>
+                                        </a>
+                                    </span>
+                                        <span class="cesium-credit-image">
+                                         <a href="http://www.inf.usi.ch/" target="_blank">
+                                             <img src="/images/reveal/logo_usi.png" alt="USI_INF" title="USI_INF" style="vertical-align: bottom;"/>
+                                         </a>
+                                    </span>
+
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </nav>

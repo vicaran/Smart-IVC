@@ -92,8 +92,7 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 .links_style{
-    text-decoration: none !important;
-    color: white !important;;
+    display: inline-table !important;
 }
 
 .links_style:hover{
@@ -148,6 +147,8 @@ input[type="color"]::-webkit-color-swatch {
 
 .icon-size {
     font-size: 21pt;
+    width:64px;
+    height: 64px;
 }
 
 .logo_style {
@@ -180,4 +181,9 @@ input[type="color"]::-webkit-color-swatch {
 
 .tg .tg-0ord {
     text-align: right
+}
+
+#credits_table a,
+#credits_table p {
+    line-height: 28px;
 }

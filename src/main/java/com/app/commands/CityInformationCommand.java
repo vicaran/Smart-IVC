@@ -51,30 +51,52 @@ public class CityInformationCommand {
         this.swissTopo = new SwissTopoAPI();
     }
 
+
+    @Scheduled
+    public void informationSuburbTaskFromSwissTopo() {
+        System.out.println("Updating Suburbs from SwissTopo...");
+        List<Building> buildings = buildingRepository.findAll();
+        for (Building building : buildings) {
+            String swissCoords = new String(building.getRingSwissCoords());
+            String[] firstCoordPoint = swissCoords.split(",")[0].split(" ");
+
+            String suburbName = swissTopo.coordinateToSuburb(firstCoordPoint[0], firstCoordPoint[1]);
+
+            this.handleSuburb(building, suburbName);
+            System.out.println("Updating building " + building.getId());
+            buildingRepository.save(building);
+
+        }
+        System.out.println("Suburbs updated!");
+    }
+
     /**
      * Information task from swiss topo.
      */
     @Scheduled
-    public void informationTaskFromSwissTopo() {
-        System.out.println("Updating Addresses from SwissTopo...");
-        List<Building> egidBuildings = buildingRepository.findBuildingsByEgidUcaIsNotNull();
-        for (Building building : egidBuildings) {
-            Optional<Address> address = addressRepository.findAddressByLatitudeAndLongitudeAndOwnBuilding_Id(building.getCentroidLat(), building.getCentroidLng(), building.getId());
-            if (address.isPresent()) {
-                org.json.JSONObject buildingInformation = swissTopo.egidToBuildingAddress(building.getEgidUca());
-                if (buildingInformation != null) {
-                    address.get().setHouseNumber(!buildingInformation.isNull("deinr") ? buildingInformation.getString("deinr") : address.get().getHouseNumber());
-                    address.get().setAddressName(!buildingInformation.isNull("strname1") ? buildingInformation.getString("strname1") : address.get().getAddressName());
+    public void informationAddressTaskFromSwissTopo() {
+        Optional<List<Address>> nullAddresses = Optional.ofNullable(addressRepository.findAddressByAddressNameIsNull());
+        if (nullAddresses.isPresent() && nullAddresses.get().size() > 81) {
+            System.out.println("Updating Addresses from SwissTopo...");
+            List<Building> egidBuildings = buildingRepository.findBuildingsByEgidUcaIsNotNull();
+            for (Building building : egidBuildings) {
+                Optional<Address> address = addressRepository.findAddressByLatitudeAndLongitudeAndOwnBuilding_Id(building.getCentroidLat(), building.getCentroidLng(), building.getId());
+                if (address.isPresent()) {
+                    org.json.JSONObject buildingInformation = swissTopo.egidToBuildingAddress(building.getEgidUca());
+                    if (buildingInformation != null) {
+                        address.get().setHouseNumber(!buildingInformation.isNull("deinr") ? buildingInformation.getString("deinr") : address.get().getHouseNumber());
+                        address.get().setAddressName(!buildingInformation.isNull("strname1") ? buildingInformation.getString("strname1") : address.get().getAddressName());
 
-                    String suburbName = !buildingInformation.isNull("plzname") ? buildingInformation.getString("plzname") : null;
-                    if (suburbName != null && !suburbName.equals(building.getCity().getName())) {
-                        this.handleSuburb(address.get(), suburbName);
+//                    String suburbName = !buildingInformation.isNull("plzname") ? buildingInformation.getString("plzname") : null;
+//                    if (suburbName != null && !suburbName.equals(building.getCity().getName())) {
+//                        this.handleSuburb(address.get(), suburbName);
+//                    }
+                        System.out.println("Updating address " + address.get().getBuilding().getId());
+                        addressRepository.save(address.get());
                     }
-                    System.out.println("Updating address " + address.get().getBuilding().getId());
-                    addressRepository.save(address.get());
                 }
-            }
 
+            }
         }
         System.out.println("Addresses updated!");
     }
@@ -147,7 +169,7 @@ public class CityInformationCommand {
                                                 case "country_code":
                                                     break;
                                                 case "suburb":
-                                                    this.handleSuburb(address, addresses.get(addressKey).toString());
+//                                                    this.handleSuburb(address, addresses.get(addressKey).toString());
                                                     break;
                                                 default:
                                                     address.addType(handleType(address, addressKey.toString()));
@@ -193,11 +215,19 @@ public class CityInformationCommand {
         return typeRepository.save(type.get());
     }
 
-    private void handleSuburb(Address address, String suburbName) {
+//    private void handleSuburbFromAddress(Address address, String suburbName) {
+//        Optional<Suburb> suburb = suburbRepository.findSuburbByName(suburbName);
+//        if (!suburb.isPresent()) {
+//            suburb = Optional.of(new Suburb(address.getBuilding().getCity(), suburbName));
+//        }
+//        address.getBuilding().setSuburb(suburb.get());
+//    }
+
+    private void handleSuburb(Building building, String suburbName) {
         Optional<Suburb> suburb = suburbRepository.findSuburbByName(suburbName);
         if (!suburb.isPresent()) {
-            suburb = Optional.of(new Suburb(address.getBuilding().getCity(), suburbName));
+            suburb = Optional.of(new Suburb(building.getCity(), suburbName));
         }
-        address.getBuilding().setSuburb(suburb.get());
+        building.setSuburb(suburb.get());
     }
 }

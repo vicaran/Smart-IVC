@@ -37,7 +37,7 @@ public class SwissTopoAPI implements SwissTopoAPIServices {
         HttpResponse<JsonNode> response = null;
         JSONObject attributes = null;
         try {
-            response = Unirest.get(buildRequestUrl(egid)).asJson();
+            response = Unirest.get(buildEgidRequestUrl(egid)).asJson();
         } catch (UnirestException e) {
             e.printStackTrace();
         }
@@ -51,8 +51,34 @@ public class SwissTopoAPI implements SwissTopoAPIServices {
         return attributes;
     }
 
+    @Override
+    public String coordinateToSuburb(String swissXCoord, String swissYCoord) {
+        HttpResponse<JsonNode> response = null;
+        String suburb = null;
+        try {
+            response = Unirest.get(buildSuburbRequestUrl(swissXCoord, swissYCoord)).asJson();
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+        if (response != null && response.getStatus() == 200) {
+            JSONObject suburbResponse = response.getBody().getObject();
+            JSONArray results = suburbResponse.getJSONArray("results");
+            if (results.length() > 0) {
+                JSONObject properties = (org.json.JSONObject) results.getJSONObject(0).get("properties");
+                suburb = properties.get("langtext").toString();
+            }
+        }
+        return suburb;
+    }
+
+
     @NotNull
-    private String buildRequestUrl(Long egid) {
+    private String buildEgidRequestUrl(Long egid) {
         return SwissTopoEgidToBuildingHead + egid.toString() + SwissTopoEdigToBuildingTail;
+    }
+
+    private String buildSuburbRequestUrl(String swissXCoord, String swissYCoord) {
+        return SwissTopoSuburbfromCoordinateHead + swissXCoord.toString() + "," + swissYCoord.toString() + SwissTopoSuburbfromCoordinateTail;
+
     }
 }

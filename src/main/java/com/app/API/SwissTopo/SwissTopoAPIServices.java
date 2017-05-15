@@ -22,6 +22,9 @@ public interface SwissTopoAPIServices {
      */
     String SwissTopoEdigToBuildingTail = "&searchField=egid&returnGeometry=false&contains=false";
 
+    String SwissTopoSuburbfromCoordinateHead = "http://api3.geo.admin.ch/rest/services/all/MapServer/identify?geometry=";
+    String SwissTopoSuburbfromCoordinateTail = "&geometryFormat=geojson&geometryType=esriGeometryPoint&imageDisplay=1017,759,96&layers=all:ch.swisstopo-vd.ortschaftenverzeichnis_plz&mapExtent=714056.101749473,94537.91634074351,718596.800863215,97926.69768521766&returnGeometry=true&tolerance=10";
+
     /**
      * C hto wgs pair.
      *
@@ -38,4 +41,6 @@ public interface SwissTopoAPIServices {
      * @return the json object
      */
     JSONObject egidToBuildingAddress(Long egid);
+
+    String coordinateToSuburb(String swissXCoord, String swissYCoord);
 }

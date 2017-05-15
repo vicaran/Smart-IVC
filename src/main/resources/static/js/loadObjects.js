@@ -82,3 +82,9 @@ let addGeometriesToPrimitives = function () {
         hideLoadingGif();
     });
 };
+
+let callina = function () {
+    var tileset = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
+                                                                             url: '/tilesets/model.glb'
+                                                                         }));
+}

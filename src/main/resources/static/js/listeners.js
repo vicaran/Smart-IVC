@@ -205,7 +205,7 @@ $('#queryFromBuildingCity').click(function () {
         return;
     }
     $.ajax({
-               url: SERVER_URL + "building/" + queryVal + "/",
+               url: SERVER_URL + "building/query/" + queryVal + "/",
                type: "GET",
                success: function (data) {
                    for (let i = 0; i < data.buildingIds.length; i++) {
@@ -223,18 +223,16 @@ $('#queryFromBuildingCity').click(function () {
 let queryBuilder = function () {
     let query = '';
     if ($("#byTypeSelection:checked").length === 1) {
-        query += "type/" + $("#buildingTypeCity").find("option:selected").attr("id");
-        return query;
+        query += "type=" + $("#buildingTypeCity").find("option:selected").attr("id") + "&";
     }
     if ($("#byFloorsSelection:checked").length === 1) {
         let comparisonVal = $("#buildingFloorsComparisonCity").val();
         let floorsNumber = $("#floorsNumber").val();
         if (comparisonVal !== null && floorsNumber !== "") {
-            return query += "floors/" + comparisonVal + "/" + floorsNumber;
+            query += "floors=" + comparisonVal + "/" + floorsNumber + "&";
         }
-        return query;
     }
-    return query;
+    return query.slice(0, -1);
 };
 
 let loadInfoBox = function (buildingId) {
@@ -276,12 +274,13 @@ let loadTypesForInfoBox = function () {
            });
 };
 
-// TODO: ALL BUILDINGS WHITE IS A BUTTON
-// TODO: COLOR BY HEIGHT IS ONE OF THE QUERIES
+// TODO: ∆ ALL BUILDINGS WHITE IS A BUTTON
+// TODO: ∆ COLOR BY HEIGHT IS ONE OF THE QUERIES
 
 // TODO: CLICK BUILDING, SHOW NEAR BUILDINGS W.R.T. THE SELECTED BUILDING
 
 // TODO: QUERY TO FIND THE NEAREST POINT (PUT SUBURB IN EVERY BUILDING)
+
 // TODO: SIDE MENU WHERE YOU CAN FIND THE HISTORY OF YOUR QUERIES AND EXECUTE QUERIES ON THEM
 // TODO: IN FIRST TAB YOU HAVE THE POSSIBILITY TO SELECT SUBURBS WITH CHECKBOXES
 // TODO: IN SECOND TAB YOU HAVE QUERY SQL LIKE : SELECT ALL BUILDINGS WHERE FLOORS > 3

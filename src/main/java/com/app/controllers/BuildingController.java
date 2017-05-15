@@ -129,14 +129,25 @@ public class BuildingController {
         return new ResponseEntity<>(buildings, HttpStatus.OK);
     }
 
-    /**
-     * Handle building by type response entity.
-     *
-     * @param id the id
-     * @return the response entity
-     */
-    @RequestMapping(value = "/type/{id}", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<?> handleBuildingByType(@PathVariable Long id) {
+//    @RequestMapping(value = "/query/{queryBody}", method = RequestMethod.GET, produces = "application/json")
+//    public ResponseEntity<?> handleBuildingByType(@PathVariable String queryBody) {
+//        String[] queries = queryBody.split("&");
+//        for (int i = 0; i < queries.length; i++) {
+//            String[] singleQuery = queries[i].split("=");
+//            switch (singleQuery[0]) {
+//                case "type":
+//                    this.handleBuildingByType(singleQuery[1]);
+//                    break;
+//                case "floors":
+//                    String[] floorsQuery = singleQuery[1].split("/");
+//                    this.handleBuildingByFloors(floorsQuery[0], Integer.parseInt(floorsQuery[1]));
+//                    break;
+//            }
+//        }
+//
+//    }
+
+    private ResponseEntity<?> handleBuildingByType(Long id) {
         Collection<Address> allTypes = this.addressRepository.findByTypes_Id(id);
 
         Set<Long> buildingIds = new HashSet<>();
@@ -150,10 +161,7 @@ public class BuildingController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/floors/{comparisonVal}/{floorsNumber}/", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<?> handleBuildingByFloors(
-            @PathVariable String comparisonVal,
-            @PathVariable int floorsNumber) {
+    private ResponseEntity<?> handleBuildingByFloors(String comparisonVal, int floorsNumber) {
 
         Collection<Building> buildings = null;
         Set<Long> buildingIds = new HashSet<>();
@@ -179,5 +187,7 @@ public class BuildingController {
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+
 }
 

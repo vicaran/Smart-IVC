@@ -48,6 +48,22 @@ public class TasksScheduler {
         };
         updateTimer.schedule(myConverterTask, 6000);
 
+        TimerTask myInformationSuburbTaskSwissTopo = new TimerTask() {
+            @Override
+            public void run() {
+                cityInformationCommand.informationSuburbTaskFromSwissTopo();
+            }
+        };
+//        updateTimer.schedule(myInformationSuburbTaskSwissTopo, 7000);
+
+        TimerTask myInformationAddressTaskSwissTopo = new TimerTask() {
+            @Override
+            public void run() {
+                cityInformationCommand.informationAddressTaskFromSwissTopo();
+            }
+        };
+//        updateTimer.schedule(myInformationAddressTaskSwissTopo, 8000);
+
 
         TimerTask myInformationTaskOsm = new TimerTask() {
             @Override
@@ -55,16 +71,7 @@ public class TasksScheduler {
                 cityInformationCommand.informationTaskFromOsm();
             }
         };
-        updateTimer.schedule(myInformationTaskOsm, 7000);
-
-        TimerTask myInformationTaskSwissTopo = new TimerTask() {
-            @Override
-            public void run() {
-                cityInformationCommand.informationTaskFromSwissTopo();
-            }
-        };
-//        updateTimer.schedule(myInformationTaskSwissTopo, 8000);
-
+//        updateTimer.schedule(myInformationTaskOsm, 7000);
 
 
     }

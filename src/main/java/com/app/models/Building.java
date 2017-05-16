@@ -57,6 +57,10 @@ public class Building implements Serializable {
     private Long edidUca;
     @Column(name = "SECTION")
     private Long section;
+    @Column(name = "PRIMARY_HOUSES")
+    private String primaryHouses;
+    @Column(name = "SECONDARY_HOUSES")
+    private String secondaryHouses;
 
     @ManyToOne()
     @JoinColumn(name="OWNCITY_ID")
@@ -398,5 +402,21 @@ public class Building implements Serializable {
      */
     public void setSection(Long section) {
         this.section = section;
+    }
+
+    public String getPrimaryHouses() {
+        return primaryHouses;
+    }
+
+    public void setPrimaryHouses(String primaryHouses) {
+        this.primaryHouses = primaryHouses;
+    }
+
+    public String getSecondaryHouses() {
+        return secondaryHouses;
+    }
+
+    public void setSecondaryHouses(String secondaryHouses) {
+        this.secondaryHouses = secondaryHouses;
     }
 }

@@ -83,8 +83,9 @@ let addGeometriesToPrimitives = function () {
     });
 };
 
-let callina = function () {
+let loadNewYork = function () {
     var tileset = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
-                                                                             url: '/tilesets/model.glb'
+                                                                             url: 'http://cesiumjs.org/NewYork/3DTiles'
                                                                          }));
-}
+    return tileset;
+};

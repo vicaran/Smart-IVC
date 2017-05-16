@@ -33,7 +33,7 @@ public class Address implements Serializable{
     @Column(nullable = false)
     private Double longitude;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "BUILDING_ID")
     private Building ownBuilding;
 

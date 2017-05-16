@@ -54,20 +54,18 @@ public class CityInformationCommand {
 
     @Scheduled
     public void informationSuburbTaskFromSwissTopo() {
-        System.out.println("Updating Suburbs from SwissTopo...");
+
         List<Building> buildings = buildingRepository.findAll();
         for (Building building : buildings) {
-            String swissCoords = new String(building.getRingSwissCoords());
-            String[] firstCoordPoint = swissCoords.split(",")[0].split(" ");
-
-            String suburbName = swissTopo.coordinateToSuburb(firstCoordPoint[0], firstCoordPoint[1]);
-
-            this.handleSuburb(building, suburbName);
-            System.out.println("Updating building " + building.getId());
-            buildingRepository.save(building);
-
+            if (building.getSuburb() == null) {
+                String swissCoords = new String(building.getRingSwissCoords());
+                String[] firstCoordPoint = swissCoords.split(",")[0].split(" ");
+                String suburbName = swissTopo.coordinateToSuburb(firstCoordPoint[0], firstCoordPoint[1]);
+                this.handleSuburb(building, suburbName);
+                System.out.println("\tUpdating building " + building.getId());
+                buildingRepository.save(building);
+            }
         }
-        System.out.println("Suburbs updated!");
     }
 
     /**
@@ -77,7 +75,6 @@ public class CityInformationCommand {
     public void informationAddressTaskFromSwissTopo() {
         Optional<List<Address>> nullAddresses = Optional.ofNullable(addressRepository.findAddressByAddressNameIsNull());
         if (nullAddresses.isPresent() && nullAddresses.get().size() > 81) {
-            System.out.println("Updating Addresses from SwissTopo...");
             List<Building> egidBuildings = buildingRepository.findBuildingsByEgidUcaIsNotNull();
             for (Building building : egidBuildings) {
                 Optional<Address> address = addressRepository.findAddressByLatitudeAndLongitudeAndOwnBuilding_Id(building.getCentroidLat(), building.getCentroidLng(), building.getId());
@@ -91,14 +88,13 @@ public class CityInformationCommand {
 //                    if (suburbName != null && !suburbName.equals(building.getCity().getName())) {
 //                        this.handleSuburb(address.get(), suburbName);
 //                    }
-                        System.out.println("Updating address " + address.get().getBuilding().getId());
+                        System.out.println("\tUpdating address " + address.get().getBuilding().getId());
                         addressRepository.save(address.get());
                     }
                 }
 
             }
         }
-        System.out.println("Addresses updated!");
     }
 
     /**
@@ -107,7 +103,7 @@ public class CityInformationCommand {
     @Scheduled
     public void informationTaskFromOsm() {
         Optional<List<Address>> nullAddresses = Optional.ofNullable(addressRepository.findAddressByAddressNameIsNull());
-        System.out.println("Updating Addresses and Types from OSM...");
+
         if (nullAddresses.isPresent() && nullAddresses.get().size() > 81) {
             JSONParser parser = new JSONParser();
             JSONArray infoArray;
@@ -176,7 +172,7 @@ public class CityInformationCommand {
                                                     break;
                                             }
                                         }
-                                        System.out.println("Updating address " + address.getBuilding().getId());
+                                        System.out.println("\tUpdating address " + address.getBuilding().getId());
                                         addressRepository.save(address);
                                         break outerloop;
                                     }
@@ -190,7 +186,6 @@ public class CityInformationCommand {
                 e.printStackTrace();
             }
         }
-        System.out.println("Addresses and Types updated!");
     }
 
     private String saveRoadName(Address address, Object addressKey, JSONObject addresses) {

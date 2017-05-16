@@ -39,7 +39,6 @@ public class ConverterCommand {
      */
     @Scheduled
     public void converterTask() {
-        System.out.println("Converting Swiss to Global coordinates...");
         List<Building> buildings = this.buildingRepository.findBuildingsByOwnCityCountry("Switzerland");
         boolean ringUpdated = false;
         boolean boundUpdated = false;
@@ -79,14 +78,14 @@ public class ConverterCommand {
                 this.saveModels(building, addresses);
             }
         }
-        System.out.println("Ring Coordinates Updated from SwissTopo: " + ringUpdated + ".");
-        System.out.println("Bound Coordinates Updated from SwissTopo: " + boundUpdated + ".");
-        System.out.println("Centroid Coordinates Updated SwissTopo: " + centroidUpdated + ".");
+        System.out.println("\tRing Coordinates Updated from SwissTopo: " + ringUpdated + ".");
+        System.out.println("\tBound Coordinates Updated from SwissTopo: " + boundUpdated + ".");
+        System.out.println("\tCentroid Coordinates Updated SwissTopo: " + centroidUpdated + ".");
     }
 
     private void saveModels(Building building, List<Address> addresses){
         buildingRepository.save(building);
         addressRepository.save(addresses);
-        System.out.println("Building " + building.getId() + " saved!");
+        System.out.println("\t\tBuilding " + building.getId() + " saved!");
     }
 }

@@ -52,6 +52,9 @@ public class CityInformationCommand {
     }
 
 
+    /**
+     * Information suburb task from swiss topo.
+     */
     @Scheduled
     public void informationSuburbTaskFromSwissTopo() {
 

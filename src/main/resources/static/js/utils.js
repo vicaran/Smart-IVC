@@ -244,3 +244,18 @@ let formatText = function (txt) {
 
     return frags.join(', ');
 };
+
+let showButtonSpinner = function ($this) {
+    $this.button('loading');
+    setTimeout(function () {
+        $this.prepend("<i id='spinner-search' class='fa fa-circle-o-notch fa-spin'>");
+    }, 10);
+};
+
+let hideButtonSpinner = function ($this) {
+    $this.button('reset');
+    setTimeout(function () {
+        $("#spinner-search").remove();
+    }, 10);
+
+};

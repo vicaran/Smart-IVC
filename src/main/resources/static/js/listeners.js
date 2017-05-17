@@ -198,12 +198,15 @@ $('#cesiumContainer').click(function () {
 
 //language=JQuery-CSS
 $('#queryFromBuildingCity').click(function () {
+    let $this = $(this);
     setDefaultColors();
 
     let queryVal = queryBuilder();
     if (queryVal === "") {
         return;
     }
+    console.log(queryVal);
+    showButtonSpinner($this);
     $.ajax({
                url: SERVER_URL + "building/query/" + queryVal + "/",
                type: "GET",
@@ -214,6 +217,10 @@ $('#queryFromBuildingCity').click(function () {
                            primitive.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.DARKORANGE);
                        }
                    }
+                   hideButtonSpinner($this);
+               },
+               error: function (request, status, error) {
+                   hideButtonSpinner($this);
                }
            })
 

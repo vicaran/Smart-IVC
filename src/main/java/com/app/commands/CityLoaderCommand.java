@@ -30,17 +30,30 @@ public class CityLoaderCommand {
     private final CityRepository cityRepository;
     private final AddressRepository addressRepository;
 
+    /**
+     * The Egid idx.
+     */
     static final int EGID_IDX = 0;
     private static final int EDID_IDX = 1;
+    /**
+     * The Road idx.
+     */
     static final int ROAD_IDX = 2;
+    /**
+     * The Civic idx.
+     */
     static final int CIVIC_IDX = 3;
+    /**
+     * The X idx.
+     */
     static final int X_IDX = 4;
+    /**
+     * The Y idx.
+     */
     static final int Y_IDX = 5;
     private static final int FLOORS_IDX = 6;
     private static final int PRIMARY_HOUSES_IDX = 7;
     private static final int SECONDARY_HOUSES_IDX = 8;
-
-
 
 
     /**
@@ -82,6 +95,9 @@ public class CityLoaderCommand {
         this.addressRepository.save(city.getAddressList());
     }
 
+    /**
+     * Additional lugano information task.
+     */
     @Scheduled
     public void additionalLuganoInformationTask() {
         BufferedReader br;

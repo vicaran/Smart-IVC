@@ -15,6 +15,11 @@ import org.powermock.modules.junit4.PowerMockRunner;
 public class LocationInfoTest {
 
 
+    /**
+     * Test city info.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void testCityInfo() throws Exception {
         //given

@@ -404,18 +404,38 @@ public class Building implements Serializable {
         this.section = section;
     }
 
+    /**
+     * Gets primary houses.
+     *
+     * @return the primary houses
+     */
     public String getPrimaryHouses() {
         return primaryHouses;
     }
 
+    /**
+     * Sets primary houses.
+     *
+     * @param primaryHouses the primary houses
+     */
     public void setPrimaryHouses(String primaryHouses) {
         this.primaryHouses = primaryHouses;
     }
 
+    /**
+     * Gets secondary houses.
+     *
+     * @return the secondary houses
+     */
     public String getSecondaryHouses() {
         return secondaryHouses;
     }
 
+    /**
+     * Sets secondary houses.
+     *
+     * @param secondaryHouses the secondary houses
+     */
     public void setSecondaryHouses(String secondaryHouses) {
         this.secondaryHouses = secondaryHouses;
     }

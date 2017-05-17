@@ -129,23 +129,30 @@ public class BuildingController {
         return new ResponseEntity<>(buildings, HttpStatus.OK);
     }
 
-//    @RequestMapping(value = "/query/{queryBody}", method = RequestMethod.GET, produces = "application/json")
-//    public ResponseEntity<?> handleBuildingByType(@PathVariable String queryBody) {
-//        String[] queries = queryBody.split("&");
-//        for (int i = 0; i < queries.length; i++) {
-//            String[] singleQuery = queries[i].split("=");
-//            switch (singleQuery[0]) {
-//                case "type":
-//                    this.handleBuildingByType(singleQuery[1]);
-//                    break;
-//                case "floors":
-//                    String[] floorsQuery = singleQuery[1].split("/");
-//                    this.handleBuildingByFloors(floorsQuery[0], Integer.parseInt(floorsQuery[1]));
-//                    break;
-//            }
-//        }
-//
-//    }
+    /**
+     * Handle building by type response entity.
+     *
+     * @param queryBody the query body
+     * @return the response entity
+     */
+    @RequestMapping(value = "/query/{queryBody}", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<?> handleBuildingByType(@PathVariable String queryBody) {
+        String[] queries = queryBody.split("&");
+        for (String query : queries) {
+            String[] singleQuery = query.split("=");
+            switch (singleQuery[0]) {
+                case "type":
+                    this.handleBuildingByType(singleQuery[1]);
+                    break;
+                case "floors":
+                    String[] floorsQuery = singleQuery[1].split("/");
+                    this.handleBuildingByFloors(floorsQuery[0], Integer.parseInt(floorsQuery[1]));
+                    break;
+            }
+        }
+        Collection<Building> buildings = buildingRepository.findAll();
+        return new ResponseEntity<>(buildings, HttpStatus.OK);
+    }
 
     private ResponseEntity<?> handleBuildingByType(Long id) {
         Collection<Address> allTypes = this.addressRepository.findByTypes_Id(id);

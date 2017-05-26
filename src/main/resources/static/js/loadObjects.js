@@ -14,6 +14,11 @@ let loadObjs = function (cityID) {
                type: "GET",
                success: function (data) {
                    for (let i = 0; i < data.length; i++) {
+
+                       if (data[i].floors > $("#maxHeightLegend").html()) {
+                           $("#maxHeightLegend").html(data[i].floors)
+
+                       }
                        generateGeometry(data[i]);
                    }
                    updateGeometryHeights();
@@ -41,7 +46,8 @@ let generateGeometry = function (data) {
                                                    geometry: buildingGeometry,
                                                    id: 'building_' + data.id,
                                                    attributes : {
-                                                       color: Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.WHITE)
+                                                       color: Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.WHITE),
+                                                       show: new Cesium.ShowGeometryInstanceAttribute(true)
                                                    },
                                                });
     buildingsArray.push(building);

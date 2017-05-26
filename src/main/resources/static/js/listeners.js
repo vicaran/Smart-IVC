@@ -48,13 +48,16 @@ handler.setInputAction(function (movement) {
 
 let getPrimitiveFromPrimitiveId = function (primitiveId) {
     let selectedPrimitive = undefined;
-    for (let i = 1; i < scene.primitives.length; i++) {
-        let foundPrimitive = scene.primitives.get(i).getGeometryInstanceAttributes(primitiveId);
-        if (foundPrimitive !== undefined) {
-            selectedPrimitive = foundPrimitive;
-            break;
+    if (typeof primitiveId === "string") {
+        for (let i = 1; i < scene.primitives.length; i++) {
+            let foundPrimitive = scene.primitives.get(i).getGeometryInstanceAttributes(primitiveId);
+            if (foundPrimitive !== undefined) {
+                selectedPrimitive = foundPrimitive;
+                break;
+            }
         }
     }
+
     return selectedPrimitive;
 };
 
@@ -106,80 +109,105 @@ $("#shadows").change(function () {
     }
 });
 
-$("#colorByHeight").change(function () {
+$("#geolocalizationPoint").change(function () {
+   if(this.checked){
+       geolocalizationChangeVisibility();
+   }else {
+       geolocalizationChangeVisibility();
+   }
+});
 
-    if (this.checked) {
-        setColorByHeight();
-        createLegend();
-    } else {
-        setDefaultColors();
-        destroyLegend();
+$("#coloring").change(function () {
+    let radioId = $("#coloring").find('input:radio:checked').attr('id');
+    let legedHeight = $("#legend-wrapper");
+    switch (radioId) {
+        case "colorDefault":
+            setDefaultColors();
+            if (!legedHeight.hasClass("hidden-wrapper")) {
+                legedHeight.addClass("hidden-wrapper");
+            }
+            break;
+        case "colorByHeight":
+            setColorByHeight();
+            legedHeight.removeClass("hidden-wrapper")
+            break;
+        case "colorBySuburb":
+            setSuburbColors();
+            if (!legedHeight.hasClass("hidden-wrapper")) {
+                legedHeight.addClass("hidden-wrapper");
+            }
+            break;
     }
+
 });
 
-// $('#colorPicker').on('change', function () {
-//     let selectedRadio = $('input[name=coloring]:checked', '#coloring').val();
-//     if (selectedRadio === "default") {
-//         setDefaultColors();
-//     }
-// });
-
-$('#resetColors').click(function () {
-    setDefaultColors();
+$("#suburbsTable").change(function () {
+    let suburbsTable = $("#suburbsTable");
+    suburbsTable.find('input:checkbox:not(:checked)').each(function () {
+        let checkBoxId = $(this).attr("id").split("_")[1];
+        if (SUBURBS_IDS[checkBoxId].visible) {
+            for (let buildingIdx in SUBURBS_IDS[checkBoxId].buildingIds) {
+                let primitive = getPrimitiveFromPrimitiveId("building_" + SUBURBS_IDS[checkBoxId].buildingIds[buildingIdx]);
+                if (primitive !== undefined) {
+                    primitive.show = Cesium.ShowGeometryInstanceAttribute.toValue(false);
+                }
+            }
+            SUBURBS_IDS[checkBoxId].visible = 0;
+        }
+    });
+    suburbsTable.find('input:checkbox:checked').each(function () {
+        let checkBoxId = $(this).attr("id").split("_")[1];
+        if (!SUBURBS_IDS[checkBoxId].visible) {
+            for (let buildingIdx in SUBURBS_IDS[checkBoxId].buildingIds) {
+                let primitive = getPrimitiveFromPrimitiveId("building_" + SUBURBS_IDS[checkBoxId].buildingIds[buildingIdx]);
+                if (primitive !== undefined) {
+                    primitive.show = Cesium.ShowGeometryInstanceAttribute.toValue(true);
+                }
+            }
+            SUBURBS_IDS[checkBoxId].visible = 1;
+        }
+    })
 });
 
-let setColorByHeight = function () {
-    for (let j = 1; j < scene.primitives.length; j++) {
-        for (let i = 0; i < viewer.scene.primitives.get(j).geometryInstances.length; i++) {
-            let primitive = getPrimitiveFromPrimitiveId(viewer.scene.primitives.get(j).geometryInstances[i].id);
-
-            if (viewer.scene.primitives.get(j).geometryInstances[i].geometry !== undefined) {
-                let buildingHeight = viewer.scene.primitives.get(j).geometryInstances[i].geometry._height
-                                     - viewer.scene.primitives.get(j).geometryInstances[i].geometry._extrudedHeight;
-                let newRGB = interpolateColors(parseInt(buildingHeight), parseInt(MAX_HEIGHT), [1, 1, 0], [0, 0, 1]);
-                primitive.color = Cesium.ColorGeometryInstanceAttribute.toValue(new Cesium.Color(newRGB[0], newRGB[1], newRGB[2], 1.0));
+let setSuburbColors = function () {
+    for (let idx in SUBURBS_IDS) {
+        for (let buildingIdx in SUBURBS_IDS[idx].buildingIds) {
+            let primitive = getPrimitiveFromPrimitiveId("building_" + SUBURBS_IDS[idx].buildingIds[buildingIdx]);
+            if (primitive !== undefined) {
+                primitive.color = Cesium.ColorGeometryInstanceAttribute.toValue(new Cesium.Color.fromCssColorString(SUBURBS_IDS[idx].color))
             }
         }
     }
 };
 
-let createLegend = function () {
-    destroyLegend();
-    let legend = '';
-    let legendUl = $("#list_legend");
-    for (let i = 0; i < MAX_HEIGHT; i++) {
-        let color = interpolateColors(parseInt(i), parseInt(MAX_HEIGHT), [1, 1, 0], [0, 0, 1]);
-        legend +=
-            '<li>'
-            + '<span style="background-color:#' + RGBToHex(color[0], color[1], color[2]) + ';">'
-            + '</span>'
-            + '</li>';
-    }
-    legendUl.append(legend);
-    legendUl.show();
-};
+let setColorByHeight = function () {
+    for (let j = 1; j < scene.primitives.length; j++) {
+        if (viewer.scene.primitives.get(j).geometryInstances !== undefined) {
+            for (let i = 0; i < viewer.scene.primitives.get(j).geometryInstances.length; i++) {
+                let primitive = getPrimitiveFromPrimitiveId(viewer.scene.primitives.get(j).geometryInstances[i].id);
 
-let destroyLegend = function () {
-    let legendUl = $("#list_legend");
-    if (legendUl !== undefined) {
-        legendUl.hide();
-        legendUl.empty();
+                if (viewer.scene.primitives.get(j).geometryInstances[i].geometry !== undefined) {
+                    let buildingHeight = viewer.scene.primitives.get(j).geometryInstances[i].geometry._height
+                                         - viewer.scene.primitives.get(j).geometryInstances[i].geometry._extrudedHeight;
+                    let newRGB = interpolateColors(parseInt(buildingHeight), parseInt(MAX_HEIGHT), [1, 1, 0], [0, 0, 1]);
+                    primitive.color = Cesium.ColorGeometryInstanceAttribute.toValue(new Cesium.Color(newRGB[0], newRGB[1], newRGB[2], 1.0));
+                }
+            }
+        }
+
     }
 };
 
 let setDefaultColors = function () {
-
-    if ($("#colorByHeight:checked").length === 1) {
-        $("#colorByHeight").prop('checked', false);
-    }
-
     for (let j = 1; j < scene.primitives.length; j++) {
-        for (let i = 0; i < viewer.scene.primitives.get(j).geometryInstances.length; i++) {
-            let primitive = getPrimitiveFromPrimitiveId(viewer.scene.primitives.get(j).geometryInstances[i].id);
-            if (primitive !== undefined) {
-                primitive.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.WHITE);
-                if (primitive === selectedEntity) {
-                    primitive.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.RED);
+        if (viewer.scene.primitives.get(j).geometryInstances !== undefined) {
+            for (let i = 0; i < viewer.scene.primitives.get(j).geometryInstances.length; i++) {
+                let primitive = getPrimitiveFromPrimitiveId(viewer.scene.primitives.get(j).geometryInstances[i].id);
+                if (primitive !== undefined) {
+                    primitive.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.WHITE);
+                    if (primitive === selectedEntity) {
+                        primitive.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.RED);
+                    }
                 }
             }
         }
@@ -211,13 +239,9 @@ $('#queryFromBuildingCity').click(function () {
                url: SERVER_URL + "building/query/" + queryVal + "/",
                type: "GET",
                success: function (data) {
-                   for (let i = 0; i < data.buildingIds.length; i++) {
-                       let primitive = getPrimitiveFromPrimitiveId("building_" + data.buildingIds[i]);
-                       if (primitive !== undefined) {
-                           primitive.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.DARKORANGE);
-                       }
-                   }
+                   renderQueryResult(data);
                    hideButtonSpinner($this);
+                   addResultToHistory(queryVal, data);
                },
                error: function (request, status, error) {
                    hideButtonSpinner($this);
@@ -226,6 +250,22 @@ $('#queryFromBuildingCity').click(function () {
 
 })
 ;
+
+$(".history_item").click(function () {
+    let $this = $(this);
+    renderQueryResult(SEARCH_HISTORY[$this.id]);
+});
+
+let renderQueryResult = function (data) {
+    for (let i = 0; i < data.buildingIds.length; i++) {
+        let primitive = getPrimitiveFromPrimitiveId("building_" + data.buildingIds[i]);
+        if (primitive !== undefined) {
+            primitive.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.DARKORANGE);
+        }
+    }
+};
+
+
 
 let queryBuilder = function () {
     let query = '';
@@ -236,9 +276,17 @@ let queryBuilder = function () {
         let comparisonVal = $("#buildingFloorsComparisonCity").val();
         let floorsNumber = $("#floorsNumber").val();
         if (comparisonVal !== null && floorsNumber !== "") {
-            query += "floors=" + comparisonVal + "/" + floorsNumber + "&";
+            query += "floors=" + comparisonVal + "_" + floorsNumber + "&";
         }
     }
+    if ($("#byPrimarySecondarySelection:checked").length === 1) {
+        let comparisonVal = $("#buildingPrimarySecondaryCity").val();
+        let percentageVal = $("#primarySecondaryNumber").val();
+        if (comparisonVal !== null && floorsNumber !== "") {
+            query += "primarySecondaryPercentage=" + comparisonVal + "_" + percentageVal + "&";
+        }
+    }
+
     return query.slice(0, -1);
 };
 
@@ -256,7 +304,7 @@ let loadInfoBox = function (buildingId) {
                            miniCanvasEngine.dispose();
                        }
                        miniCanvasEngine = createMiniCanvas(data, miniCanvasEngine);
-                       loadTypesForInfoBox();
+                       // loadTypesForInfoBox();
                    }, 200)
                }
            });
@@ -280,6 +328,11 @@ let loadTypesForInfoBox = function () {
                }
            });
 };
+
+let selectBuildingById = function (id) {
+    selectedEntity = getPrimitiveFromPrimitiveId("building_" + id);
+    selectedEntity.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.RED);
+}
 
 // TODO: ∆ ALL BUILDINGS WHITE IS A BUTTON
 // TODO: ∆ COLOR BY HEIGHT IS ONE OF THE QUERIES

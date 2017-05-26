@@ -1,6 +1,8 @@
 /**
  * Created by Andrea on 29/03/2017.
  */
+let SUBURBS_IDS = {};
+
 $("#menu-toggle").click(function (e) {
     e.preventDefault();
     $("#wrapper").toggleClass("toggled");
@@ -12,6 +14,7 @@ window.onload = function () {
     addCredits();
     loadCities();
     loadTypes();
+    loadSuburbs();
     loadObjs("1");
 };
 
@@ -26,6 +29,38 @@ let loadCities = function () {
                }
            })
 };
+
+let loadSuburbs = function () {
+    $.ajax({
+               url: SERVER_URL + "suburb/fromCityId=1",
+               type: "GET",
+               success: function (data) {
+                   // let colorStep = data.length/255;
+                   for (let i = 0; i < data.length; i++) {
+                       let generatedColor = '#' + (0x1000000 + (Math.random()) * 0xffffff).toString(16).substr(1, 6);
+
+                       SUBURBS_IDS[data[i].id] = {
+                           "buildingIds": data[i].buildingIds,
+                           "color": generatedColor,
+                           "visible" : 1
+                       };
+                       let tableRow = '<tr>'
+                                      + '<td class="tg-0ord">'
+                                      + '<form class="nowrap">'
+                                      + '<input id="suburb_' + data[i].id + '" name="bySuburb" value="suburbSelection" type="checkbox" checked/>'
+                                      + '</form>'
+                                      + '</td>'
+                                      + '<td class="tg-031e alignment-suburb"><div class="suburb-color-square"><p style=" width: 30px;height: 23pt; background:'
+                                      + generatedColor + '; margin-bottom: 0pt;"></p></div><p class="suburb-label">'
+                                      + data[i].name + '</p></td>'
+                                      + '</tr>';
+
+                       $("#suburbsTable").append(tableRow);
+                   }
+               }
+           })
+
+}
 
 let triggerCreditButton = function () {
     let creditsBox = $("#credits-box");

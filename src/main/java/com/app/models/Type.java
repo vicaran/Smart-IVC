@@ -55,6 +55,11 @@ public class Type implements Serializable{
         this.addresses = new HashSet<>();
     }
 
+    public Type(Long typeId){
+        this.setId(typeId);
+        this.addresses = new HashSet<>();
+    }
+
     /**
      * Gets type name.
      *

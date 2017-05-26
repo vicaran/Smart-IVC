@@ -3,6 +3,13 @@
  */
 let SERVER_URL = "http://" + window.location.host + "/";
 let MAX_HEIGHT = Number.NEGATIVE_INFINITY;
+let SEARCH_HISTORY = {};
+let geolocalizationCoords = {
+    "latitude": 0.0,
+    "longitude": 0.0,
+    "accuracy": 0.0
+};
+let GEOLOCALIZATIONVISIBLE = false;
 
 let createRing = function (binaryCoordinates) {
     return (atob(binaryCoordinates)).split(",");
@@ -176,15 +183,18 @@ let generateTable = function (data) {
     for (let field in data) {
         if (field !== undefined && field !== 'ringCoords' && field !== 'id') {
             let value = createValuesForTable(data, field);
-            table += '<tr>'
-                     + '<th>' + formatText(field) + '</th>'
-                     + '<td>' + formatText(value) + '</td>'
-                     + '</tr>'
+            if (value !== undefined) {
+                table += '<tr>'
+                         + '<th>' + formatText(field) + '</th>'
+                         + '<td>' + formatText(value.toString()) + '</td>'
+                         + '</tr>'
+            }
         }
     }
     table += '</tbody>' + '</table>' + '</div>';
 
-    return miniCanvas + table + generateQuerieSelector();
+    return miniCanvas + table;
+    // return miniCanvas + table + generateQuerieSelector();
 };
 
 let generateQuerieSelector = function () {
@@ -206,6 +216,9 @@ let createValuesForTable = function (data, field) {
         case 'number':
             value = data[field];
             break;
+        case 'string':
+            value = data[field];
+            break;
         case 'object':
             for (let entry in data[field]) {
                 if (data[field][entry][0] !== null) {
@@ -216,10 +229,10 @@ let createValuesForTable = function (data, field) {
         default:
             break;
     }
-    if (value.length === 0) {
-        value = "Not Given"
+    if (value === "0" || value.length === 0 || value === "null") {
+        return undefined;
     }
-    return value.toString();
+    return value;
 };
 
 let showLoadingGif = function () {
@@ -258,4 +271,114 @@ let hideButtonSpinner = function ($this) {
         $("#spinner-search").remove();
     }, 10);
 
+};
+
+let sortDataTags = function (array) {
+    return array.sort(function (a, b) {
+        let x = a[key];
+        let y = b[key];
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    });
+};
+
+let addResultToHistory = function (queryVal, data) {
+    $("#historyPlaceholder").hide();
+
+
+    if (SEARCH_HISTORY[queryVal] === undefined) {
+        SEARCH_HISTORY[queryVal] = data;
+        queryVal = queryVal.split("&");
+
+        let queryParts = "";
+        console.log(queryVal);
+        for (let idx in queryVal) {
+            queryParts += "with " + queryVal[idx].split("=")[0] + " being " + queryVal[idx].split("=")[1] +"<br>";
+        }
+
+        console.log(queryParts);
+
+        let historyCard = "<li class='orange history_item' id='"+queryVal+"'><a>Find " + queryParts
+                          + " Produced " + data["buildingIds"].length + " results"
+                          + "</a></li>";
+
+        $("#history_list").prepend(historyCard);
+
+    }
+};
+
+// User geolocalization position
+let getGeolocalizationCoordinates = function () {
+
+    function geolocalizationSuccess(pos) {
+        let crd = pos.coords;
+        geolocalizationCoords.latitude = crd.latitude;
+        geolocalizationCoords.longitude = crd.longitude;
+        geolocalizationCoords.accuracy = crd.accuracy;
+    }
+
+    function geolocalizationError(err) {}
+
+    navigator.geolocation.getCurrentPosition(geolocalizationSuccess, geolocalizationError, {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 900000
+    });
+
+    return geolocalizationCoords;
+};
+
+let drawPin = function () {
+    viewer.entities.removeById('GeolocalizationPos');
+
+    let promise = Cesium.sampleTerrainMostDetailed(viewer.terrainProvider, [Cesium.Cartographic.fromDegrees(geolocalizationCoords.longitude,
+                                                                                                            geolocalizationCoords.latitude)]);
+    Cesium.when(promise, function (updatedPositions) {
+
+        let headPosition = Cesium.Cartesian3.fromDegrees(geolocalizationCoords.longitude,
+                                                         geolocalizationCoords.latitude, MAX_HEIGHT + 5);
+
+        let tailPosition = Cesium.Cartesian3.fromDegrees(geolocalizationCoords.longitude,
+                                                         geolocalizationCoords.latitude, updatedPositions[0].height + MAX_HEIGHT + 5);
+
+        let groundPosition = Cesium.Cartesian3.fromDegrees(geolocalizationCoords.longitude, geolocalizationCoords.latitude,
+                                                           updatedPositions[0].height);
+
+        viewer.entities.add(new Cesium.Entity({
+                                                  id: 'GeolocalizationPos',
+                                                  show: GEOLOCALIZATIONVISIBLE,
+                                                  position: headPosition,
+                                                  point: new Cesium.PointGraphics({
+                                                                                      color: Cesium.Color.DEEPSKYBLUE,
+                                                                                      pixelSize: 20,
+                                                                                      outlineColor: Cesium.Color.DODGERBLUE,
+                                                                                      outlineWidth: geolocalizationCoords.accuracy *
+                                                                                                    0.2,
+                                                                                      heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND
+                                                                                  }),
+                                                  polyline: {
+                                                      positions: [groundPosition, tailPosition],
+                                                      width: 5,
+                                                      followSurface: false,
+                                                      material: Cesium.Color.DIMGREY
+                                                  }
+                                              }))
+
+    });
+};
+
+let geolocalizationCommand = function () {
+    getGeolocalizationCoordinates();
+    setTimeout(function () {
+        drawPin();
+    }, 6000)
+};
+
+geolocalizationCommand();
+setInterval(function () {
+    geolocalizationCommand()
+}, 10000);
+
+let geolocalizationChangeVisibility = function () {
+    GEOLOCALIZATIONVISIBLE = !GEOLOCALIZATIONVISIBLE;
+    viewer.entities.getById('GeolocalizationPos').show = GEOLOCALIZATIONVISIBLE;
 };

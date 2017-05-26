@@ -10,8 +10,6 @@ Cesium.MapboxApi.defaultAccessToken = "pk.eyJ1IjoidmljYXJhIiwiYSI6ImNqMmYxbWx0Nj
 // Cesium.Camera.DEFAULT_VIEW_FACTOR = 0;
 // Cesium.Camera.DEFAULT_VIEW_RECTANGLE = Cesium.Rectangle.fromDegrees(8.893699999999999, 46.1191401, 9.089630099999999, 45.93971);
 
-
-
 let viewer = new Cesium.Viewer('cesiumContainer', {
     animation: false,
     baseLayerPicker: false,
@@ -41,10 +39,10 @@ viewer.dropError.addEventListener(function (dropHandler, name, error) {
 viewer.infoBox.frame.removeAttribute('sandbox');
 
 viewer.camera.setView({
-                          destination : Cesium.Rectangle.fromDegrees(8.893699999999999, 46.0101401, 9.039630099999999, 45.98971),
+                          destination : Cesium.Rectangle.fromDegrees(8.941063, 45.993499, 8.977996, 45.980138),
                           orientation: {
                               heading : 0.0,
-                              pitch : Cesium.Math.toRadians(-70),
+                              pitch : Cesium.Math.toRadians(-35),
                               roll : viewer.camera.roll
                           }
                       });
@@ -77,6 +75,20 @@ $(myLayerPicker).insertBefore($(".cesium-navigationHelpButton-wrapper"));
 let imageryViewModels = [];
 let terrainViewModels = [];
 
+
+imageryViewModels.push(new Cesium.ProviderViewModel({
+                                                        name : 'Bing\u00adMaps\u00a0Aerial',
+                                                        iconUrl : Cesium.buildModuleUrl('Widgets/Images/ImageryProviders/bingAerial.png'),
+                                                        tooltip : 'Bing Maps aerial Imagery',
+                                                        creationFunction : function() {
+                                                            return new Cesium.BingMapsImageryProvider({
+                                                                                                          url : 'https://dev.virtualearth.net',
+                                                                                                          key : 'AibFjJSh0jKod09GGPlExgM-mBd5DEah5hPAeIVTDHQhEuUHi0PAhYKS3vmFi-i9',
+                                                                                                          mapStyle : Cesium.BingMapsStyle.AERIAL
+                                                                                                      });
+                                                        }
+                                                    }));
+
 imageryViewModels.push(new Cesium.ProviderViewModel({
                                                         name : 'Mapbox\u00adStreet\u00a0Classic',
                                                         iconUrl : Cesium.buildModuleUrl('Widgets/Images/ImageryProviders/mapboxStreets.png'),
@@ -90,18 +102,7 @@ imageryViewModels.push(new Cesium.ProviderViewModel({
                                                     }));
 
 
-imageryViewModels.push(new Cesium.ProviderViewModel({
-                                                        name : 'Bing\u00adMaps\u00a0Aerial',
-                                                        iconUrl : Cesium.buildModuleUrl('Widgets/Images/ImageryProviders/bingAerial.png'),
-                                                        tooltip : 'Bing Maps aerial Imagery',
-                                                        creationFunction : function() {
-                                                            return new Cesium.BingMapsImageryProvider({
-                                                                                                         url : 'https://dev.virtualearth.net',
-                                                                                                         key : 'AibFjJSh0jKod09GGPlExgM-mBd5DEah5hPAeIVTDHQhEuUHi0PAhYKS3vmFi-i9',
-                                                                                                         mapStyle : Cesium.BingMapsStyle.AERIAL
-                                                                                                     });
-                                                        }
-                                                    }));
+
 
 
 

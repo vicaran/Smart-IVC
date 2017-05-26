@@ -65,6 +65,7 @@ public class CityCreator {
     }
 
     private void create() throws Exception {
+//        Set<String> settino = new HashSet<>();
         NodeList recordsList = this.getCityDocument().getElementsByTagName("Record");
         if (recordsList != null) {
             for (int recordIdx = 0; recordIdx < recordsList.getLength(); recordIdx++) {
@@ -72,11 +73,19 @@ public class CityCreator {
                 if (valuesList != null) {
                     BuildingCreator building = new BuildingCreator();
                     Pair<Building, Address> createdBuilding = building.create(valuesList, this.cityModel);
+//                    if (createdBuilding.getL().getDescription().equals("edificio")) {
                     buildingList.add(createdBuilding.getL());
                     addressList.add(createdBuilding.getR());
+//                    }
+//                    else {
+//                        settino.add(createdBuilding.getL().getDescription());
+//                    }
                 }
             }
         }
+//        for(String i : settino) {
+//            System.out.println(i);
+//        }
     }
 
     private Document getCityDocument() throws Exception {

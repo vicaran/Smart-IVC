@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
+import static org.springframework.data.repository.init.ResourceReader.Type.JSON;
 
 /**
  * Created by Andrea on 17/03/2017.
@@ -78,12 +78,25 @@ public class BuildingController {
             }
         }
 
+        String primaryPercentage;
+        String secondaryPercentage;
+
+        if (building.getPrimaryHousesPercentage() == null && building.getSecondaryHousesPercentage() == null) {
+            primaryPercentage = secondaryPercentage = "";
+        } else {
+            primaryPercentage = " (" + building.getPrimaryHousesPercentage() + "%)";
+            secondaryPercentage = " (" + building.getSecondaryHousesPercentage() + "%)";
+        }
+
         String result = new JSONObject()
                 .put("id", building.getId())
                 .put("floors", building.getFloors())
                 .put("civicNumbers", buildingNumbers)
                 .put("addresses", buildingAddresses)
                 .put("types", buildingTypes)
+                .put("suburb", building.getSuburb().getName())
+                .put("Primary Houses", building.getPrimaryHouses() + primaryPercentage)
+                .put("Secondary Houses", building.getSecondaryHouses() + secondaryPercentage)
                 .put("ringCoords", Base64.encodeBase64String(building.getRingGlobalCoords())).toString();
 
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -125,7 +138,7 @@ public class BuildingController {
     public ResponseEntity<?> handleBuildingsByCoords(@PathVariable Long id) {
 
         List<Building> buildings = this.buildingRepository.findBuildingByOwnCityId(id);
-
+//        List<Building> buildings = this.buildingRepository.findBuildingByIdLessThan((long) 4520);
         return new ResponseEntity<>(buildings, HttpStatus.OK);
     }
 
@@ -135,66 +148,30 @@ public class BuildingController {
      * @param queryBody the query body
      * @return the response entity
      */
-    @RequestMapping(value = "/query/{queryBody}", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<?> handleBuildingByType(@PathVariable String queryBody) {
-        String[] queries = queryBody.split("&");
-        for (String query : queries) {
-            String[] singleQuery = query.split("=");
-            switch (singleQuery[0]) {
-                case "type":
-                    this.handleBuildingByType(singleQuery[1]);
-                    break;
-                case "floors":
-                    String[] floorsQuery = singleQuery[1].split("/");
-                    this.handleBuildingByFloors(floorsQuery[0], Integer.parseInt(floorsQuery[1]));
-                    break;
-            }
-        }
-        Collection<Building> buildings = buildingRepository.findAll();
-        return new ResponseEntity<>(buildings, HttpStatus.OK);
-    }
+    @RequestMapping(value = "/query/{queryBody}/", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<?> handleQuery(@PathVariable String queryBody) {
 
-    private ResponseEntity<?> handleBuildingByType(Long id) {
-        Collection<Address> allTypes = this.addressRepository.findByTypes_Id(id);
+        List<Building> buildingIds = buildingRepository.findByFilterText(new HashSet<>(Arrays.asList(queryBody.split("&"))));
 
-        Set<Long> buildingIds = new HashSet<>();
-        for (Address address: allTypes) {
-            buildingIds.add(address.getBuilding().getId());
-        }
-
-        String result = new JSONObject()
-                .put("buildingIds",buildingIds).toString();
+        String result = new JSONObject().put("buildingIds", buildingIds).toString();
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    private ResponseEntity<?> handleBuildingByFloors(String comparisonVal, int floorsNumber) {
-
-        Collection<Building> buildings = null;
-        Set<Long> buildingIds = new HashSet<>();
-        switch (comparisonVal) {
-            case "greater":
-                buildings = buildingRepository.findBuildingsByFloorsGreaterThan(floorsNumber);
-                break;
-            case "equal":
-                buildings = buildingRepository.findBuildingsByFloorsEquals(floorsNumber);
-                break;
-            case "less":
-                buildings = buildingRepository.findBuildingsByFloorsLessThan(floorsNumber);
-                break;
-            default:
-                buildings = new ArrayList<>();
-        }
-
-        for (Building building : buildings) {
-            buildingIds.add(building.getId());
-        }
-        String result = new JSONObject()
-                .put("buildingIds",buildingIds).toString();
-
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
+//    private List<Long> handleBuildingByType(Long id) {
+//        Collection<Address> allTypes = this.addressRepository.findByTypes_Id(id);
+//
+//        Set<Long> buildingIds = new HashSet<>();
+//        for (Address address: allTypes) {
+//            buildingIds.add(address.getBuilding().getId());
+//        }
+//        return (List<Long>) buildingIds;
+//
+////        String result = new JSONObject()
+////                .put("buildingIds",buildingIds).toString();
+////
+////        return new ResponseEntity<>(result, HttpStatus.OK);
+//    }
 
 }
 

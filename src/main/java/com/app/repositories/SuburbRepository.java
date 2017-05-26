@@ -28,7 +28,7 @@ public interface SuburbRepository  extends JpaRepository<Suburb, Long> {
      */
     Optional<Suburb> findSuburbByName(String name);
 
-//    Optional<Collection<Suburb>> findSuburbByCityId(Long id);
+    Optional<Collection<Suburb>> findSuburbsByOwnCity_IdOrderByNameAsc(Long id);
 
 
 }

@@ -80,6 +80,8 @@ public class CityLoaderCommand {
             CityCreator lugano = new CityCreator();
             try {
                 lugano = new CityCreator("src/main/resources/city_data/lugano.xml", "Lugano", "6900");
+//                lugano = new CityCreator("src/main/resources/city_data/luganoNew.xml", "Lugano", "6900");
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

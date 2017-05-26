@@ -2,6 +2,8 @@ package com.app.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import org.hibernate.annotations.Formula;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +74,12 @@ public class Building implements Serializable {
 
     @OneToMany(mappedBy = "ownBuilding", cascade = CascadeType.ALL)
     private List<Address> addresses;
+
+    @Formula("(PRIMARY_HOUSES/(PRIMARY_HOUSES+SECONDARY_HOUSES))*100")
+    private Long primaryHousesPercentage;
+
+    @Formula("(SECONDARY_HOUSES/(PRIMARY_HOUSES+SECONDARY_HOUSES))*100")
+    private Long secondaryHousesPercentage;
 
     /**
      * Instantiates a new Building.
@@ -150,6 +158,7 @@ public class Building implements Serializable {
      *
      * @return the shape area
      */
+    @JsonIgnore
     public double getShapeArea() {
         return shapeArea;
     }
@@ -373,6 +382,7 @@ public class Building implements Serializable {
      *
      * @return the edid uca
      */
+    @JsonIgnore
     public Long getEdidUca() {
         return edidUca;
     }
@@ -391,6 +401,7 @@ public class Building implements Serializable {
      *
      * @return the section
      */
+    @JsonIgnore
     public Long getSection() {
         return section;
     }
@@ -438,5 +449,23 @@ public class Building implements Serializable {
      */
     public void setSecondaryHouses(String secondaryHouses) {
         this.secondaryHouses = secondaryHouses;
+    }
+
+    @JsonIgnore
+    public Long getPrimaryHousesPercentage() {
+        return primaryHousesPercentage;
+    }
+
+    public void setPrimaryHousesPercentage(Long primaryHousesPercentage) {
+        this.primaryHousesPercentage = primaryHousesPercentage;
+    }
+
+    @JsonIgnore
+    public Long getSecondaryHousesPercentage() {
+        return secondaryHousesPercentage;
+    }
+
+    public void setSecondaryHousesPercentage(Long secondaryHousesPercentage) {
+        this.secondaryHousesPercentage = secondaryHousesPercentage;
     }
 }

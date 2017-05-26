@@ -4,20 +4,21 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PostPersist;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * Created by Andrea on 30/03/2017.
@@ -41,6 +42,8 @@ public class Suburb {
 
     @OneToMany(mappedBy = "ownSuburb", cascade = CascadeType.ALL)
     private Collection<Building> buildings = new ArrayList<>();
+
+
 
     /**
      * Instantiates a new Suburb.
@@ -97,6 +100,7 @@ public class Suburb {
      *
      * @return the buildings
      */
+    @JsonIgnore
     public Collection<Building> getBuildings() {
         return new ArrayList<Building>(buildings);
     }
@@ -158,6 +162,7 @@ public class Suburb {
      *
      * @return the byte [ ]
      */
+    @JsonIgnore
     public byte[] getBoundCoords() {
         return boundCoords;
     }
@@ -169,5 +174,16 @@ public class Suburb {
      */
     public void setBoundCoords(byte[] boundCoords) {
         this.boundCoords = boundCoords;
+    }
+
+    @Transient
+    public List<Long> getBuildingIds () {
+        List<Long> buildingIds = new LinkedList<>();
+        Collection<Building> buildingList = getBuildings();
+        if (buildingList != null) {
+            for (Building building : buildingList)
+                buildingIds.add(building.getId());
+        }
+        return buildingIds;
     }
 }

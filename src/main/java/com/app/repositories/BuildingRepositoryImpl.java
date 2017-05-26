@@ -1,0 +1,113 @@
+package com.app.repositories;
+
+import com.app.models.Address;
+import com.app.models.Building;
+import com.app.models.Type;
+
+import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Subquery;
+
+/**
+ * Created by Andrea on 23/05/2017.
+ */
+@Repository
+public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    public List<Building> findByFilterText(Set<String> words) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Building> query = criteriaBuilder.createQuery(Building.class);
+
+        Root<Building> buildingRoot = query.from(Building.class);
+
+        List<Predicate> predicates = new ArrayList<>();
+
+        for (String word : words) {
+            Predicate predicateResult = this.createPredicates(criteriaBuilder, query, buildingRoot, word);
+            if (predicateResult != null) {
+                predicates.add(predicateResult);
+            }
+        }
+
+
+        query.where(criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()])));
+
+        List<Building> ciaone = entityManager.createQuery(query.select(buildingRoot.get("id"))).getResultList();
+        System.out.println();
+        return ciaone;
+    }
+
+
+    private Predicate createPredicates(CriteriaBuilder criteriaBuilder, CriteriaQuery<Building> query, Root<Building> buildingRoot, String word) {
+        String[] queryVal = word.split("=");
+        Predicate predicateResult = null;
+        switch (queryVal[0]) {
+            case "floors":
+                Path<String> buildingFloors = buildingRoot.get("floors");
+                String[] compareArr = queryVal[1].split("_");
+                switch (compareArr[0]) {
+                    case "less":
+                        predicateResult = criteriaBuilder.lessThan(buildingFloors, compareArr[1]);
+                        break;
+                    case "greater":
+                        predicateResult = criteriaBuilder.greaterThan(buildingFloors, compareArr[1]);
+                        break;
+                    case "equal":
+                        predicateResult = criteriaBuilder.equal(buildingFloors, compareArr[1]);
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "type":
+                System.out.println("Searching for type " + queryVal[1]);
+                Subquery<Building> subQuery = query.subquery(Building.class);
+                Root<Address> addressRoot = subQuery.from(Address.class);
+
+                System.out.println("Query so far " + addressRoot.<String> get("types"));
+                subQuery.where(criteriaBuilder.like(addressRoot.<String> get("types"), queryVal[1]));
+
+                subQuery.select(addressRoot.get("ownBuilding"));
+
+                predicateResult = criteriaBuilder.in(buildingRoot).value(subQuery);
+                System.out.println();
+                break;
+            case "primarySecondaryPercentage":
+                String[] typeArr = queryVal[1].split("_");
+                switch (typeArr[0]) {
+                    case "primary":
+                        predicateResult = criteriaBuilder.greaterThanOrEqualTo(buildingRoot.get("primaryHousesPercentage"), typeArr[1]);
+                        break;
+                    case "secondary":
+                        predicateResult = criteriaBuilder.greaterThanOrEqualTo(buildingRoot.get("secondaryHousesPercentage"), typeArr[1]);
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "suburb":
+                Path<String> buildingSuburb = buildingRoot.get("ownSuburb");
+                predicateResult = criteriaBuilder.equal(buildingSuburb, queryVal[1]);
+            default:
+                break;
+        }
+        return predicateResult;
+    }
+}

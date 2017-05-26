@@ -77,7 +77,7 @@ public class CityInformationCommand {
     @Scheduled
     public void informationAddressTaskFromSwissTopo() {
         Optional<List<Address>> nullAddresses = Optional.ofNullable(addressRepository.findAddressByAddressNameIsNull());
-        if (nullAddresses.isPresent() && nullAddresses.get().size() > 81) {
+        if (nullAddresses.isPresent() && nullAddresses.get().size() > 8465) {
             List<Building> egidBuildings = buildingRepository.findBuildingsByEgidUcaIsNotNull();
             for (Building building : egidBuildings) {
                 Optional<Address> address = addressRepository.findAddressByLatitudeAndLongitudeAndOwnBuilding_Id(building.getCentroidLat(), building.getCentroidLng(), building.getId());
@@ -95,7 +95,6 @@ public class CityInformationCommand {
                         addressRepository.save(address.get());
                     }
                 }
-
             }
         }
     }
@@ -111,14 +110,14 @@ public class CityInformationCommand {
             JSONParser parser = new JSONParser();
             JSONArray infoArray;
             try {
-                File dir = new File("src/main/resources/city_data/");
+                File dir = new File("src/main/resources/city_data/OSM_DATA/");
                 File[] directoryListing = dir.listFiles();
                 if (directoryListing != null) {
                     for (Address address : nullAddresses.get()) {
                         outerloop:
                         for (File child : directoryListing) {
-                            if (!Objects.equals(child.getName(), "lugano.xml") && !Objects.equals(child.getName(), ".DS_Store")) {
-                                infoArray = (JSONArray) parser.parse(new FileReader("src/main/resources/city_data/" + child.getName()));
+                            if (!Objects.equals(child.getName(), ".DS_Store")) {
+                                infoArray = (JSONArray) parser.parse(new FileReader("src/main/resources/city_data/OSM_DATA/" + child.getName()));
                                 for (Object addressInfo : infoArray) {
                                     JSONObject jsonAddressInfo = (JSONObject) addressInfo;
 

@@ -3,6 +3,8 @@ package com.app.repositories;
 import com.app.models.Building;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,7 +12,7 @@ import java.util.Optional;
 /**
  * Created by Andrea on 13/03/2017.
  */
-public interface BuildingRepository extends JpaRepository<Building, Long> {
+public interface BuildingRepository extends JpaRepository<Building, Long>, BuildingRepositoryCustom {
 
     /**
      * Find building by id optional.
@@ -86,4 +88,5 @@ public interface BuildingRepository extends JpaRepository<Building, Long> {
      */
     Optional<List<Building>> findBuildingsByEgidUca(Long egidUca);
 
+    List<Building> findBuildingByIdLessThan(Long idx);
 }

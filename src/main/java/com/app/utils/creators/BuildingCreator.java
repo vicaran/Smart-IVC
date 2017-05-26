@@ -45,6 +45,22 @@ public class BuildingCreator {
     private static final int SHAPE_LENGTH = 11;
     private static final int SHAPE_AREA = 12;
 
+//
+//    private static final int OBJECTID = 0;
+//    private static final int SHAPE = 12;
+//    private static final int JOIN_COUNT = 15;
+//    private static final int TARGET_FID = 16;
+//    private static final int DESCRIPTION = 4;
+//    private static final int SECTION = 11;
+//    private static final int NUM_CIVIC_ID = 17;
+//    private static final int ID_STABILE = 18;
+//    private static final int EGID_UCA = 19;
+//    private static final int EDID_UCA = 20;
+//    private static final int FLOORS = 21;
+//    private static final int SHAPE_LENGTH = 14;
+//    private static final int SHAPE_AREA = 13;
+
+
 
     /**
      * Create pair.
@@ -97,7 +113,6 @@ public class BuildingCreator {
                 }
             }
         }
-
 
         Address address = new Address();
         address.setLatitude(building.getCentroidLat());

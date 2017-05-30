@@ -56,6 +56,13 @@ let loadSuburbs = function () {
                                       + '</tr>';
 
                        $("#suburbsTable").append(tableRow);
+
+                       let opt = document.createElement("OPTION");
+                       let val = document.createTextNode(formatText(data[i].name));
+                       opt.id = data[i].id;
+                       opt.value = data[i].name;
+                       opt.appendChild(val);
+                       document.getElementById('buildingSuburbNameCity').appendChild(opt);
                    }
                }
            })

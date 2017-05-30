@@ -153,6 +153,7 @@ public class BuildingController {
 
         List<Building> buildingIds = buildingRepository.findByFilterText(new HashSet<>(Arrays.asList(queryBody.split("&"))));
 
+
         String result = new JSONObject().put("buildingIds", buildingIds).toString();
 
         return new ResponseEntity<>(result, HttpStatus.OK);

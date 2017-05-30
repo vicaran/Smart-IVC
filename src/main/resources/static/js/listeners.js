@@ -286,6 +286,9 @@ let queryBuilder = function () {
             query += "primarySecondaryPercentage=" + comparisonVal + "_" + percentageVal + "&";
         }
     }
+    if ($("#bySuburbNameSelection:checked").length === 1) {
+        query += "suburb=" + $("#buildingSuburbNameCity").find("option:selected").attr("id") + "&";
+    }
 
     return query.slice(0, -1);
 };

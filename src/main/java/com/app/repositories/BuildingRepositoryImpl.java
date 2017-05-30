@@ -2,6 +2,7 @@ package com.app.repositories;
 
 import com.app.models.Address;
 import com.app.models.Building;
+import com.app.models.Suburb;
 import com.app.models.Type;
 
 import org.springframework.stereotype.Repository;
@@ -77,17 +78,22 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
                 }
                 break;
             case "type":
-                System.out.println("Searching for type " + queryVal[1]);
-                Subquery<Building> subQuery = query.subquery(Building.class);
-                Root<Address> addressRoot = subQuery.from(Address.class);
+                Join<Building,Address> buildingAddressJoin = buildingRoot.join( "ownBuilding" );
+//                Join<Type, Address> typeAddressJoin =
+                Path<String> buildingAddress = buildingAddressJoin.get("id");
+                System.out.println(buildingAddress.toString());
 
-                System.out.println("Query so far " + addressRoot.<String> get("types"));
-                subQuery.where(criteriaBuilder.like(addressRoot.<String> get("types"), queryVal[1]));
-
-                subQuery.select(addressRoot.get("ownBuilding"));
-
-                predicateResult = criteriaBuilder.in(buildingRoot).value(subQuery);
-                System.out.println();
+//                System.out.println("Searching for type " + queryVal[1]);
+//                Subquery<Building> subQuery = query.subquery(Building.class);
+//                Root<Address> addressRoot = subQuery.from(Address.class);
+//
+//                System.out.println("Query so far " + addressRoot.<String> get("types"));
+//                subQuery.where(criteriaBuilder.like(addressRoot.<String> get("types"), queryVal[1]));
+//
+//                subQuery.select(addressRoot.get("ownBuilding"));
+//
+//                predicateResult = criteriaBuilder.in(buildingRoot).value(subQuery);
+//                System.out.println();
                 break;
             case "primarySecondaryPercentage":
                 String[] typeArr = queryVal[1].split("_");
@@ -103,7 +109,8 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
                 }
                 break;
             case "suburb":
-                Path<String> buildingSuburb = buildingRoot.get("ownSuburb");
+                Join<Building,Suburb> buildingSuburbJoin = buildingRoot.join( "ownSuburb" );
+                Path<String> buildingSuburb = buildingSuburbJoin.get("id");
                 predicateResult = criteriaBuilder.equal(buildingSuburb, queryVal[1]);
             default:
                 break;

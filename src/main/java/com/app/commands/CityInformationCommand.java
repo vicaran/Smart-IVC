@@ -26,7 +26,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Created by Andrea on 14/04/2017.
+ * The type City information command.
  */
 public class CityInformationCommand {
     private final AddressRepository addressRepository;
@@ -72,7 +72,7 @@ public class CityInformationCommand {
     }
 
     /**
-     * Information task from swiss topo.
+     * Information address task from swiss topo.
      */
     @Scheduled
     public void informationAddressTaskFromSwissTopo() {

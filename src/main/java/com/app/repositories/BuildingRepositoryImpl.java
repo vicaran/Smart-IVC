@@ -21,7 +21,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 /**
- * Created by Andrea on 23/05/2017.
+ * The type Building repository.
  */
 @Repository
 public class BuildingRepositoryImpl implements BuildingRepositoryCustom {

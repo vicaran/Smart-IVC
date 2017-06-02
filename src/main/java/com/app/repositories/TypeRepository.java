@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 /**
- * Created by Andrea on 16/04/2017.
+ * The interface Type repository.
  */
 public interface TypeRepository extends JpaRepository<Type, Long> {
     /**

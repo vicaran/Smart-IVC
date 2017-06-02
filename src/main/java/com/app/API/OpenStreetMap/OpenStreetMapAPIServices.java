@@ -3,7 +3,7 @@ package com.app.API.OpenStreetMap;
 import java.util.HashMap;
 
 /**
- * Created by Andrea on 30/03/2017.
+ * The interface Open street map api services.
  */
 public interface OpenStreetMapAPIServices {
 

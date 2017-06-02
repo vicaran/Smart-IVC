@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by Andrea on 16/03/2017.
+ * The interface Google api services.
  */
 public interface GoogleAPIServices {
 

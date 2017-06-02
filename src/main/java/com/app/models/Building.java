@@ -26,7 +26,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * Created by Andrea on 12/03/2017.
+ * The type Building.
  */
 @Entity
 @Table(name = "BUILDING")
@@ -457,24 +457,49 @@ public class Building implements Serializable {
         this.secondaryHouses = secondaryHouses;
     }
 
+    /**
+     * Gets primary houses percentage.
+     *
+     * @return the primary houses percentage
+     */
     @JsonIgnore
     public Long getPrimaryHousesPercentage() {
         return primaryHousesPercentage;
     }
 
+    /**
+     * Sets primary houses percentage.
+     *
+     * @param primaryHousesPercentage the primary houses percentage
+     */
     public void setPrimaryHousesPercentage(Long primaryHousesPercentage) {
         this.primaryHousesPercentage = primaryHousesPercentage;
     }
 
+    /**
+     * Gets secondary houses percentage.
+     *
+     * @return the secondary houses percentage
+     */
     @JsonIgnore
     public Long getSecondaryHousesPercentage() {
         return secondaryHousesPercentage;
     }
 
+    /**
+     * Sets secondary houses percentage.
+     *
+     * @param secondaryHousesPercentage the secondary houses percentage
+     */
     public void setSecondaryHousesPercentage(Long secondaryHousesPercentage) {
         this.secondaryHousesPercentage = secondaryHousesPercentage;
     }
 
+    /**
+     * Sets building coordinate.
+     *
+     * @param buildingCoordinate the building coordinate
+     */
     public void setBuildingCoordinate(Point buildingCoordinate) {
         this.buildingCoordinate = buildingCoordinate;
     }

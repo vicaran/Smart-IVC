@@ -21,7 +21,7 @@ import java.util.HashSet;
 import java.util.List;
 
 /**
- * Created by Andrea on 17/03/2017.
+ * The type Building controller.
  */
 @RestController
 @RequestMapping("/building")
@@ -131,7 +131,7 @@ public class BuildingController {
     }
 
     /**
-     * Handle building by type response entity.
+     * Handle query response entity.
      *
      * @param queryBody the query body
      * @return the response entity

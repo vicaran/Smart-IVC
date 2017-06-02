@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Created by Andrea on 03/04/2017.
+ * The interface Address repository.
  */
 public interface AddressRepository extends JpaRepository<Address, Long> {
 

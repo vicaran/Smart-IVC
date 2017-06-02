@@ -9,7 +9,7 @@ import com.app.utils.dataStructures.Pair;
 import java.nio.charset.StandardCharsets;
 
 /**
- * Created by Andrea on 14/04/2017.
+ * The type Online converter.
  */
 public class OnlineConverter {
 

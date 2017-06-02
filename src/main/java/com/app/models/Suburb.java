@@ -21,7 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 /**
- * Created by Andrea on 30/03/2017.
+ * The type Suburb.
  */
 @Entity
 @Table(name = "SUBURB")
@@ -42,7 +42,6 @@ public class Suburb {
 
     @OneToMany(mappedBy = "ownSuburb", cascade = CascadeType.ALL)
     private Collection<Building> buildings = new ArrayList<>();
-
 
 
     /**
@@ -176,6 +175,11 @@ public class Suburb {
         this.boundCoords = boundCoords;
     }
 
+    /**
+     * Gets building ids.
+     *
+     * @return the building ids
+     */
     @Transient
     public List<Long> getBuildingIds () {
         List<Long> buildingIds = new LinkedList<>();

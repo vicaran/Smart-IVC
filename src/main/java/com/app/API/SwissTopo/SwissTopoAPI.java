@@ -11,7 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- * Created by Andrea on 29/03/2017.
+ * The type Swiss topo api.
  */
 public class SwissTopoAPI implements SwissTopoAPIServices {
 

@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 /**
- * Created by Andrea on 12/03/2017.
+ * The interface City repository.
  */
 public interface CityRepository extends JpaRepository<City, Long> {
 

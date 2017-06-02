@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by Andrea on 15/03/2017.
+ * The type Api keys.
  */
 @Component
 public class APIKeys {

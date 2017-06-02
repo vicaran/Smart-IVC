@@ -17,7 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Created by Andrea on 30/03/2017.
+ * The type Address.
  */
 @Entity
 @Table(name = "ADDRESS")

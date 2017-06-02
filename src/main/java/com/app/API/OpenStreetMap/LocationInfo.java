@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 /**
- * Created by Andrea on 30/03/2017.
+ * The type Location info.
  */
 public class LocationInfo implements OpenStreetMapAPIServices {
 

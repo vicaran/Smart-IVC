@@ -5,7 +5,7 @@ import com.app.utils.dataStructures.Pair;
 import org.json.JSONObject;
 
 /**
- * Created by Andrea on 16/03/2017.
+ * The interface Swiss topo api services.
  */
 public interface SwissTopoAPIServices {
 

@@ -21,7 +21,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * Created by Andrea on 12/03/2017.
+ * The type City.
  */
 @Entity
 @Table(name = "CITY")

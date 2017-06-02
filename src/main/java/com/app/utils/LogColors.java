@@ -1,7 +1,7 @@
 package com.app.utils;
 
 /**
- * Created by Andrea on 16/05/2017.
+ * The type Log colors.
  */
 public class LogColors {
     /**

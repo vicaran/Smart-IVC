@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by Andrea on 15/03/2017.
+ * The type Location info.
  */
 public class LocationInfo implements GoogleAPIServices {
 

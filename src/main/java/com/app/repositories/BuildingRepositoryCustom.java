@@ -6,8 +6,14 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by Andrea on 23/05/2017.
+ * The interface Building repository custom.
  */
 interface BuildingRepositoryCustom {
+    /**
+     * Find by filter text list.
+     *
+     * @param words the words
+     * @return the list
+     */
     List<Building> findByFilterText(Set<String> words);
 }

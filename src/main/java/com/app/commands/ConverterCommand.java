@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Andrea on 14/04/2017.
+ * The type Converter command.
  */
 @Service
 public class ConverterCommand {

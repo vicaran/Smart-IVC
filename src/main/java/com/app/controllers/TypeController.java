@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Collection;
 
 /**
- * Created by Andrea on 02/05/2017.
+ * The type Type controller.
  */
 @RestController
 @RequestMapping("/type")

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Created by Andrea on 13/03/2017.
+ * The interface Building repository.
  */
 public interface BuildingRepository extends JpaRepository<Building, Long>, BuildingRepositoryCustom {
 
@@ -88,5 +88,11 @@ public interface BuildingRepository extends JpaRepository<Building, Long>, Build
      */
     Optional<List<Building>> findBuildingsByEgidUca(Long egidUca);
 
+    /**
+     * Find building by id less than list.
+     *
+     * @param idx the idx
+     * @return the list
+     */
     List<Building> findBuildingByIdLessThan(Long idx);
 }

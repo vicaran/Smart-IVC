@@ -8,7 +8,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
- * Created by Andrea on 16/03/2017.
+ * The type Location info test.
  */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(GeocodingApi.class)

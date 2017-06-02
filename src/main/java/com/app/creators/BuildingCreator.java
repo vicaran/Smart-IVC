@@ -1,4 +1,4 @@
-package com.app.utils.creators;
+package com.app.creators;
 
 import com.app.models.Address;
 import com.app.models.Building;
@@ -27,7 +27,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 /**
- * Created by Andrea on 15/03/2017.
+ * The type Building creator.
  */
 public class BuildingCreator {
 
@@ -59,7 +59,6 @@ public class BuildingCreator {
 //    private static final int FLOORS = 21;
 //    private static final int SHAPE_LENGTH = 14;
 //    private static final int SHAPE_AREA = 13;
-
 
 
     /**

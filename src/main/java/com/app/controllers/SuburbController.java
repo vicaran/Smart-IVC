@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Collection;
 
 /**
- * Created by Andrea on 28/04/2017.
+ * The type Suburb controller.
  */
 @RestController
 @RequestMapping("/suburb")
@@ -23,11 +23,22 @@ public class SuburbController {
 
     private final SuburbRepository suburbRepository;
 
+    /**
+     * Instantiates a new Suburb controller.
+     *
+     * @param suburbRepository the suburb repository
+     */
     @Autowired
     public SuburbController(SuburbRepository suburbRepository) {
         this.suburbRepository = suburbRepository;
     }
 
+    /**
+     * Gets suburb from city id.
+     *
+     * @param id the id
+     * @return the suburb from city id
+     */
     @RequestMapping(value = "/fromCityId={id}", method = RequestMethod.GET)
     public ResponseEntity<?> getSuburbFromCityId(@PathVariable Long id) {
         Collection<Suburb> suburbList = this.suburbRepository.findSuburbsByOwnCity_IdOrderByNameAsc(id).orElseThrow(NotFoundException::new);

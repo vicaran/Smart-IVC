@@ -1,8 +1,7 @@
 package com.app.utils;
 
 /**
- * Created by Andrea on 08/03/2017.
- * Modified from: https://github.com/ValentinMinder/Swisstopo-WGS84-LV03
+ * The type Offline converter.
  */
 
 

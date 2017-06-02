@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by Andrea on 27/02/2017.
+ * The type City controller.
  */
 @RestController
 @RequestMapping("/city")

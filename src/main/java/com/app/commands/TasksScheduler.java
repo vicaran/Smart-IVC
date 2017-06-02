@@ -13,7 +13,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Created by Andrea on 29/03/2017.
+ * The type Tasks scheduler.
  */
 @Service
 public class TasksScheduler {

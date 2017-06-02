@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 /**
- * Created by Andrea on 30/03/2017.
+ * The interface Suburb repository.
  */
 public interface SuburbRepository  extends JpaRepository<Suburb, Long> {
     /**
@@ -28,6 +28,12 @@ public interface SuburbRepository  extends JpaRepository<Suburb, Long> {
      */
     Optional<Suburb> findSuburbByName(String name);
 
+    /**
+     * Find suburbs by own city id order by name asc optional.
+     *
+     * @param id the id
+     * @return the optional
+     */
     Optional<Collection<Suburb>> findSuburbsByOwnCity_IdOrderByNameAsc(Long id);
 
 

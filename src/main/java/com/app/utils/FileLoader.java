@@ -8,7 +8,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 /**
- * Created by Andrea on 26/02/2017.
+ * The type File loader.
  */
 public class FileLoader {
 

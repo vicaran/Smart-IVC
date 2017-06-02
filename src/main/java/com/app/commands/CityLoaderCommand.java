@@ -1,12 +1,11 @@
 package com.app.commands;
 
-import com.app.models.Address;
+import com.app.creators.CityCreator;
 import com.app.models.Building;
 import com.app.models.City;
 import com.app.repositories.AddressRepository;
 import com.app.repositories.BuildingRepository;
 import com.app.repositories.CityRepository;
-import com.app.utils.creators.CityCreator;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Created by Andrea on 14/04/2017.
+ * The type City loader command.
  */
 @Service
 public class CityLoaderCommand {

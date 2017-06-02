@@ -1,4 +1,4 @@
-package com.app.utils.creators;
+package com.app.creators;
 
 import com.app.API.GoogleGeocoding.GoogleAPIServices;
 import com.app.API.GoogleGeocoding.LocationInfo;
@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by Andrea on 15/03/2017.
+ * The type City creator.
  */
 public class CityCreator {
 

@@ -19,7 +19,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
- * Created by Andrea on 30/03/2017.
+ * The type Type.
  */
 @Entity
 @Table(name = "TYPE")
@@ -55,6 +55,11 @@ public class Type implements Serializable{
         this.addresses = new HashSet<>();
     }
 
+    /**
+     * Instantiates a new Type.
+     *
+     * @param typeId the type id
+     */
     public Type(Long typeId){
         this.setId(typeId);
         this.addresses = new HashSet<>();

@@ -1,13 +1,9 @@
 package com.app.models;
 
-import com.google.maps.model.Geometry;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sun.javafx.scene.paint.GradientUtils;
 
 import org.hibernate.annotations.Formula;
 
-import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -84,8 +80,6 @@ public class Building implements Serializable {
 
     @Formula("(SECONDARY_HOUSES/(PRIMARY_HOUSES+SECONDARY_HOUSES))*100")
     private Long secondaryHousesPercentage;
-
-    private Point buildingCoordinate;
 
     /**
      * Instantiates a new Building.
@@ -493,14 +487,5 @@ public class Building implements Serializable {
      */
     public void setSecondaryHousesPercentage(Long secondaryHousesPercentage) {
         this.secondaryHousesPercentage = secondaryHousesPercentage;
-    }
-
-    /**
-     * Sets building coordinate.
-     *
-     * @param buildingCoordinate the building coordinate
-     */
-    public void setBuildingCoordinate(Point buildingCoordinate) {
-        this.buildingCoordinate = buildingCoordinate;
     }
 }

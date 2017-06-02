@@ -133,7 +133,6 @@ $("#coloring").change(function () {
             hideLegendIfVisible();
             break;
     }
-
 });
 
 $("#suburbsTable").change(function () {
@@ -189,8 +188,9 @@ let setColorByHeight = function () {
 
                 if (viewer.scene.primitives.get(j).geometryInstances[i].geometry !== undefined) {
 
-                    let newRGB = interpolateColors(buildingFloors[buildingID], parseInt(MAX_HEIGHT));
+                    let newRGB = interpolationByHeight(buildingFloors[buildingID], parseInt(MAX_HEIGHT));
                     primitive.color = Cesium.ColorGeometryInstanceAttribute.toValue(new Cesium.Color(newRGB[0], newRGB[1], newRGB[2], 1.0));
+
                     if (primitive === selectedEntity) {
                         viewer.selectedEntity = undefined;
                         selectedEntity = undefined;
@@ -338,6 +338,40 @@ let loadTypesForInfoBox = function () {
                }
            });
 };
+
+
+let distanceMap = function () {
+    setDefaultColors();
+
+    $.ajax({
+               url: SERVER_URL + "building/distanceQuery/buildingId=105/",
+               type: "GET",
+               success: function (data) {
+
+                   let primitive = getPrimitiveFromPrimitiveId("building_" + data[0][0]);
+                   if (primitive !== undefined) {
+                       primitive.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.RED);
+                   }
+
+                   //TODO MERGE COLORS TOGHETER (TAKE THE PREVIUOUS AND SUM WITH THE OTHER) TO SHOW COVERAGE MAP OF BUILDINGS
+
+
+                   for (let i = 1; i < data.length; i++) {
+                       let primitive = getPrimitiveFromPrimitiveId("building_" + data[i][0]);
+                       if (primitive !== undefined) {
+                           let newRGB = interpolateColors(data[i][1], [0, 1, 0], [1, 1, 1]);
+                           console.log(primitive.color);
+                           primitive.color = Cesium.ColorGeometryInstanceAttribute.toValue(new Cesium.Color(newRGB[0], newRGB[1], newRGB[2], 1.0));
+                       }
+                   }
+
+                   unselectRadioButtonsColoring();
+               },
+               error: function (request, status, error) {
+               }
+           })
+};
+
 
 let selectBuildingById = function (id) {
     selectedEntity = getPrimitiveFromPrimitiveId("building_" + id);

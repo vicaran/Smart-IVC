@@ -16,4 +16,6 @@ interface BuildingRepositoryCustom {
      * @return the list
      */
     List<Building> findByFilterText(Set<String> words);
+
+    List<Object[]> findByDistance(Double latitude, Double longitude);
 }

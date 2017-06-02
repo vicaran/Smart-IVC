@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The type Building controller.
@@ -146,5 +147,36 @@ public class BuildingController {
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/distanceQuery/{queryBody}/", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<?> distanceQuery(@PathVariable String queryBody) {
+        String[] queryParts = queryBody.split("&");
+        String[] queryFirstParam = queryParts[0].split("=");
+
+        Double latitude = 0.0;
+        Double longitude = 0.0;
+
+        switch (queryFirstParam[0]) {
+            case "buildingId":
+                Optional<Building> building = buildingRepository.findBuildingById(Long.valueOf(queryFirstParam[1]));
+                if (building.isPresent()) {
+                    latitude = building.get().getCentroidLat();
+                    longitude = building.get().getCentroidLng();
+                }
+                break;
+            case "latitude":
+                latitude = Double.valueOf(queryFirstParam[1]);
+                longitude = Double.valueOf(queryParts[1].split("=")[1]);
+                break;
+            default:
+                break;
+        }
+
+        List result = buildingRepository.findByDistance(latitude, longitude);
+        System.out.println(result);
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
 }
 

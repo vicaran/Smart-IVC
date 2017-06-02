@@ -13,6 +13,7 @@ import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
@@ -93,5 +94,12 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
                 break;
         }
         return predicateResult;
+    }
+
+
+    public List findByDistance(Double latitude, Double longitude) {
+        Query query = entityManager.createNativeQuery("Select building_id, (6371 * acos (cos ( radians(" + latitude + ") )* cos( radians( centroid_lat ) )* cos( radians( centroid_lng ) -radians(" + longitude + ") )+ sin ( radians(" + latitude + ") )* sin(radians( centroid_lat )))) AS distance FROM building HAVING distance < 1 ORDER BY distance");
+        List buildings = query.getResultList();
+        return buildings;
     }
 }

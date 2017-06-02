@@ -137,7 +137,18 @@ let interpolate = function (startRGB, endRGB, value) {
     return (1 - value) * startRGB + (value * endRGB)
 };
 
-let interpolateColors = function (value, maximum) {
+let interpolateColors = function (value, startRGB, endRGB) {
+
+    let interpolatedColors = [];
+    interpolatedColors[0] = interpolate(startRGB[0], endRGB[0], value);
+    interpolatedColors[1] = interpolate(startRGB[1], endRGB[1], value);
+    interpolatedColors[2] = interpolate(startRGB[2], endRGB[2], value);
+
+    return interpolatedColors;
+};
+
+let interpolationByHeight = function (value, maximum) {
+
     value = value / maximum;
 
     let interpolationStep = 1 / (RANGESINTERPOLATION.length - 1);
@@ -147,10 +158,6 @@ let interpolateColors = function (value, maximum) {
         colorIdx = 0;
     }
 
-    // if (value >= interpolationStep) {
-    //     colorIdx = 1;
-    // }
-
     if (value >= interpolationStep && value < (interpolationStep * 2)) {
         colorIdx = 1;
     }
@@ -159,13 +166,7 @@ let interpolateColors = function (value, maximum) {
         colorIdx = 2;
     }
 
-
-    let interpolatedColors = [];
-    interpolatedColors[0] = interpolate(RANGESINTERPOLATION[colorIdx][0], RANGESINTERPOLATION[colorIdx + 1][0], value);
-    interpolatedColors[1] = interpolate(RANGESINTERPOLATION[colorIdx][1], RANGESINTERPOLATION[colorIdx + 1][1], value);
-    interpolatedColors[2] = interpolate(RANGESINTERPOLATION[colorIdx][2], RANGESINTERPOLATION[colorIdx + 1][2], value);
-
-    return interpolatedColors;
+    return interpolateColors(value, RANGESINTERPOLATION[colorIdx], RANGESINTERPOLATION[colorIdx + 1])
 };
 
 let getCameraCoordinates = function () {
@@ -311,7 +312,6 @@ let sortDataTags = function (array) {
 
 let addResultToHistory = function (queryVal, data) {
     $("#historyPlaceholder").hide();
-
 
     if (SEARCH_HISTORY[queryVal] === undefined) {
         SEARCH_HISTORY[queryVal] = data;

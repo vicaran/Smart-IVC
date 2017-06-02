@@ -262,7 +262,7 @@ input[type="color"]::-webkit-color-swatch {
 #color-legend-line {
     border-radius: 5pt;
     width: 100%;
-    background: linear-gradient(to right, yellow, grey, blue);
+    background: linear-gradient(to right, lime 25%, blue 50%, yellow 75%, red 100%);
     position: relative;
     margin: 0 6% 0 6%;
 }

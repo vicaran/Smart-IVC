@@ -17,7 +17,7 @@ handler.setInputAction(function (click) {
         }
         selectedEntity = getPrimitiveFromPrimitiveId(pickedObject.id);
         selectPrevColor = hoverPrevColor;
-        selectedEntity.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.RED);
+        selectedEntity.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.DARKORANGE);
         loadInfoBox(pickedObject.id.split("_")[1]);
     } else {
         if (selectedEntity !== undefined) {
@@ -36,7 +36,7 @@ handler.setInputAction(function (movement) {
         }
         hoverEntity = getPrimitiveFromPrimitiveId(hoverObject.id);
         hoverPrevColor = hoverEntity.color;
-        hoverEntity.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.CHARTREUSE);
+        hoverEntity.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.GOLD);
     }
     else {
         if (hoverEntity !== undefined && hoverEntity !== selectedEntity) {
@@ -175,6 +175,11 @@ let setSuburbColors = function () {
             let primitive = getPrimitiveFromPrimitiveId("building_" + SUBURBS_IDS[idx].buildingIds[buildingIdx]);
             if (primitive !== undefined) {
                 primitive.color = Cesium.ColorGeometryInstanceAttribute.toValue(new Cesium.Color.fromCssColorString(SUBURBS_IDS[idx].color))
+                if (primitive === selectedEntity) {
+                    viewer.selectedEntity = undefined;
+                    selectedEntity = undefined;
+                    hoverEntity = undefined;
+                }
             }
         }
     }
@@ -184,13 +189,18 @@ let setColorByHeight = function () {
     for (let j = 1; j < scene.primitives.length; j++) {
         if (viewer.scene.primitives.get(j).geometryInstances !== undefined) {
             for (let i = 0; i < viewer.scene.primitives.get(j).geometryInstances.length; i++) {
-                let primitive = getPrimitiveFromPrimitiveId(viewer.scene.primitives.get(j).geometryInstances[i].id);
+                let buildingID = viewer.scene.primitives.get(j).geometryInstances[i].id;
+                let primitive = getPrimitiveFromPrimitiveId(buildingID);
 
                 if (viewer.scene.primitives.get(j).geometryInstances[i].geometry !== undefined) {
-                    let buildingHeight = viewer.scene.primitives.get(j).geometryInstances[i].geometry._height
-                                         - viewer.scene.primitives.get(j).geometryInstances[i].geometry._extrudedHeight;
-                    let newRGB = interpolateColors(parseInt(buildingHeight), parseInt(MAX_HEIGHT), [1, 1, 0], [0, 0, 1]);
+
+                    let newRGB = interpolateColors(buildingFloors[buildingID], parseInt(MAX_HEIGHT));
                     primitive.color = Cesium.ColorGeometryInstanceAttribute.toValue(new Cesium.Color(newRGB[0], newRGB[1], newRGB[2], 1.0));
+                    if (primitive === selectedEntity) {
+                        viewer.selectedEntity = undefined;
+                        selectedEntity = undefined;
+                        hoverEntity = undefined;
+                    }
                 }
             }
         }
@@ -206,7 +216,10 @@ let setDefaultColors = function () {
                 if (primitive !== undefined) {
                     primitive.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.WHITE);
                     if (primitive === selectedEntity) {
-                        primitive.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.RED);
+                        viewer.selectedEntity = undefined;
+                        selectedEntity = undefined;
+                        hoverEntity = undefined;
+                        // primitive.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.RED);
                     }
                 }
             }
@@ -242,6 +255,7 @@ $('#queryFromBuildingCity').click(function () {
                    renderQueryResult(data);
                    hideButtonSpinner($this);
                    addResultToHistory(queryVal, data);
+                   unselectRadioButtonsColoring();
                },
                error: function (request, status, error) {
                    hideButtonSpinner($this);
@@ -264,8 +278,6 @@ let renderQueryResult = function (data) {
         }
     }
 };
-
-
 
 let queryBuilder = function () {
     let query = '';
@@ -337,13 +349,9 @@ let selectBuildingById = function (id) {
     selectedEntity.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.RED);
 }
 
-// TODO: ∆ ALL BUILDINGS WHITE IS A BUTTON
-// TODO: ∆ COLOR BY HEIGHT IS ONE OF THE QUERIES
 
 // TODO: CLICK BUILDING, SHOW NEAR BUILDINGS W.R.T. THE SELECTED BUILDING
 
 // TODO: QUERY TO FIND THE NEAREST POINT (PUT SUBURB IN EVERY BUILDING)
 
 // TODO: SIDE MENU WHERE YOU CAN FIND THE HISTORY OF YOUR QUERIES AND EXECUTE QUERIES ON THEM
-// TODO: IN FIRST TAB YOU HAVE THE POSSIBILITY TO SELECT SUBURBS WITH CHECKBOXES
-// TODO: IN SECOND TAB YOU HAVE QUERY SQL LIKE : SELECT ALL BUILDINGS WHERE FLOORS > 3

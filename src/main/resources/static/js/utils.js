@@ -3,13 +3,21 @@
  */
 let SERVER_URL = "http://" + window.location.host + "/";
 let MAX_HEIGHT = Number.NEGATIVE_INFINITY;
+let MIN_HEIGHT = Number.POSITIVE_INFINITY;
 let SEARCH_HISTORY = {};
+let buildingFloors = {};
 let geolocalizationCoords = {
     "latitude": 0.0,
     "longitude": 0.0,
     "accuracy": 0.0
 };
 let GEOLOCALIZATIONVISIBLE = false;
+let BLUE = [0, 0, 1];
+let GREEN = [0, 1, 0];
+let YELLOW = [1, 1, 0];
+let RED = [1, 0, 0];
+
+let RANGESINTERPOLATION = [GREEN, BLUE, YELLOW, RED];
 
 let createRing = function (binaryCoordinates) {
     return (atob(binaryCoordinates)).split(",");
@@ -125,17 +133,37 @@ let padZero = function (str, len) {
     return (zeros + str).slice(-len);
 };
 
-let interpolate = function (value, maximum, start_point, end_point) {
-    return start_point + (end_point - start_point) * value / maximum;
+let interpolate = function (startRGB, endRGB, value) {
+    return (1 - value) * startRGB + (value * endRGB)
 };
 
-let interpolateColors = function (value, maximum, startRGB, endRGB) {
-    let interpolatedColors = [];
-    if (startRGB.length === 3 && endRGB.length === 3) {
-        interpolatedColors[0] = interpolate(value, maximum, startRGB[0], endRGB[0]);
-        interpolatedColors[1] = interpolate(value, maximum, startRGB[1], endRGB[1]);
-        interpolatedColors[2] = interpolate(value, maximum, startRGB[2], endRGB[2]);
+let interpolateColors = function (value, maximum) {
+    value = value / maximum;
+
+    let interpolationStep = 1 / (RANGESINTERPOLATION.length - 1);
+    let colorIdx = 0;
+
+    if (value < interpolationStep) {
+        colorIdx = 0;
     }
+
+    // if (value >= interpolationStep) {
+    //     colorIdx = 1;
+    // }
+
+    if (value >= interpolationStep && value < (interpolationStep * 2)) {
+        colorIdx = 1;
+    }
+
+    if (value >= (interpolationStep * 2)) {
+        colorIdx = 2;
+    }
+
+
+    let interpolatedColors = [];
+    interpolatedColors[0] = interpolate(RANGESINTERPOLATION[colorIdx][0], RANGESINTERPOLATION[colorIdx + 1][0], value);
+    interpolatedColors[1] = interpolate(RANGESINTERPOLATION[colorIdx][1], RANGESINTERPOLATION[colorIdx + 1][1], value);
+    interpolatedColors[2] = interpolate(RANGESINTERPOLATION[colorIdx][2], RANGESINTERPOLATION[colorIdx + 1][2], value);
 
     return interpolatedColors;
 };
@@ -306,6 +334,12 @@ let addResultToHistory = function (queryVal, data) {
     }
 };
 
+let unselectRadioButtonsColoring = function () {
+    $("#coloring").find('input:radio:checked').prop('checked', false);
+    if (!legedHeight.hasClass("hidden-wrapper")) {
+        legedHeight.addClass("hidden-wrapper");
+    }
+};
 // User geolocalization position
 let getGeolocalizationCoordinates = function () {
 

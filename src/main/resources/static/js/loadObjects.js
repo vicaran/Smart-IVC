@@ -14,10 +14,8 @@ let loadObjs = function (cityID) {
                type: "GET",
                success: function (data) {
                    for (let i = 0; i < data.length; i++) {
-
                        if (data[i].floors > $("#maxHeightLegend").html()) {
-                           $("#maxHeightLegend").html(data[i].floors)
-
+                           $("#maxHeightLegend").html(data[i].floors);
                        }
                        generateGeometry(data[i]);
                    }
@@ -30,6 +28,11 @@ let generateGeometry = function (data) {
     let list = createList(data.ringGlobalCoords);
     let buildingHeight = data.floors === 0 ? 1 : (data.floors * 3);
     let buildingID = 'building_' + data.id;
+
+    buildingFloors[buildingID] = data.floors;
+    if (data.floors > MAX_HEIGHT) {
+        MAX_HEIGHT = data.floors;
+    }
 
     buildingsID.push(buildingID);
     buildingsHeight.push(buildingHeight);
@@ -44,7 +47,7 @@ let generateGeometry = function (data) {
                                                       });
     let building = new Cesium.GeometryInstance({
                                                    geometry: buildingGeometry,
-                                                   id: 'building_' + data.id,
+                                                   id: buildingID,
                                                    attributes : {
                                                        color: Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.WHITE),
                                                        show: new Cesium.ShowGeometryInstanceAttribute(true)
@@ -58,15 +61,8 @@ let updateGeometryHeights = function () {
     Cesium.when(promise, function (updatedPositions) {
         for (let i = 0; i < updatedPositions.length; i++) {
             let prevHeight = buildingsArray[i].geometry._height;
-            buildingsArray[i].geometry._height =
-                updatedPositions[i].height + ((buildingsArray[i].geometry._height) / 2) + prevHeight;
+            buildingsArray[i].geometry._height = updatedPositions[i].height + ((buildingsArray[i].geometry._height) / 2) + prevHeight;
             buildingsArray[i].geometry._extrudedHeight = updatedPositions[i].height - prevHeight;
-
-            let buildingHeight = buildingsArray[i].geometry._height
-                                 - buildingsArray[i].geometry._extrudedHeight;
-            if (buildingHeight > MAX_HEIGHT) {
-                MAX_HEIGHT = buildingHeight;
-            }
         }
         addGeometriesToPrimitives();
     });

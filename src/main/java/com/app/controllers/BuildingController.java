@@ -4,7 +4,6 @@ import com.app.exceptions.NotFoundException;
 import com.app.models.Address;
 import com.app.models.Building;
 import com.app.models.Type;
-import com.app.repositories.AddressRepository;
 import com.app.repositories.BuildingRepository;
 
 import org.apache.commons.codec.binary.Base64;
@@ -21,8 +20,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
-import static org.springframework.data.repository.init.ResourceReader.Type.JSON;
-
 /**
  * Created by Andrea on 17/03/2017.
  */
@@ -31,18 +28,15 @@ import static org.springframework.data.repository.init.ResourceReader.Type.JSON;
 public class BuildingController {
 
     private final BuildingRepository buildingRepository;
-    private final AddressRepository addressRepository;
 
     /**
      * Instantiates a new Building controller.
      *
      * @param buildingRepository the building repository
-     * @param addressRepository  the address repository
      */
     @Autowired
-    public BuildingController(BuildingRepository buildingRepository, AddressRepository addressRepository) {
+    public BuildingController(BuildingRepository buildingRepository) {
         this.buildingRepository = buildingRepository;
-        this.addressRepository = addressRepository;
     }
 
     /**
@@ -116,13 +110,8 @@ public class BuildingController {
                                      @PathVariable Double maxLng,
                                      @PathVariable Double minLat,
                                      @PathVariable Double minLng) {
-        long start = System.currentTimeMillis();
 
         List<Building> buildings = this.buildingRepository.findBuildingsByCentroidLatLessThanAndCentroidLngGreaterThanAndCentroidLatGreaterThanAndCentroidLngLessThan(maxLat, maxLng, minLat, minLng);
-
-        long end = System.currentTimeMillis();
-        System.out.println("Time for query is: " + (end-start));
-        System.out.println(buildings.size());
 
         return new ResponseEntity<>(buildings, HttpStatus.OK);
     }
@@ -138,7 +127,6 @@ public class BuildingController {
     public ResponseEntity<?> handleBuildingsByCoords(@PathVariable Long id) {
 
         List<Building> buildings = this.buildingRepository.findBuildingByOwnCityId(id);
-//        List<Building> buildings = this.buildingRepository.findBuildingByIdLessThan((long) 4520);
         return new ResponseEntity<>(buildings, HttpStatus.OK);
     }
 
@@ -158,21 +146,5 @@ public class BuildingController {
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-
-//    private List<Long> handleBuildingByType(Long id) {
-//        Collection<Address> allTypes = this.addressRepository.findByTypes_Id(id);
-//
-//        Set<Long> buildingIds = new HashSet<>();
-//        for (Address address: allTypes) {
-//            buildingIds.add(address.getBuilding().getId());
-//        }
-//        return (List<Long>) buildingIds;
-//
-////        String result = new JSONObject()
-////                .put("buildingIds",buildingIds).toString();
-////
-////        return new ResponseEntity<>(result, HttpStatus.OK);
-//    }
-
 }
 

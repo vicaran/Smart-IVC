@@ -8,8 +8,6 @@ import com.app.models.Type;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -21,7 +19,6 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.persistence.criteria.Subquery;
 
 /**
  * Created by Andrea on 23/05/2017.
@@ -35,11 +32,9 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
     public List<Building> findByFilterText(Set<String> words) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Building> query = criteriaBuilder.createQuery(Building.class);
-
         Root<Building> buildingRoot = query.from(Building.class);
 
         List<Predicate> predicates = new ArrayList<>();
-
         for (String word : words) {
             Predicate predicateResult = this.createPredicates(criteriaBuilder, query, buildingRoot, word);
             if (predicateResult != null) {
@@ -47,14 +42,9 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
             }
         }
 
-
         query.where(criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()])));
-
-        List<Building> ciaone = entityManager.createQuery(query.select(buildingRoot.get("id"))).getResultList();
-        System.out.println();
-        return ciaone;
+        return entityManager.createQuery(query.select(buildingRoot.get("id"))).getResultList();
     }
-
 
     private Predicate createPredicates(CriteriaBuilder criteriaBuilder, CriteriaQuery<Building> query, Root<Building> buildingRoot, String word) {
         String[] queryVal = word.split("=");
@@ -78,22 +68,9 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
                 }
                 break;
             case "type":
-                Join<Building,Address> buildingAddressJoin = buildingRoot.join( "ownBuilding" );
-//                Join<Type, Address> typeAddressJoin =
-                Path<String> buildingAddress = buildingAddressJoin.get("id");
-                System.out.println(buildingAddress.toString());
-
-//                System.out.println("Searching for type " + queryVal[1]);
-//                Subquery<Building> subQuery = query.subquery(Building.class);
-//                Root<Address> addressRoot = subQuery.from(Address.class);
-//
-//                System.out.println("Query so far " + addressRoot.<String> get("types"));
-//                subQuery.where(criteriaBuilder.like(addressRoot.<String> get("types"), queryVal[1]));
-//
-//                subQuery.select(addressRoot.get("ownBuilding"));
-//
-//                predicateResult = criteriaBuilder.in(buildingRoot).value(subQuery);
-//                System.out.println();
+                Join<Building, Address> buildingAddressJoin = buildingRoot.join("addresses");
+                Join<Address, Type> addressTypeJoin = buildingAddressJoin.join("types");
+                predicateResult = criteriaBuilder.equal(addressTypeJoin.get("id"), queryVal[1]);
                 break;
             case "primarySecondaryPercentage":
                 String[] typeArr = queryVal[1].split("_");

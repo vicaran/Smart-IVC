@@ -334,12 +334,20 @@ let addResultToHistory = function (queryVal, data) {
     }
 };
 
-let unselectRadioButtonsColoring = function () {
-    $("#coloring").find('input:radio:checked').prop('checked', false);
-    if (!legedHeight.hasClass("hidden-wrapper")) {
-        legedHeight.addClass("hidden-wrapper");
+let hideLegendIfVisible = function () {
+    let legendHeight = $("#legend-wrapper");
+    if (!legendHeight.hasClass("hidden-wrapper")) {
+        legendHeight.addClass("hidden-wrapper");
     }
 };
+
+let unselectRadioButtonsColoring = function () {
+    $("#coloring").find('input:radio:checked').prop('checked', false);
+    hideLegendIfVisible();
+};
+
+
+
 // User geolocalization position
 let getGeolocalizationCoordinates = function () {
 

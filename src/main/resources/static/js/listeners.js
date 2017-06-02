@@ -119,23 +119,18 @@ $("#geolocalizationPoint").change(function () {
 
 $("#coloring").change(function () {
     let radioId = $("#coloring").find('input:radio:checked').attr('id');
-    let legedHeight = $("#legend-wrapper");
     switch (radioId) {
         case "colorDefault":
             setDefaultColors();
-            if (!legedHeight.hasClass("hidden-wrapper")) {
-                legedHeight.addClass("hidden-wrapper");
-            }
+            hideLegendIfVisible();
             break;
         case "colorByHeight":
             setColorByHeight();
-            legedHeight.removeClass("hidden-wrapper")
+            $("#legend-wrapper").removeClass("hidden-wrapper")
             break;
         case "colorBySuburb":
             setSuburbColors();
-            if (!legedHeight.hasClass("hidden-wrapper")) {
-                legedHeight.addClass("hidden-wrapper");
-            }
+            hideLegendIfVisible();
             break;
     }
 

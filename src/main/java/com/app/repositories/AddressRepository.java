@@ -60,6 +60,5 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
      * @param id the id
      * @return the list
      */
-    List<Address> findByTypes_Id(Long id);
-//    Optional<Address> findBytTypes_IdWhere();
+    List<Address> findAddressByTypes_Id(Long id);
 }

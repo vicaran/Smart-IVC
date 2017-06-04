@@ -96,9 +96,4 @@ public interface BuildingRepository extends JpaRepository<Building, Long>, Build
      * @return the list
      */
     List<Building> findBuildingByIdLessThan(Long idx);
-
-
-
-//    @Query("Select building_id (6371 * acos (cos ( radians(:latitude) )* cos( radians( centroid_lat ) )* cos( radians( centroid_lng ) -radians(:longitude) )+ sin ( radians(:latitude) )* sin(radians( centroid_lat )))) AS distance FROM building HAVING distance < 1 ORDER BY distance")
-//    Collection<Long> findByDistance(@Param("latitude") Double latitude, @Param("longitude") Double longitude);
 }

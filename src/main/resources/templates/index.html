@@ -211,6 +211,24 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <td class="tg-0ord">
+                                        <form class="nowrap" id="byDistance">
+                                            <input id="byDistanceSelection" name="bySuburbName" value="suburb"
+                                                   type="checkbox"/>
+                                        </form>
+                                    </td>
+                                    <td class="tg-031e">
+                                        <div class="querySection">
+                                            <p>Nearest to </p>
+                                            <select id="buildingDistanceCity">
+                                                <option selected="" disabled="" hidden="" value="">Choose...</option>
+                                                <option value="myPosition"> my position </option>
+                                                <option value="selectedBuilding"> selected building </option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td class="tg-0ord"></td>
                                     <td class="tg-031e"></td>
                                 </tr>
@@ -219,8 +237,27 @@
                                     <td class="tg-031e"></td>
                                 </tr>
                             </table>
-
                             <button type="button" class="btn btn-primary btn-lg" id="queryFromBuildingCity">Search</button>
+
+                            <h4 class="subsection-menu">Coverage Map</h4>
+                            <table class="tg">
+                                <tr>
+                                    <td class="tg-0ord">
+                                        <!--<form class="nowrap" id="byTypeCover">-->
+                                            <!--<input id="byTypeCoverage" name="byType" value="type" type="checkbox"/>-->
+                                        <!--</form>-->
+                                    </td>
+                                    <td class="tg-031e">
+                                        <div class="querySection">
+                                            <p>Where type is: </p>
+                                            <select id="coverageTypeCity">
+                                                <option selected="" disabled="" hidden="" value="">Choose...</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <button type="button" class="btn btn-primary btn-lg" id="coverageCity">Show Coverage</button>
                         </div>
                     </div>
                     <div id="queryHistory_menu" class="tab-pane fade" style="height: 100%">

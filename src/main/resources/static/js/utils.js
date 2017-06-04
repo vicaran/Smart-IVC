@@ -377,10 +377,10 @@ let drawPin = function () {
     Cesium.when(promise, function (updatedPositions) {
 
         let headPosition = Cesium.Cartesian3.fromDegrees(geolocalizationCoords.longitude,
-                                                         geolocalizationCoords.latitude, MAX_HEIGHT + 5);
+                                                         geolocalizationCoords.latitude, MAX_HEIGHT *3);
 
         let tailPosition = Cesium.Cartesian3.fromDegrees(geolocalizationCoords.longitude,
-                                                         geolocalizationCoords.latitude, updatedPositions[0].height + MAX_HEIGHT + 5);
+                                                         geolocalizationCoords.latitude, updatedPositions[0].height + MAX_HEIGHT * 3);
 
         let groundPosition = Cesium.Cartesian3.fromDegrees(geolocalizationCoords.longitude, geolocalizationCoords.latitude,
                                                            updatedPositions[0].height);

@@ -3,6 +3,7 @@
  */
 
 let selectedEntity = undefined;
+let selectedEntityId = undefined;
 let hoverEntity = undefined;
 let miniCanvasEngine = undefined;
 let hoverPrevColor = undefined;
@@ -17,7 +18,8 @@ handler.setInputAction(function (click) {
         }
         selectedEntity = getPrimitiveFromPrimitiveId(pickedObject.id);
         selectPrevColor = hoverPrevColor;
-        selectedEntity.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.DARKORANGE);
+        selectedEntity.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.RED);
+        selectedEntityId = pickedObject.id.split("_")[1];
         loadInfoBox(pickedObject.id.split("_")[1]);
     } else {
         if (selectedEntity !== undefined) {
@@ -172,6 +174,7 @@ let setSuburbColors = function () {
                 if (primitive === selectedEntity) {
                     viewer.selectedEntity = undefined;
                     selectedEntity = undefined;
+                    selectedEntityId = undefined;
                     hoverEntity = undefined;
                 }
             }
@@ -194,6 +197,7 @@ let setColorByHeight = function () {
                     if (primitive === selectedEntity) {
                         viewer.selectedEntity = undefined;
                         selectedEntity = undefined;
+                        selectedEntityId = undefined;
                         hoverEntity = undefined;
                     }
                 }
@@ -213,6 +217,7 @@ let setDefaultColors = function () {
                     if (primitive === selectedEntity) {
                         viewer.selectedEntity = undefined;
                         selectedEntity = undefined;
+                        selectedEntityId = undefined;
                         hoverEntity = undefined;
                         // primitive.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.RED);
                     }
@@ -235,14 +240,14 @@ $('#cesiumContainer').click(function () {
 //language=JQuery-CSS
 $('#queryFromBuildingCity').click(function () {
     let $this = $(this);
-    setDefaultColors();
+
 
     let queryVal = queryBuilder();
     if (queryVal === "") {
         return;
     }
-    console.log(queryVal);
     showButtonSpinner($this);
+    setDefaultColors();
     $.ajax({
                url: SERVER_URL + "building/query/" + queryVal + "/",
                type: "GET",
@@ -256,7 +261,6 @@ $('#queryFromBuildingCity').click(function () {
                    hideButtonSpinner($this);
                }
            })
-
 })
 ;
 
@@ -296,6 +300,16 @@ let queryBuilder = function () {
     if ($("#bySuburbNameSelection:checked").length === 1) {
         query += "suburb=" + $("#buildingSuburbNameCity").find("option:selected").attr("id") + "&";
     }
+    if ($("#byDistanceSelection:checked").length === 1) {
+        let selectedProximity = $("#buildingDistanceCity").find("option:selected").val();
+        let proximityQuery = "";
+        if (selectedProximity === "myPosition") {
+            proximityQuery += "latitude_" + geolocalizationCoords.latitude + "_longitude_" + geolocalizationCoords.longitude;
+        } else if (selectedProximity === "selectedBuilding") {
+            proximityQuery += "buildingId_" + selectedEntityId;
+        }
+        query += "proximity=" + proximityQuery + "&";
+    }
 
     return query.slice(0, -1);
 };
@@ -306,7 +320,7 @@ let loadInfoBox = function (buildingId) {
                type: "GET",
                success: function (data) {
                    viewer.selectedEntity = new Cesium.Entity({
-                                                                 id: "Selected Building",
+                                                                 id: "Selected Building (" + buildingId + ")",
                                                                  description: generateTable(data)
                                                              });
                    setTimeout(function () {
@@ -339,32 +353,44 @@ let loadTypesForInfoBox = function () {
            });
 };
 
+$('#coverageCity').click(function () {
+    distanceMap($("#coverageTypeCity").find("option:selected").attr("id").split("_")[0]);
+});
 
-let distanceMap = function () {
+let distanceMap = function (buildingId) {
     setDefaultColors();
 
     $.ajax({
-               url: SERVER_URL + "building/distanceQuery/buildingId=105/",
+               url: SERVER_URL + "building/distanceMap/byTypeId=" + buildingId + "/",
+               // url: SERVER_URL + "building/distanceQuery/buildingId=" + buildingId + "/",
                type: "GET",
                success: function (data) {
+                   let hotSpots = [];
 
-                   let primitive = getPrimitiveFromPrimitiveId("building_" + data[0][0]);
-                   if (primitive !== undefined) {
-                       primitive.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.RED);
-                   }
-
-                   //TODO MERGE COLORS TOGHETER (TAKE THE PREVIUOUS AND SUM WITH THE OTHER) TO SHOW COVERAGE MAP OF BUILDINGS
-
-
-                   for (let i = 1; i < data.length; i++) {
+                   for (let i = 0; i < data.length; i++) {
                        let primitive = getPrimitiveFromPrimitiveId("building_" + data[i][0]);
                        if (primitive !== undefined) {
-                           let newRGB = interpolateColors(data[i][1], [0, 1, 0], [1, 1, 1]);
-                           console.log(primitive.color);
-                           primitive.color = Cesium.ColorGeometryInstanceAttribute.toValue(new Cesium.Color(newRGB[0], newRGB[1], newRGB[2], 1.0));
+
+                           if (data[i][1] === 0) {
+                               primitive.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.RED);
+                               hotSpots.push(data[i][0]);
+                           } else if (!hotSpots.includes(data[i][0])) {
+                               let newRGB = interpolateColors(data[i][1], [0, 1, 0], [1, 1, 1]);
+
+                               let prevRed = primitive.color[0] / 255;
+                               let prevGreen = primitive.color[1] / 255;
+                               let prevBlue = primitive.color[2] / 255;
+
+                               primitive.color =
+                                   Cesium.ColorGeometryInstanceAttribute.toValue(
+                                       new Cesium.Color(
+                                           (prevRed + newRGB[0]) / 2 > prevRed ? prevRed : (prevRed + newRGB[0]) / 2,
+                                           1,
+                                           (prevBlue + newRGB[2]) / 2 > prevBlue ? prevBlue : (prevBlue + newRGB[2]) / 2,
+                                           1.0));
+                           }
                        }
                    }
-
                    unselectRadioButtonsColoring();
                },
                error: function (request, status, error) {
@@ -372,15 +398,11 @@ let distanceMap = function () {
            })
 };
 
-
 let selectBuildingById = function (id) {
     selectedEntity = getPrimitiveFromPrimitiveId("building_" + id);
     selectedEntity.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.RED);
 }
 
 
-// TODO: CLICK BUILDING, SHOW NEAR BUILDINGS W.R.T. THE SELECTED BUILDING
-
-// TODO: QUERY TO FIND THE NEAREST POINT (PUT SUBURB IN EVERY BUILDING)
 
 // TODO: SIDE MENU WHERE YOU CAN FIND THE HISTORY OF YOUR QUERIES AND EXECUTE QUERIES ON THEM

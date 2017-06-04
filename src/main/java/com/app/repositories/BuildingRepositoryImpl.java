@@ -30,7 +30,7 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public List<Building> findByFilterText(Set<String> words) {
+    public List findByFilterText(Set<String> words, boolean justIds) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Building> query = criteriaBuilder.createQuery(Building.class);
         Root<Building> buildingRoot = query.from(Building.class);
@@ -43,8 +43,13 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
             }
         }
 
+
         query.where(criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()])));
-        return entityManager.createQuery(query.select(buildingRoot.get("id"))).getResultList();
+
+        if (justIds) {
+            return entityManager.createQuery(query.select(buildingRoot.get("id"))).getResultList();
+        }
+        return entityManager.createQuery(query.select(buildingRoot)).getResultList();
     }
 
     private Predicate createPredicates(CriteriaBuilder criteriaBuilder, CriteriaQuery<Building> query, Root<Building> buildingRoot, String word) {
@@ -90,16 +95,48 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
                 Join<Building,Suburb> buildingSuburbJoin = buildingRoot.join( "ownSuburb" );
                 Path<String> buildingSuburb = buildingSuburbJoin.get("id");
                 predicateResult = criteriaBuilder.equal(buildingSuburb, queryVal[1]);
+                break;
             default:
                 break;
         }
         return predicateResult;
     }
 
+    public List<Building> findBuildingCoordinatesByType(String type) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Building> query = criteriaBuilder.createQuery(Building.class);
+        Root<Building> buildingRoot = query.from(Building.class);
 
-    public List findByDistance(Double latitude, Double longitude) {
-        Query query = entityManager.createNativeQuery("Select building_id, (6371 * acos (cos ( radians(" + latitude + ") )* cos( radians( centroid_lat ) )* cos( radians( centroid_lng ) -radians(" + longitude + ") )+ sin ( radians(" + latitude + ") )* sin(radians( centroid_lat )))) AS distance FROM building HAVING distance < 1 ORDER BY distance");
-        List buildings = query.getResultList();
-        return buildings;
+        List<Predicate> predicates = new ArrayList<>();
+        Predicate predicateResult = this.createPredicates(criteriaBuilder, query, buildingRoot, type);
+        if (predicateResult != null) {
+            predicates.add(predicateResult);
+        }
+
+        query.where(criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()])));
+        return entityManager.createQuery(query.select(buildingRoot)).getResultList();
+    }
+
+
+    public List findByDistance(Double latitude, Double longitude, int maxDistance, int maxResults) {
+
+        String queryVal = "Select building_id, " +
+                "(6371 * acos (" +
+                "cos ( radians(" + latitude + ") )" +
+                "* cos( radians( centroid_lat ) )" +
+                "* cos( radians( centroid_lng ) -radians(" + longitude + ") )" +
+                "+ sin ( radians(" + latitude + ") )" +
+                "* sin(radians( centroid_lat ))" +
+                ")" +
+                ") AS distance FROM building " +
+                "HAVING distance < " + maxDistance + " " +
+                "ORDER BY distance ";
+
+        if (maxResults > BuildingRepository.ALL_RESULTS) {
+            queryVal += "LIMIT 0 ," + maxResults + ";";
+        }
+
+        Query query = entityManager.createNativeQuery(queryVal);
+        return query.getResultList();
     }
 }

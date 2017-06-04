@@ -102,6 +102,12 @@ let loadTypes = function () {
                        opt.value = data[i].typeName;
                        opt.appendChild(val);
                        document.getElementById('buildingTypeCity').appendChild(opt);
+                       opt = document.createElement("OPTION");
+                       val = document.createTextNode(formatText(data[i].typeName));
+                       opt.id = data[i].id + "_cov";
+                       opt.value = data[i].typeName;
+                       opt.appendChild(val);
+                       document.getElementById('coverageTypeCity').appendChild(opt);
                    }
                }
            });

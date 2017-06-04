@@ -9,13 +9,18 @@ import java.util.Set;
  * The interface Building repository custom.
  */
 interface BuildingRepositoryCustom {
+
+    int ALL_RESULTS = 0;
+
     /**
      * Find by filter text list.
      *
      * @param words the words
      * @return the list
      */
-    List<Building> findByFilterText(Set<String> words);
+    List findByFilterText(Set<String> words, boolean justIds);
 
-    List<Object[]> findByDistance(Double latitude, Double longitude);
+    List<Building> findBuildingCoordinatesByType(String type);
+
+    List findByDistance(Double latitude, Double longitude, int maxDistance, int maxResults);
 }

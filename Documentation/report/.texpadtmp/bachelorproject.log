@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.10.13)  5 JUN 2017 02:31
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.10.13)  5 JUN 2017 02:51
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -705,7 +705,7 @@ LaTeX Info: Redefining \nameref on input line 31.
 \@outlinefile=\write4
 \openout4 = `bachelorproject.out'.
 
- <logo-info.pdf, id=44, 469.47095pt x 85.35829pt>
+ <logo-info.pdf, id=40, 469.47095pt x 85.35829pt>
 File: logo-info.pdf Graphic file (type pdf)
  <use logo-info.pdf>
 Package pdftex.def Info: logo-info.pdf used on input line 33.
@@ -846,31 +846,31 @@ LaTeX Font Info:    Font shape `TS1/mdbch/m/n' will be
 (Font)              scaled to size 9.60007pt on input line 44.
 LaTeX Font Info:    Font shape `T1/mdbch/b/n' will be
 (Font)              scaled to size 9.60007pt on input line 44.
- <images/NewYorkCityCesium3dTiles.png, id=74, 1442.38875pt x 805.0075pt>
+ <images/NewYorkCityCesium3dTiles.png, id=70, 1442.38875pt x 805.0075pt>
 File: images/NewYorkCityCesium3dTiles.png Graphic file (type png)
  <use images/NewYorkCityCesium3dTiles.png>
-Package pdftex.def Info: images/NewYorkCityCesium3dTiles.png used on input line 59.
+Package pdftex.def Info: images/NewYorkCityCesium3dTiles.png used on input line 60.
 (pdftex.def)             Requested size: 386.95894pt x 215.95462pt.
 LaTeX Font Info:    Font shape `T1/mdbch/m/n' will be
-(Font)              scaled to size 7.68005pt on input line 60.
+(Font)              scaled to size 7.68005pt on input line 61.
 LaTeX Font Info:    Font shape `T1/mdbch/b/n' will be
-(Font)              scaled to size 7.68005pt on input line 60.
- <images/BernCitySwissTopo.png, id=76, 1444.39626pt x 780.9175pt>
+(Font)              scaled to size 7.68005pt on input line 61.
+ <images/BernCitySwissTopo.png, id=72, 1444.39626pt x 780.9175pt>
 File: images/BernCitySwissTopo.png Graphic file (type png)
  <use images/BernCitySwissTopo.png>
-Package pdftex.def Info: images/BernCitySwissTopo.png used on input line 66.
+Package pdftex.def Info: images/BernCitySwissTopo.png used on input line 67.
 (pdftex.def)             Requested size: 435.32419pt x 235.36139pt.
  [1 <./images/NewYorkCityCesium3dTiles.png>] (/Users/Andrea/Desktop/iCorsi/Semester6/Bachelor Thesis/Smart-IVC/Smart-IVC/Documentation/report/.texpadtmp/bachelorproject.bbl
 
 LaTeX Warning: Empty `thebibliography' environment on input line 3.
 
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 119.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 118.
  [2 <./images/BernCitySwissTopo.png>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 119.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 118.
  (/Users/Andrea/Desktop/iCorsi/Semester6/Bachelor Thesis/Smart-IVC/Smart-IVC/Documentation/report/.texpadtmp/bachelorproject.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 119.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 119.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 118.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 118.
 Package rerunfilecheck Info: File `bachelorproject.out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
 
@@ -879,18 +879,18 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 14851 strings out of 493089
- 213318 string characters out of 6134841
- 306403 words of memory out of 5000000
- 18059 multiletter control sequences out of 15000+600000
+ 14848 strings out of 493089
+ 213276 string characters out of 6134841
+ 306317 words of memory out of 5000000
+ 18057 multiletter control sequences out of 15000+600000
  42324 words of font info for 65 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  60i,8n,94p,824b,449s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/ly1/texnansi.enc}{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/local/texlive/2015/texmf-dist/fonts/type1/bitstrea/charter/bchb8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/bitstrea/charter/bchr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/bitstrea/charter/bchri8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/cm-super/sfrm2074.pfb>
-Output written on "/Users/Andrea/Desktop/iCorsi/Semester6/Bachelor Thesis/Smart-IVC/Smart-IVC/Documentation/report/.texpadtmp/bachelorproject.pdf" (3 pages, 3488761 bytes).
+Output written on "/Users/Andrea/Desktop/iCorsi/Semester6/Bachelor Thesis/Smart-IVC/Smart-IVC/Documentation/report/.texpadtmp/bachelorproject.pdf" (3 pages, 3488549 bytes).
 PDF statistics:
- 123 PDF objects out of 1000 (max. 8388607)
- 98 compressed objects within 1 object stream
- 23 named destinations out of 1000 (max. 500000)
- 96 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 119 PDF objects out of 1000 (max. 8388607)
+ 94 compressed objects within 1 object stream
+ 22 named destinations out of 1000 (max. 500000)
+ 88 words of extra memory for PDF output out of 10000 (max. 10000000)
 

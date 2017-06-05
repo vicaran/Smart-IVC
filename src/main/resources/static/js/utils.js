@@ -444,7 +444,7 @@ let geolocalizationCommand = function () {
     }, 6000)
 };
 
-
+geolocalizationCommand();
 setInterval(function () {
     geolocalizationCommand()
 }, 10000);
@@ -501,10 +501,6 @@ let WEBCAMS = [
     }
 ];
 
-
-
-
-
 let webCamsChangeVisibility = function () {
     WEBCAMSVISIBLE = !WEBCAMSVISIBLE;
     WEBCAMS.forEach(function (webcam) {
@@ -519,8 +515,7 @@ let drawWebCamPins = function () {
     });
 };
 
+
 setTimeout(function () {
     drawWebCamPins();
-    geolocalizationCommand();
-}, 4000);
-
+}, 8000);

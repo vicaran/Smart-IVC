@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.10.13)  5 JUN 2017 17:45
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.10.13)  6 JUN 2017 01:15
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -578,57 +578,60 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 28
 \Hy@SectionHShift=\skip60
 ) (/usr/local/texlive/2015/texmf-dist/tex/latex/oberdiek/hypcap.sty
 Package: hypcap 2011/02/16 v1.11 Adjusting the anchors of captions (HO)
-))
-\dtldb@committee=\toks45
-\dtlkeys@committee=\toks46
-\dtlrows@committee=\count158
-\dtlcols@committee=\count159
+)) (/usr/local/texlive/2015/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count158
+\float@exts=\toks45
+\float@box=\box28
+\@float@everytoks=\toks46
+\@floatcapt=\box29
+)
+\dtldb@committee=\toks47
+\dtlkeys@committee=\toks48
+\dtlrows@committee=\count159
+\dtlcols@committee=\count160
 
 
 LaTeX Warning: Unused global option(s):
     [top=0.2].
 
-(/Users/Andrea/Desktop/iCorsi/Semester6/Bachelor Thesis/Smart-IVC/Smart-IVC/Documentation/report/.texpadtmp/bachelorproject.aux
-
-LaTeX Warning: Label `fig:NewYorkCityCesium3dTiles' multiply defined.
-
-)
+(/Users/Andrea/Desktop/iCorsi/Semester6/Bachelor Thesis/Smart-IVC/Smart-IVC/Documentation/report/.texpadtmp/bachelorproject.aux)
 \openout1 = `bachelorproject.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for MDA/cmr/m/n on input line 31.
-LaTeX Font Info:    Try loading font information for MDA+cmr on input line 31.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for MDA/cmr/m/n on input line 32.
+LaTeX Font Info:    Try loading font information for MDA+cmr on input line 32.
  (/usr/local/texlive/2015/texmf-dist/tex/latex/mathdesign/mdacmr.fd
 File: mdacmr.fd 
 )
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for MDB/cmr/m/n on input line 31.
-LaTeX Font Info:    Try loading font information for MDB+cmr on input line 31.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for MDB/cmr/m/n on input line 32.
+LaTeX Font Info:    Try loading font information for MDB+cmr on input line 32.
  (/usr/local/texlive/2015/texmf-dist/tex/latex/mathdesign/mdbcmr.fd
 File: mdbcmr.fd 
 )
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 31.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 31.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 32.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 32.
  (/usr/local/texlive/2015/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -666,22 +669,23 @@ LaTeX Font Info:    ... okay on input line 31.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: float package is loaded.
 Package caption Info: hyperref package is loaded.
 Package caption Info: hypcap package is loaded.
 Package caption Info: End \AtBeginDocument code.
 (/usr/local/texlive/2015/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count160
+\scratchcounter=\count161
 \scratchdimen=\dimen148
-\scratchbox=\box28
-\nofMPsegments=\count161
-\nofMParguments=\count162
-\everyMPshowfont=\toks47
-\MPscratchCnt=\count163
+\scratchbox=\box30
+\nofMPsegments=\count162
+\nofMParguments=\count163
+\everyMPshowfont=\toks49
+\MPscratchCnt=\count164
 \MPscratchDim=\dimen149
-\MPnumerator=\count164
-\makeMPintoPDFobject=\count165
-\everyMPtoPDFconversion=\toks48
+\MPnumerator=\count165
+\makeMPintoPDFobject=\count166
+\everyMPtoPDFconversion=\toks50
 ) (/usr/local/texlive/2015/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
  (/usr/local/texlive/2015/texmf-dist/tex/latex/oberdiek/grfext.sty
@@ -693,227 +697,232 @@ Package grfext Info: Graphics extension search list:
  (/usr/local/texlive/2015/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-\AtBeginShipoutBox=\box29
-Package hyperref Info: Link coloring OFF on input line 31.
+\AtBeginShipoutBox=\box31
+Package hyperref Info: Link coloring OFF on input line 32.
  (/usr/local/texlive/2015/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
  (/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count166
+\c@section@level=\count167
 )
-LaTeX Info: Redefining \ref on input line 31.
-LaTeX Info: Redefining \pageref on input line 31.
-LaTeX Info: Redefining \nameref on input line 31.
+LaTeX Info: Redefining \ref on input line 32.
+LaTeX Info: Redefining \pageref on input line 32.
+LaTeX Info: Redefining \nameref on input line 32.
  (/Users/Andrea/Desktop/iCorsi/Semester6/Bachelor Thesis/Smart-IVC/Smart-IVC/Documentation/report/.texpadtmp/bachelorproject.out) (/Users/Andrea/Desktop/iCorsi/Semester6/Bachelor Thesis/Smart-IVC/Smart-IVC/Documentation/report/.texpadtmp/bachelorproject.out)
 \@outlinefile=\write4
 \openout4 = `bachelorproject.out'.
 
- <logo-info.pdf, id=40, 469.47095pt x 85.35829pt>
+ <logo-info.pdf, id=104, 469.47095pt x 85.35829pt>
 File: logo-info.pdf Graphic file (type pdf)
  <use logo-info.pdf>
-Package pdftex.def Info: logo-info.pdf used on input line 33.
+Package pdftex.def Info: logo-info.pdf used on input line 34.
 (pdftex.def)             Requested size: 349.96889pt x 63.63042pt.
 LaTeX Font Info:    Font shape `T1/mdbch/m/n' will be
-(Font)              scaled to size 13.82408pt on input line 33.
-LaTeX Font Info:    Try loading font information for T1+uop on input line 33.
-LaTeX Font Info:    No file T1uop.fd. on input line 33.
+(Font)              scaled to size 13.82408pt on input line 34.
+LaTeX Font Info:    Try loading font information for T1+uop on input line 34.
+LaTeX Font Info:    No file T1uop.fd. on input line 34.
 
 
 LaTeX Font Warning: Font shape `T1/uop/m/n' undefined
-(Font)              using `T1/cmr/m/n' instead on input line 33.
+(Font)              using `T1/cmr/m/n' instead on input line 34.
 
 LaTeX Font Info:    Font shape `T1/mdbch/m/n' will be
-(Font)              scaled to size 19.91054pt on input line 33.
+(Font)              scaled to size 19.91054pt on input line 34.
 LaTeX Font Info:    Font shape `T1/mdbch/m/n' will be
-(Font)              scaled to size 11.52008pt on input line 33.
+(Font)              scaled to size 11.52008pt on input line 34.
 
 LaTeX Font Warning: Font shape `T1/uop/b/n' undefined
-(Font)              using `T1/uop/m/n' instead on input line 33.
+(Font)              using `T1/uop/m/n' instead on input line 34.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
+Underfull \hbox (badness 10000) in paragraph at lines 34--34
 
  []
 
 LaTeX Font Info:    Font shape `T1/mdbch/m/it' will be
-(Font)              scaled to size 9.60007pt on input line 33.
+(Font)              scaled to size 9.60007pt on input line 34.
 
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
+Underfull \hbox (badness 10000) in paragraph at lines 34--34
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
+Underfull \hbox (badness 10000) in paragraph at lines 34--34
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 33--33
+Underfull \hbox (badness 10000) in paragraph at lines 34--34
 
  []
 
-LaTeX Font Info:    Try loading font information for OT1+mdbch on input line 33.
+
+Underfull \hbox (badness 10000) in paragraph at lines 34--34
+
+ []
+
+LaTeX Font Info:    Try loading font information for OT1+mdbch on input line 34.
 (/usr/local/texlive/2015/texmf-dist/tex/latex/mathdesign/mdbch/ot1mdbch.fd
 File: ot1mdbch.fd 2013/08/29 Fontinst v1.933 font definitions for OT1/mdbch.
 )
 LaTeX Font Info:    Font shape `OT1/mdbch/m/n' will be
-(Font)              scaled to size 9.60007pt on input line 33.
+(Font)              scaled to size 9.60007pt on input line 34.
 LaTeX Font Info:    Font shape `OT1/mdbch/m/n' will be
-(Font)              scaled to size 6.72005pt on input line 33.
+(Font)              scaled to size 6.72005pt on input line 34.
 LaTeX Font Info:    Font shape `OT1/mdbch/m/n' will be
-(Font)              scaled to size 4.80003pt on input line 33.
-LaTeX Font Info:    Try loading font information for OML+mdbch on input line 33.
+(Font)              scaled to size 4.80003pt on input line 34.
+LaTeX Font Info:    Try loading font information for OML+mdbch on input line 34.
  (/usr/local/texlive/2015/texmf-dist/tex/latex/mathdesign/mdbch/omlmdbch.fd
 File: omlmdbch.fd 2013/08/29 Fontinst v1.933 font definitions for OML/mdbch.
 )
 LaTeX Font Info:    Font shape `OML/mdbch/m/it' will be
-(Font)              scaled to size 9.60007pt on input line 33.
+(Font)              scaled to size 9.60007pt on input line 34.
 LaTeX Font Info:    Font shape `OML/mdbch/m/it' will be
-(Font)              scaled to size 6.72005pt on input line 33.
+(Font)              scaled to size 6.72005pt on input line 34.
 LaTeX Font Info:    Font shape `OML/mdbch/m/it' will be
-(Font)              scaled to size 4.80003pt on input line 33.
-LaTeX Font Info:    Try loading font information for OMS+mdbch on input line 33.
+(Font)              scaled to size 4.80003pt on input line 34.
+LaTeX Font Info:    Try loading font information for OMS+mdbch on input line 34.
  (/usr/local/texlive/2015/texmf-dist/tex/latex/mathdesign/mdbch/omsmdbch.fd
 File: omsmdbch.fd 2013/08/29 Fontinst v1.933 font definitions for OMS/mdbch.
 )
 LaTeX Font Info:    Font shape `OMS/mdbch/m/n' will be
-(Font)              scaled to size 9.60007pt on input line 33.
+(Font)              scaled to size 9.60007pt on input line 34.
 LaTeX Font Info:    Font shape `OMS/mdbch/m/n' will be
-(Font)              scaled to size 6.72005pt on input line 33.
+(Font)              scaled to size 6.72005pt on input line 34.
 LaTeX Font Info:    Font shape `OMS/mdbch/m/n' will be
-(Font)              scaled to size 4.80003pt on input line 33.
-LaTeX Font Info:    Try loading font information for OMX+mdbch on input line 33.
+(Font)              scaled to size 4.80003pt on input line 34.
+LaTeX Font Info:    Try loading font information for OMX+mdbch on input line 34.
  (/usr/local/texlive/2015/texmf-dist/tex/latex/mathdesign/mdbch/omxmdbch.fd
 File: omxmdbch.fd 2013/08/29 Fontinst v1.933 font definitions for OMX/mdbch.
 )
 LaTeX Font Info:    Font shape `OMX/mdbch/m/n' will be
-(Font)              scaled to size 9.60007pt on input line 33.
+(Font)              scaled to size 9.60007pt on input line 34.
 LaTeX Font Info:    Font shape `OMX/mdbch/m/n' will be
-(Font)              scaled to size 6.72005pt on input line 33.
+(Font)              scaled to size 6.72005pt on input line 34.
 LaTeX Font Info:    Font shape `OMX/mdbch/m/n' will be
-(Font)              scaled to size 4.80003pt on input line 33.
+(Font)              scaled to size 4.80003pt on input line 34.
 LaTeX Font Info:    Font shape `OML/mdbch/m/n' will be
-(Font)              scaled to size 9.60007pt on input line 33.
+(Font)              scaled to size 9.60007pt on input line 34.
 LaTeX Font Info:    Font shape `OML/mdbch/m/n' will be
-(Font)              scaled to size 6.72005pt on input line 33.
+(Font)              scaled to size 6.72005pt on input line 34.
 LaTeX Font Info:    Font shape `OML/mdbch/m/n' will be
-(Font)              scaled to size 4.80003pt on input line 33.
-LaTeX Font Info:    Try loading font information for MDA+mdbch on input line 33.
+(Font)              scaled to size 4.80003pt on input line 34.
+LaTeX Font Info:    Try loading font information for MDA+mdbch on input line 34.
  (/usr/local/texlive/2015/texmf-dist/tex/latex/mathdesign/mdbch/mdamdbch.fd
 File: mdamdbch.fd 2013/08/29 Fontinst v1.933 font definitions for MDA/mdbch.
 )
 LaTeX Font Info:    Font shape `MDA/mdbch/m/n' will be
-(Font)              scaled to size 9.60007pt on input line 33.
+(Font)              scaled to size 9.60007pt on input line 34.
 LaTeX Font Info:    Font shape `MDA/mdbch/m/n' will be
-(Font)              scaled to size 6.72005pt on input line 33.
+(Font)              scaled to size 6.72005pt on input line 34.
 LaTeX Font Info:    Font shape `MDA/mdbch/m/n' will be
-(Font)              scaled to size 4.80003pt on input line 33.
-LaTeX Font Info:    Try loading font information for MDB+mdbch on input line 33.
+(Font)              scaled to size 4.80003pt on input line 34.
+LaTeX Font Info:    Try loading font information for MDB+mdbch on input line 34.
  (/usr/local/texlive/2015/texmf-dist/tex/latex/mathdesign/mdbch/mdbmdbch.fd
 File: mdbmdbch.fd 2013/08/29 Fontinst v1.933 font definitions for MDB/mdbch.
 )
 LaTeX Font Info:    Font shape `MDB/mdbch/m/n' will be
-(Font)              scaled to size 9.60007pt on input line 33.
+(Font)              scaled to size 9.60007pt on input line 34.
 LaTeX Font Info:    Font shape `MDB/mdbch/m/n' will be
-(Font)              scaled to size 6.72005pt on input line 33.
+(Font)              scaled to size 6.72005pt on input line 34.
 LaTeX Font Info:    Font shape `MDB/mdbch/m/n' will be
-(Font)              scaled to size 4.80003pt on input line 33.
+(Font)              scaled to size 4.80003pt on input line 34.
  [0
 
 
 {/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./logo-info.pdf>]
 LaTeX Font Info:    Font shape `T1/mdbch/b/n' will be
-(Font)              scaled to size 13.82408pt on input line 35.
+(Font)              scaled to size 13.82408pt on input line 36.
 
-Underfull \hbox (badness 10000) in paragraph at lines 39--40
+Underfull \hbox (badness 10000) in paragraph at lines 38--39
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 41--42
+Underfull \hbox (badness 10000) in paragraph at lines 40--41
 
  []
 
 LaTeX Font Info:    Font shape `T1/mdbch/b/n' will be
-(Font)              scaled to size 11.52008pt on input line 42.
-LaTeX Font Info:    Try loading font information for TS1+mdbch on input line 44.
+(Font)              scaled to size 11.52008pt on input line 43.
+LaTeX Font Info:    Try loading font information for TS1+mdbch on input line 46.
 (/usr/local/texlive/2015/texmf-dist/tex/latex/mathdesign/mdbch/ts1mdbch.fd
 File: ts1mdbch.fd 2013/08/29 Fontinst v1.933 font definitions for TS1/mdbch.
 )
 LaTeX Font Info:    Font shape `TS1/mdbch/m/n' will be
-(Font)              scaled to size 9.60007pt on input line 44.
+(Font)              scaled to size 9.60007pt on input line 46.
 LaTeX Font Info:    Font shape `T1/mdbch/b/n' will be
-(Font)              scaled to size 9.60007pt on input line 44.
- <images/cesium_logo.png, id=70, 954.767pt x 240.9pt>
+(Font)              scaled to size 9.60007pt on input line 52.
+
+Underfull \hbox (badness 10000) in paragraph at lines 61--63
+
+ []
+
+<images/cesium_logo.png, id=134, 954.767pt x 240.9pt>
 File: images/cesium_logo.png Graphic file (type png)
  <use images/cesium_logo.png>
-Package pdftex.def Info: images/cesium_logo.png used on input line 61.
+Package pdftex.def Info: images/cesium_logo.png used on input line 70.
 (pdftex.def)             Requested size: 386.95894pt x 97.63379pt.
 LaTeX Font Info:    Font shape `T1/mdbch/m/n' will be
-(Font)              scaled to size 7.68005pt on input line 62.
+(Font)              scaled to size 7.68005pt on input line 71.
 LaTeX Font Info:    Font shape `T1/mdbch/b/n' will be
-(Font)              scaled to size 7.68005pt on input line 62.
- <images/NewYorkCityCesium3dTiles.png, id=72, 1442.38875pt x 805.0075pt>
+(Font)              scaled to size 7.68005pt on input line 71.
+ [1] <images/NewYorkCityCesium3dTiles.png, id=141, 1442.38875pt x 805.0075pt>
 File: images/NewYorkCityCesium3dTiles.png Graphic file (type png)
  <use images/NewYorkCityCesium3dTiles.png>
-Package pdftex.def Info: images/NewYorkCityCesium3dTiles.png used on input line 67.
-(pdftex.def)             Requested size: 386.95894pt x 215.95462pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<images/BernCitySwissTopo.png, id=73, 1444.39626pt x 780.9175pt>
+Package pdftex.def Info: images/NewYorkCityCesium3dTiles.png used on input line 76.
+(pdftex.def)             Requested size: 435.32419pt x 242.95355pt.
+ <images/BernCitySwissTopo.png, id=142, 1444.39626pt x 780.9175pt>
 File: images/BernCitySwissTopo.png Graphic file (type png)
  <use images/BernCitySwissTopo.png>
-Package pdftex.def Info: images/BernCitySwissTopo.png used on input line 74.
+Package pdftex.def Info: images/BernCitySwissTopo.png used on input line 83.
 (pdftex.def)             Requested size: 435.32419pt x 235.36139pt.
 
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-LaTeX Warning: `h' float specifier changed to `ht'.
+ [2 <./images/cesium_logo.png> <./images/NewYorkCityCesium3dTiles.png>] <images/application_bySuburb.png, id=151, 1445.4pt x 903.375pt>
+File: images/application_bySuburb.png Graphic file (type png)
+ <use images/application_bySuburb.png>
+Package pdftex.def Info: images/application_bySuburb.png used on input line 109.
+(pdftex.def)             Requested size: 435.32419pt x 272.07599pt.
 
-(/Users/Andrea/Desktop/iCorsi/Semester6/Bachelor Thesis/Smart-IVC/Smart-IVC/Documentation/report/.texpadtmp/bachelorproject.bbl
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [3 <./images/BernCitySwissTopo.png>] (/Users/Andrea/Desktop/iCorsi/Semester6/Bachelor Thesis/Smart-IVC/Smart-IVC/Documentation/report/.texpadtmp/bachelorproject.bbl
 
 LaTeX Warning: Empty `thebibliography' environment on input line 3.
 
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 125.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 149.
 
-Underfull \vbox (badness 1448) has occurred while \output is active []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [1 <./images/cesium_logo.png>] [2 <./images/NewYorkCityCesium3dTiles.png> <./images/BernCitySwissTopo.png>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 125.
+ [4 <./images/application_bySuburb.png>] [5]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 149.
  (/Users/Andrea/Desktop/iCorsi/Semester6/Bachelor Thesis/Smart-IVC/Smart-IVC/Documentation/report/.texpadtmp/bachelorproject.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 125.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 125.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 149.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 149.
 Package rerunfilecheck Info: File `bachelorproject.out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-
-LaTeX Warning: There were multiply-defined labels.
-
  ) 
 Here is how much of TeX's memory you used:
- 14854 strings out of 493089
- 213414 string characters out of 6134841
- 308356 words of memory out of 5000000
- 18061 multiletter control sequences out of 15000+600000
+ 14947 strings out of 493089
+ 214859 string characters out of 6134841
+ 309946 words of memory out of 5000000
+ 18129 multiletter control sequences out of 15000+600000
  42324 words of font info for 65 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  60i,8n,94p,824b,449s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/ly1/texnansi.enc}{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/local/texlive/2015/texmf-dist/fonts/type1/bitstrea/charter/bchb8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/bitstrea/charter/bchr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/bitstrea/charter/bchri8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/cm-super/sfrm2074.pfb>
-Output written on "/Users/Andrea/Desktop/iCorsi/Semester6/Bachelor Thesis/Smart-IVC/Smart-IVC/Documentation/report/.texpadtmp/bachelorproject.pdf" (3 pages, 3521053 bytes).
+Output written on "/Users/Andrea/Desktop/iCorsi/Semester6/Bachelor Thesis/Smart-IVC/Smart-IVC/Documentation/report/.texpadtmp/bachelorproject.pdf" (6 pages, 5636295 bytes).
 PDF statistics:
- 122 PDF objects out of 1000 (max. 8388607)
- 95 compressed objects within 1 object stream
- 23 named destinations out of 1000 (max. 500000)
- 93 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 208 PDF objects out of 1000 (max. 8388607)
+ 175 compressed objects within 2 object streams
+ 43 named destinations out of 1000 (max. 500000)
+ 226 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -117,6 +117,7 @@ scene.shadows = false;
 scene.fog = new Cesium.Fog({enabled: false});
 scene.fxaa = false;
 scene.moon = undefined;
+viewer.selectionIndicator.viewModel.selectionIndicatorElement.style.visibility = 'hidden';
 
 let myLayerPicker = '<span id="baseLayerPickerContainer" class="cesium-navigationHelpButton-wrapper"></span>';
 $(myLayerPicker).insertBefore($(".cesium-navigationHelpButton-wrapper"));

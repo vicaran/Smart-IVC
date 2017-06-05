@@ -16,6 +16,7 @@ window.onload = function () {
     loadTypes();
     loadSuburbs();
     loadObjs("1");
+
 };
 
 let loadCities = function () {

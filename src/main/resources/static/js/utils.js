@@ -12,6 +12,7 @@ let geolocalizationCoords = {
     "accuracy": 0.0
 };
 let GEOLOCALIZATIONVISIBLE = false;
+let WEBCAMSVISIBLE = false;
 let BLUE = [0, 0, 1];
 let GREEN = [0, 1, 0];
 let YELLOW = [1, 1, 0];
@@ -369,34 +370,41 @@ let getGeolocalizationCoordinates = function () {
     return geolocalizationCoords;
 };
 
-let drawPin = function () {
-    viewer.entities.removeById('GeolocalizationPos');
+let drawPin = function (longitude, latitude, pinID, visibility, description, billboardVal) {
 
-    let promise = Cesium.sampleTerrainMostDetailed(viewer.terrainProvider, [Cesium.Cartographic.fromDegrees(geolocalizationCoords.longitude,
-                                                                                                            geolocalizationCoords.latitude)]);
+    let promise = Cesium.sampleTerrainMostDetailed(viewer.terrainProvider, [Cesium.Cartographic.fromDegrees(longitude, latitude)]);
     Cesium.when(promise, function (updatedPositions) {
 
-        let headPosition = Cesium.Cartesian3.fromDegrees(geolocalizationCoords.longitude,
-                                                         geolocalizationCoords.latitude, MAX_HEIGHT *3);
+        let headPosition = Cesium.Cartesian3.fromDegrees(longitude, latitude, MAX_HEIGHT * 3);
 
-        let tailPosition = Cesium.Cartesian3.fromDegrees(geolocalizationCoords.longitude,
-                                                         geolocalizationCoords.latitude, updatedPositions[0].height + MAX_HEIGHT * 3);
+        let tailPosition = Cesium.Cartesian3.fromDegrees(longitude, latitude, updatedPositions[0].height + MAX_HEIGHT * 3);
 
-        let groundPosition = Cesium.Cartesian3.fromDegrees(geolocalizationCoords.longitude, geolocalizationCoords.latitude,
-                                                           updatedPositions[0].height);
+        let groundPosition = Cesium.Cartesian3.fromDegrees(longitude, latitude, updatedPositions[0].height);
 
+        if (!description) {
+            createGeolocalizationPin(headPosition, tailPosition, groundPosition, pinID, visibility);
+
+        } else {
+            createWebCamPin(headPosition, tailPosition, groundPosition, pinID, visibility, description);
+        }
+
+    });
+};
+
+let createWebCamPin = function (headPosition, tailPosition, groundPosition, pinID, visibility, description) {
+    let pinBuilder = new Cesium.PinBuilder();
+    let url = Cesium.buildModuleUrl('Assets/Textures/maki/camera.png');
+    Cesium.when(pinBuilder.fromUrl(url, Cesium.Color.GREEN, 48), function (canvas) {
         viewer.entities.add(new Cesium.Entity({
-                                                  id: 'GeolocalizationPos',
-                                                  show: GEOLOCALIZATIONVISIBLE,
+                                                  id: pinID,
+                                                  show: visibility,
+                                                  description: description,
                                                   position: headPosition,
-                                                  point: new Cesium.PointGraphics({
-                                                                                      color: Cesium.Color.DEEPSKYBLUE,
-                                                                                      pixelSize: 20,
-                                                                                      outlineColor: Cesium.Color.DODGERBLUE,
-                                                                                      outlineWidth: geolocalizationCoords.accuracy *
-                                                                                                    0.2,
-                                                                                      heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND
-                                                                                  }),
+                                                  billboard: {
+                                                      image: canvas.toDataURL(),
+                                                      verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+                                                      heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND
+                                                  },
                                                   polyline: {
                                                       positions: [groundPosition, tailPosition],
                                                       width: 5,
@@ -404,18 +412,39 @@ let drawPin = function () {
                                                       material: Cesium.Color.DIMGREY
                                                   }
                                               }))
+    })
+};
 
-    });
+let createGeolocalizationPin = function (headPosition, tailPosition, groundPosition, pinID, visibility) {
+    viewer.entities.add(new Cesium.Entity({
+                                              id: pinID,
+                                              show: visibility,
+                                              position: headPosition,
+                                              point: new Cesium.PointGraphics({
+                                                                                  color: Cesium.Color.DEEPSKYBLUE,
+                                                                                  pixelSize: 20,
+                                                                                  outlineColor: Cesium.Color.DODGERBLUE,
+                                                                                  outlineWidth: geolocalizationCoords.accuracy * 0.2,
+                                                                                  heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND
+                                                                              }),
+                                              polyline: {
+                                                  positions: [groundPosition, tailPosition],
+                                                  width: 5,
+                                                  followSurface: false,
+                                                  material: Cesium.Color.DIMGREY
+                                              }
+                                          }))
 };
 
 let geolocalizationCommand = function () {
     getGeolocalizationCoordinates();
     setTimeout(function () {
-        drawPin();
+        viewer.entities.removeById('GeolocalizationPos');
+        drawPin(geolocalizationCoords.longitude, geolocalizationCoords.latitude, 'GeolocalizationPos', GEOLOCALIZATIONVISIBLE);
     }, 6000)
 };
 
-geolocalizationCommand();
+
 setInterval(function () {
     geolocalizationCommand()
 }, 10000);
@@ -424,3 +453,74 @@ let geolocalizationChangeVisibility = function () {
     GEOLOCALIZATIONVISIBLE = !GEOLOCALIZATIONVISIBLE;
     viewer.entities.getById('GeolocalizationPos').show = GEOLOCALIZATIONVISIBLE;
 };
+
+// LUGANO WEBCAMS
+
+let WEBCAMS = [
+    {
+        "id": "webcam_piazza_riforma",
+        "name": "Piazza Riforma",
+        "coordinates": [46.003798, 8.951161],
+        "url": "piazza-riforma"
+    },
+    {
+        "id": "webcam_golfo_lugano",
+        "name": "Golfo di Lugano",
+        "coordinates": [46.003515, 8.952784],
+        "url": "golfo-di-lugano"
+    },
+    {
+        "id": "webcam_lungolago",
+        "name": "Lungolago",
+        "coordinates": [45.999096, 8.949228],
+        "url": "cantiere-ex-palace"
+    },
+    {
+        "id": "webcam_lido_lugano",
+        "name": "Lido di Lugano",
+        "coordinates": [46.004822, 8.963629],
+        "url": "lido-di-lugano"
+    },
+    {
+        "id": "webcam_stazione_lugano",
+        "name": "Stazione di Lugano",
+        "coordinates": [46.005326, 8.947159],
+        "url": "flp"
+    },
+    {
+        "id": "webcam_monte_bre",
+        "name": "Monte Bre' - Ristorante Vetta",
+        "coordinates": [46.008480, 8.984793],
+        "url": "monte-bre"
+    },
+    {
+        "id": "webcam_skatepark_cornaredo",
+        "name": "Scatepark Cornaredo",
+        "coordinates": [46.022150, 8.959817],
+        "url": "skatepark"
+    }
+];
+
+
+
+
+
+let webCamsChangeVisibility = function () {
+    WEBCAMSVISIBLE = !WEBCAMSVISIBLE;
+    WEBCAMS.forEach(function (webcam) {
+        viewer.entities.getById(webcam.name).show = WEBCAMSVISIBLE;
+    });
+};
+
+let drawWebCamPins = function () {
+    WEBCAMS.forEach(function (webcam) {
+        let description = "<button type='button' id='button_webcam'>Watch Webcam Live</button>";
+        drawPin(webcam.coordinates[1], webcam.coordinates[0], webcam.name, WEBCAMSVISIBLE, description);
+    });
+};
+
+setTimeout(function () {
+    drawWebCamPins();
+    geolocalizationCommand();
+}, 4000);
+

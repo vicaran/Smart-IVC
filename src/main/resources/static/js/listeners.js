@@ -12,7 +12,7 @@ let selectPrevColor = undefined;
 handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
 handler.setInputAction(function (click) {
     let pickedObject = viewer.scene.pick(click.position);
-    if (pickedObject !== undefined && getPrimitiveFromPrimitiveId(pickedObject.id) !== selectedEntity) {
+    if (pickedObject !== undefined && getPrimitiveFromPrimitiveId(pickedObject.id) !== selectedEntity && typeof pickedObject.id === "string") {
         if (selectedEntity !== undefined) {
             selectedEntity.color = selectPrevColor;
         }
@@ -21,6 +21,13 @@ handler.setInputAction(function (click) {
         selectedEntity.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.RED);
         selectedEntityId = pickedObject.id.split("_")[1];
         loadInfoBox(pickedObject.id.split("_")[1]);
+    } else if (pickedObject.id._id !== undefined) {
+        viewer.selectedEntity = undefined;
+        WEBCAMS.forEach(function (webcam) {
+            if (webcam.name === pickedObject.id._id) {
+                showWebCam(webcam.id, webcam.url,webcam.name);
+            }
+        });
     } else {
         if (selectedEntity !== undefined) {
             selectedEntity.color = selectPrevColor;
@@ -32,7 +39,7 @@ handler.setInputAction(function (click) {
 handler.setInputAction(function (movement) {
     let hoverObject = viewer.scene.pick(movement.endPosition);
 
-    if (hoverObject !== undefined && getPrimitiveFromPrimitiveId(hoverObject.id) !== selectedEntity) {
+    if (hoverObject !== undefined && getPrimitiveFromPrimitiveId(hoverObject.id) !== selectedEntity && typeof hoverObject.id === "string") {
         if (hoverEntity !== undefined && hoverEntity !== selectedEntity) {
             hoverEntity.color = hoverPrevColor;
         }
@@ -52,7 +59,7 @@ let getPrimitiveFromPrimitiveId = function (primitiveId) {
     let selectedPrimitive = undefined;
     if (typeof primitiveId === "string") {
         for (let i = 1; i < scene.primitives.length; i++) {
-            let foundPrimitive = scene.primitives.get(i).getGeometryInstanceAttributes(primitiveId);
+            let foundPrimitive = scene.primitives.get(1).getGeometryInstanceAttributes(primitiveId);
             if (foundPrimitive !== undefined) {
                 selectedPrimitive = foundPrimitive;
                 break;
@@ -112,11 +119,11 @@ $("#shadows").change(function () {
 });
 
 $("#geolocalizationPoint").change(function () {
-   if(this.checked){
-       geolocalizationChangeVisibility();
-   }else {
-       geolocalizationChangeVisibility();
-   }
+    geolocalizationChangeVisibility();
+});
+
+$("#webcamPoints").change(function () {
+    webCamsChangeVisibility();
 });
 
 $("#coloring").change(function () {
@@ -401,7 +408,25 @@ let distanceMap = function (buildingId) {
 let selectBuildingById = function (id) {
     selectedEntity = getPrimitiveFromPrimitiveId("building_" + id);
     selectedEntity.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.RED);
-}
+};
+
+$("#closeWebCamWrapper").click(function () {
+    $("#webCamDiv").addClass("hidden-wrapper");
+    $("#webCamTitle").html("");
+    $("#webCamWrapper").find('object:first').remove();
+});
+
+let showWebCam = function (webCamId, webCamUrl, webcamName) {
+    let objectTag = document.createElement("OBJECT");
+    objectTag.id = webCamId + "_viewer";
+    objectTag.width = "100%";
+    objectTag.height = "100%";
+    objectTag.className = "nivo-lightbox-item";
+    objectTag.data = "http://www.lugano.ch/tools/webcam/" + webCamUrl + ".html?modal=true";
+    $("#webCamWrapper").append(objectTag);
+    $("#webCamTitle").html(webcamName);
+    $("#webCamDiv").removeClass("hidden-wrapper");
+};
 
 
 

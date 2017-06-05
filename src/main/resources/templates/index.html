@@ -59,6 +59,17 @@
 </div>
 
 
+<div class="nivo-lightbox-overlay nivo-lightbox-theme-default nivo-lightbox-effect-fade nivo-lightbox-open hidden-wrapper" id="webCamDiv">
+    <div class="nivo-lightbox-wrap">
+        <div class="nivo-lightbox-content" style="text-align: center;" id="webCamWrapper">
+            <!--<object width="100%" height="100%" class="nivo-lightbox-item" data="https://livevideo.infomaniak.com/iframe.php?stream=webcam02luganoch&amp;name=player01&amp;player=1194"></object>-->
+        </div>
+        <div class="nivo-lightbox-title-wrap"><span class="nivo-lightbox-title" id="webCamTitle"></span></div>
+    </div>
+    <i class="fa fa-times nivo-lightbox-close" aria-hidden="true" id="closeWebCamWrapper"></i>
+</div>
+
+
 <div class="container fullscreen-Cesium">
     <ul id="gn-menu" class="gn-menu-main" style="max-width: 59px; z-index: 10;">
         <li class="gn-trigger">
@@ -82,7 +93,7 @@
                     <div id="visualize_menu" class="tab-pane fade" style="height: 100%">
                         <h3>Visualize</h3>
                         <div class="nowrap sectionContent" id="suburbsSelection">
-                            <h4 class="subsection-menu">Geolocalization</h4>
+                            <h4 class="subsection-menu">Show on the map</h4>
                             <form class="nowrap subsection-border" id="geolocalization">
                                 <table class="tg visualize-table">
                                     <tr>
@@ -90,7 +101,15 @@
                                             <input id="geolocalizationPoint" name="coloring" value="default" type="checkbox"/>
                                         </td>
                                         <td class="tg-031e">
-                                            <label for="geolocalizationPoint">Show on Map</label><br/>
+                                            <label for="geolocalizationPoint">Geolocalization point</label><br/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tg-0ord">
+                                            <input id="webcamPoints" name="coloring" value="default" type="checkbox"/>
+                                        </td>
+                                        <td class="tg-031e">
+                                            <label for="webcamPoints">Webcams</label><br/>
                                         </td>
                                     </tr>
                                 </table>

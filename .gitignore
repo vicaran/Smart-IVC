@@ -35,3 +35,9 @@ node_modules/*
 
 src/main/resources/city_data/*
 src/main/resources/city_data/OSM_DATA/*
+
+#discard latex files
+*.aux
+*.log
+*.out
+*.pdf

@@ -419,7 +419,7 @@ $("#closeWebCamWrapper").click(function () {
 let showWebCam = function (webCamId, webCamUrl, webcamName) {
     let objectTag = document.createElement("OBJECT");
     objectTag.id = webCamId + "_viewer";
-    objectTag.width = "100%";
+    objectTag.width = "55%";
     objectTag.height = "100%";
     objectTag.className = "nivo-lightbox-item";
     objectTag.data = "http://www.lugano.ch/tools/webcam/" + webCamUrl + ".html?modal=true";
@@ -427,7 +427,3 @@ let showWebCam = function (webCamId, webCamUrl, webcamName) {
     $("#webCamTitle").html(webcamName);
     $("#webCamDiv").removeClass("hidden-wrapper");
 };
-
-
-
-// TODO: SIDE MENU WHERE YOU CAN FIND THE HISTORY OF YOUR QUERIES AND EXECUTE QUERIES ON THEM

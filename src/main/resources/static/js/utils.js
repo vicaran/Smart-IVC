@@ -444,7 +444,7 @@ let geolocalizationCommand = function () {
     }, 6000)
 };
 
-geolocalizationCommand();
+
 setInterval(function () {
     geolocalizationCommand()
 }, 10000);
@@ -515,7 +515,8 @@ let drawWebCamPins = function () {
     });
 };
 
-
-setTimeout(function () {
+let initializePins = function () {
     drawWebCamPins();
-}, 8000);
+    geolocalizationCommand();
+};
+

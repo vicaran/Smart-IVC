@@ -21,7 +21,7 @@ handler.setInputAction(function (click) {
         selectedEntity.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.RED);
         selectedEntityId = pickedObject.id.split("_")[1];
         loadInfoBox(pickedObject.id.split("_")[1]);
-    } else if (pickedObject.id._id !== undefined) {
+    } else if (pickedObject !== undefined && pickedObject.id._id !== undefined) {
         viewer.selectedEntity = undefined;
         WEBCAMS.forEach(function (webcam) {
             if (webcam.name === pickedObject.id._id) {

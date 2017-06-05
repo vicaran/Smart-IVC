@@ -82,6 +82,7 @@ let addGeometriesToPrimitives = function () {
                                               }));
     primitivesArray.readyPromise.then(function () {
         hideLoadingGif();
+        initializePins();
     });
 };
 

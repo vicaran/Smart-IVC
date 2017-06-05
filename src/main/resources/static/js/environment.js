@@ -10,6 +10,55 @@ Cesium.MapboxApi.defaultAccessToken = "pk.eyJ1IjoidmljYXJhIiwiYSI6ImNqMmYxbWx0Nj
 // Cesium.Camera.DEFAULT_VIEW_FACTOR = 0;
 // Cesium.Camera.DEFAULT_VIEW_RECTANGLE = Cesium.Rectangle.fromDegrees(8.893699999999999, 46.1191401, 9.089630099999999, 45.93971);
 
+// var rectangle = Cesium.Rectangle.fromDegrees(
+//     5.013926957923385, 45.35600133779394, 11.477436312994008, 48.27502358353741);
+// var viewer = new Cesium.Viewer('cesiumContainer', {
+//     baseLayerPicker: false,
+//     terrainProvider: new Cesium.CesiumTerrainProvider({
+//                                                           url: '//3d.geo.admin.ch/1.0.0/ch.swisstopo.terrain.3d/default/20160115/4326/'
+//                                                           , requestWaterMask: true
+//                                                           , requestVertexNormals: true
+//                                                           , availableLevels: [8, 9, 10, 12, 14, 16, 17]
+//                                                           , rectangle: rectangle // Doesn't work without
+//                                                       }),
+//     imageryProvider: new Cesium.UrlTemplateImageryProvider({
+//                                                                url: "//wmts{s}.geo.admin.ch/1.0.0/ch.swisstopo.swissimage-product/default/current/4326/{z}/{y}/{x}.jpeg",
+//                                                                subdomains: '56789',
+//                                                                //url:
+//                                                                // "//wmts{s}.geo.admin.ch/1.0.0/ch.swisstopo.swisstlm3d-wanderwege/default/20150101/4326/{z}/{x}/{y}.png",
+//                                                                // subdomains: ['10', '11', '12', '13', '14'], metadataUrl:
+//                                                                // '//terrain3.geo.admin.ch/1.0.0/ch.swisstopo.swisstlm3d-wanderwege/default/20150101/4326/'
+//                                                                availableLevels: [8, 10, 12, 14, 15, 16, 17, 18],
+//                                                                minimumRetrievingLevel: 8,
+//                                                                maximumLevel: 17,
+//                                                                tilingScheme: new Cesium.GeographicTilingScheme({
+//                                                                                                                    numberOfLevelZeroTilesX: 2,
+//                                                                                                                    numberOfLevelZeroTilesY: 1
+//
+//                                                                                                                }),
+//                                                                rectangle: rectangle
+//                                                            }),
+//     fullscreenButton: false,
+//     homeButton: false,
+//     sceneModePicker: false,
+//     selectionIndicator: false,
+//     timeline: false,
+//     animation: false,
+//     geocoder: true,
+//     navigationInstructionsInitiallyVisible: false,
+//     navigationHelpButton: false,
+//     scene3DOnly: true
+// });
+//
+// // Zoom on swiss
+// viewer.camera.setView({
+//                           destination: rectangle
+//                       });
+// viewer.scene.globe.baseColor = Cesium.Color.BLUE;
+// viewer.scene.backgroundColor = Cesium.Color.WHITE;
+
+
+
 let viewer = new Cesium.Viewer('cesiumContainer', {
     animation: false,
     baseLayerPicker: false,
@@ -105,7 +154,6 @@ imageryViewModels.push(new Cesium.ProviderViewModel({
 
 
 
-
 terrainViewModels.push(new Cesium.ProviderViewModel({
                                                         name : 'STK\u00a0World\u00a0Terrain\u00a0meshes',
                                                         iconUrl : Cesium.buildModuleUrl('Widgets/Images/TerrainProviders/STK.png'),
@@ -124,8 +172,6 @@ terrainViewModels.push(new Cesium.ProviderViewModel({
 //                                                             return new Cesium.EllipsoidTerrainProvider();
 //                                                         }
 //                                                     }));
-
-
 
 
 

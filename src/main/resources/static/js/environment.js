@@ -86,6 +86,8 @@ viewer.dropError.addEventListener(function (dropHandler, name, error) {
 });
 
 viewer.infoBox.frame.removeAttribute('sandbox');
+//Enable depth testing so things behind the terrain disappear.
+viewer.scene.globe.depthTestAgainstTerrain = true;
 
 viewer.camera.setView({
                           destination : Cesium.Rectangle.fromDegrees(8.941063, 45.993499, 8.977996, 45.980138),

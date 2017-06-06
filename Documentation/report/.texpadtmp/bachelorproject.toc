@@ -10,20 +10,23 @@
 \contentsline {subsection}{\numberline {2.3}Swiss Geospatial Portal Using 3D Tiles}{7}{subsection.2.3}
 \contentsline {section}{\numberline {3}Smart--IVC}{8}{section.3}
 \contentsline {subsection}{\numberline {3.1}Environment and Frameworks}{8}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}The first Attempt: Babylon.js}{8}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}The final version: Cesium.js}{8}{subsection.3.3}
-\contentsline {subsection}{\numberline {3.4}The Overall Structure}{8}{subsection.3.4}
-\contentsline {subsection}{\numberline {3.5}Server Side}{8}{subsection.3.5}
-\contentsline {subsubsection}{\numberline {3.5.1}Parser}{8}{subsubsection.3.5.1}
-\contentsline {subsubsection}{\numberline {3.5.2}Cron Jobs}{8}{subsubsection.3.5.2}
-\contentsline {subsection}{\numberline {3.6}Client Side}{8}{subsection.3.6}
-\contentsline {subsubsection}{\numberline {3.6.1}Cesium Framework}{8}{subsubsection.3.6.1}
-\contentsline {section}{\numberline {4}Use Cases}{9}{section.4}
-\contentsline {subsection}{\numberline {4.1}Access information}{9}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}Visualize the City}{9}{subsection.4.2}
-\contentsline {subsection}{\numberline {4.3}The Query System}{9}{subsection.4.3}
-\contentsline {subsubsection}{\numberline {4.3.1}Building Selection}{9}{subsubsection.4.3.1}
-\contentsline {subsubsection}{\numberline {4.3.2}City Gradient Map}{9}{subsubsection.4.3.2}
-\contentsline {section}{\numberline {5}Conclusions and future work or possible developments}{10}{section.5}
-\contentsline {subsection}{\numberline {5.1}Summary}{10}{subsection.5.1}
-\contentsline {subsection}{\numberline {5.2}Future Work}{10}{subsection.5.2}
+\contentsline {subsection}{\numberline {3.2}The Overall Structure}{8}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Server Side}{8}{subsection.3.3}
+\contentsline {subsubsection}{\numberline {3.3.1}Models}{8}{subsubsection.3.3.1}
+\contentsline {subsubsection}{\numberline {3.3.2}Parser}{8}{subsubsection.3.3.2}
+\contentsline {subsubsection}{\numberline {3.3.3}Cron Jobs}{8}{subsubsection.3.3.3}
+\contentsline {subsubsection}{\numberline {3.3.4}Controllers}{8}{subsubsection.3.3.4}
+\contentsline {subsection}{\numberline {3.4}Client Side}{8}{subsection.3.4}
+\contentsline {subsubsection}{\numberline {3.4.1}The first Attempt: Babylon.js}{8}{subsubsection.3.4.1}
+\contentsline {subsubsection}{\numberline {3.4.2}The final version: Cesium.js}{9}{subsubsection.3.4.2}
+\contentsline {subsubsection}{\numberline {3.4.3}The Side Menu and The Query Builder}{9}{subsubsection.3.4.3}
+\contentsline {subsubsection}{\numberline {3.4.4}Cesium Framework}{9}{subsubsection.3.4.4}
+\contentsline {section}{\numberline {4}Use Cases}{10}{section.4}
+\contentsline {subsection}{\numberline {4.1}Access information}{10}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Visualize the City}{10}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}The Query System}{10}{subsection.4.3}
+\contentsline {subsubsection}{\numberline {4.3.1}Building Selection}{10}{subsubsection.4.3.1}
+\contentsline {subsubsection}{\numberline {4.3.2}City Gradient Map}{10}{subsubsection.4.3.2}
+\contentsline {section}{\numberline {5}Conclusions and future work or possible developments}{11}{section.5}
+\contentsline {subsection}{\numberline {5.1}Summary}{11}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}Future Work}{11}{subsection.5.2}

@@ -37,4 +37,10 @@ public class HomeController {
         return "error";
     }
 
+    @RequestMapping(value = "/oldButGold", method = RequestMethod.GET)
+    public String showPreviousVersion() {
+
+        return "indexBabylon";
+    }
+
 }

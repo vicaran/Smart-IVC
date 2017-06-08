@@ -4,12 +4,19 @@
 \usepackage{subcaption}
 \usepackage{graphicx}
 \usepackage{chngcntr}
+\usepackage{xcolor}
+
 \counterwithin{figure}{section}
 
 \captionsetup{labelfont={bf}}
 
 \author{Andrea Vicari}
 \newcommand{\applicationName}{Smart--IVC}
+\newcommand{\cfbox}[2]{%
+    \colorlet{currentcolor}{.}%
+    {\color{#1}%
+    \fbox{\color{currentcolor}#2}}%
+}
 \title{\applicationName}
 \subtitle{Enhanced Visualization of Cities, Through Smart Visual Queries}
 \versiondate{\today}

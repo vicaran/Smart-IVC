@@ -95,12 +95,15 @@ public class BuildingController {
         String result = new JSONObject()
                 .put("id", building.getId())
                 .put("floors", building.getFloors())
-                .put("civicNumbers", buildingNumbers)
-                .put("addresses", buildingAddresses)
+                .put("civic Numbers", buildingNumbers)
+                .put("street Names", buildingAddresses)
                 .put("types", buildingTypes)
                 .put("suburb", building.getSuburb().getName())
                 .put("Primary Houses", building.getPrimaryHouses() + primaryPercentage)
                 .put("Secondary Houses", building.getSecondaryHouses() + secondaryPercentage)
+                .put("EGID", building.getEgidUca())
+                .put("shape Length", building.getShapeArea())
+                .put("shape Area", building.getShapeLength())
                 .put("ringCoords", Base64.encodeBase64String(building.getRingGlobalCoords())).toString();
 
         return new ResponseEntity<>(result, HttpStatus.OK);

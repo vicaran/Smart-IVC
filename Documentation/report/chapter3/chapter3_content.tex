@@ -92,7 +92,7 @@ Cesium, on the contrary, provides a ready--to--use virtual globe
 \subsubsection{Provided Interface}
 \applicationName\ aims to create interactive 3D cities representations accessible by everyone. In order to have interactions that may suggest interest in users, it is required to have an user--friendly system which allows interactions with the entities in the city. In order to achieve this feature in the most flexible way, a tab based interface is at disposal of the user. The proposed interface is composed as follows:
 \begin{itemize}
-	\item An {\bf Info--Box} is shown whenever a building is selected. All the available information about it are displayed such as: street name, civic number, membership suburb, number of floors, purpose of the building and Percentace of Primary and Secondary Houses.
+	\item An {\bf Info--Box} is shown whenever a building is selected. All the available information about it are displayed such as: street name, civic number, membership suburb, number of floors, purpose of the building, EGID value, perimeter length, area of the building and Percentace of Primary and Secondary Houses.
 	\item A {\bf sidebar} is at user's disposal and it is divided into the following subsections:
 	\begin{itemize}
 		\item The {\bf Visualize} Tab let the user: {\bf add elements} to the city like the geolocalization and the position of the cameras distributed around the city, {\bf color} the city by height or by suburb and decide to {\bf show some suburbs} rather than others.
@@ -102,4 +102,20 @@ Cesium, on the contrary, provides a ready--to--use virtual globe
 	\end{itemize}
 \end{itemize}
 \subsubsection{Query Builder}
+The client side, takes advantage of the great flexibility given by the APIs created on the server--side and explained above. They are very useful in order to visualize on the city, results of the query executed visually on the sidebar.\\
+Once the user has clicked on the {\bf Query City} tab, the interface shown will be the one on Figure \ref{fig:query_city_tab}.\\ 
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.35\textwidth]{chapter3/images/query_city_tab}
+\caption{The Query City Tab}
+\label{fig:query_city_tab}
+\end{figure}
+On the {\bf Select Buildings} subsection, it is possible to select, row by row, which constraint to add to the final query. The user would only have to check the checkbox and set a value for that specific field. Of course, it is also possible to select multiple rows in order to do more restrictive queries. The buildings that match the executed query, will be highlighted with a different color.\\
+
+On the {\bf Coverage Map} subsection, it is instead possible to visualize on the map the coverage of certain buildings considered hotspots of the city. The result of this kind of query will occur colouring the hotspot (or hotspots if many of the same type) in red, the neighbour buildings will be coloured with an interpolation of colours from lime green to with depending on their distance from the hotspot.\\
+
+Both kind of queries, will be better explained and enhanced with visual examples in the chapter called ``Use cases'', later in this report. 
 \subsection{Potential and Limit}
+In our opinion the tool has great potential. As explained above, even if there are many tools which represent cities in 3D, very few of them are able to allow interactions and almost none of them allow the possibility to do query like presented in \applicationName. We think that the possibility to take plain alphanumeric data and gives it a virtual representation which provides visual feedback is the success key of this application.\\
+Right now \applicationName is a prototype which could be further developed, since the ways out of this application are really limitless. With some more data available like a more accurate representation of the buildings, it could be possible to result in an even nicer and more precise 3D--visualization. In addition, more information related to buildings, bus stops, actual streets, rivers, bridges, green zones and tunnels could be included. Once other elements are available in the representation further interactions could be implemented raising the level of visual feedback provided by the tool.\\
+The current limit of \applicationName is strictly related to data availability. We did not manage to always find accurate data to inject in the example of Lugano, therefore we were limited to make interactions with the available data. Since not all data was available for each building, where data was missing we had to fill in with OpenStreetMap's information that were not always accurate.

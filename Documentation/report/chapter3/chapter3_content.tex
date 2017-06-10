@@ -1,26 +1,26 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \section{\applicationName} \label{projectDesign}
 %%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Environment and Frameworks}
+The upcoming sections will illustrate \applicationName\ features and how they were developed. The first part proposes the \applicationName\ modelling of data. Afterwards we present a section about the parser and the cron--jobs created. It follows a description of the API provided to the user. Finally this chapter concludes with some discussions about how we developed the structure and the logic behind the Web--Application.
+
+\subsection{\applicationName\ Architecture}
 The environments selected to develop \applicationName\ are the following:
 \begin{itemize}
 	\item {\bf The Server--side} was written using the {\bf Java} Programming Language. The {\bf Spring Framework} was used, in particular using its most famous convention--over--configuration, called {\bf Spring Boot}. The database used to store the information about the city is {\bf MySQL}.
 	\item {\bf The Client--side} was written using the {\bf Javascript} scripting language. The {\bf jQuery} library was used and, of course, {\bf HTML5} and {\bf CSS3}. As mentioned above, the 3D visualization of the city was achieved using the {\bf Cesium Framework}
 \end{itemize}
-
-\subsection{The Overall Structure}
-Figure \ref{fig:project_structure} shows how the final prototype of \applicationName\ looks like.
+Figure \ref{fig:project_structure} shows the structure of the final \applicationName\ 's prototype.
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{chapter3/images/project_structure}
+\includegraphics[width=1.0\textwidth]{chapter3/images/project_structure}
 \caption{\applicationName\ architecture scheme}
 \label{fig:project_structure}
 \end{figure}
-The upcoming sections, illustrate \applicationName\ and how it was developed. The first part proposes the \applicationName\ modelling of data. Afterwards a section about the parser and the cron--jobs created is present. Followed by a description of the API provided to the user. Finally it concludes with some discussions about how the structure and the logic behind the Web--Application was developed.
+
 \subsection{Server Side}
 \subsubsection{Available Data and Modelling}
 The entire work starts from the ``xml'' file provided by the Comune of Lugano. The first choice to take was how to model the available data in the best way such that the way of retrieving information about any building was as fast and as consistent as possible.\\
-The models created are the following: City, Suburb, Building, Address and Type.Figure \ref{fig:db_structure} shows, in the form of an ER diagram, the final version of how the data was modelled into the database, specifying columns and relations between tables.
+The models created are the following: City, Suburb, Building, Address and Type. Figure \ref{fig:db_structure} shows, in the form of an ER diagram, the final version of how the data was modelled into the database, specifying columns and relations between tables.
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{chapter3/images/db_structure}
@@ -29,20 +29,21 @@ The models created are the following: City, Suburb, Building, Address and Type.F
 \end{figure}
 \subsubsection{Parser}
 The data type taken as input is of xml type. It is used in the process to load buildings data.\\
-At the beginning of the file an header which describes the content is defined. It regulates fields and types as well as values range, tolerances in the coordinates system and other set ups parameters. After the header, a long record of elements which represent buildings follows (exactly 18904). Structure and constraints, of record elements are defined in the header. The record presents several data, out of this data  \applicationName\ finds use on almost all of them. Here there will be described the tags that can be found in the xml file and that were found useful for \applicationName\:
+The beginning of the file contains an header which describes the schema of the content that follows.
+It regulates fields and types as well as values range, tolerances in the coordinates system and other set ups parameters. After the header, a long record of elements which represent buildings follows (exactly 18904). Structure and constraints, of record elements are defined in the header. The record presents several data, out of this data  \applicationName\ finds use on almost all of them. Here there will be described the tags that can be found in the xml file and that were found useful for \applicationName\:
 \begin{itemize}
 	\item {\bf SHAPE:} it stores both the perimeter of the building and the max bounds that it occupies
-	\item {\bf Descrizione:} it represents the type of the building. Between them only the ones of type ``Edificio'' (i.e., building in Italian), are stored
-	\item {\bf Sezione:} it is a numeric value that represent the suburb in which the building is located
-	\item {\bf NUM$\_$CIVICO$\_$ID:} it is a 8--character--long numeric value that contains: the number id representing the street name in the first four characters and the civic number in the remaining four.
+	\item {\bf Descrizione (Description):} it represents the type of the building. Between them only the ones of type ``Edificio'' (i.e., building in Italian), are stored
+	\item {\bf Sezione (Section):} it is a numeric value that represent the suburb in which the building is located
+	\item {\bf NUM$\_$CIVICO$\_$ID (CIVIC$\_$NUMBER$\_$ID):} it is a 8--character--long numeric value that contains: the number id representing the street name in the first four characters and the civic number in the remaining four.
 	\item {\bf EGID$\_$UCA:} it uniquely identifies buildings on the entire Swiss ground on the basis of the ``Registro Federale degli Edifici e delle abitazioni'' (REA) from the ``Ufficio federale di statistica''.
-	\item {\bf PIANI:} the number of floors per building
+	\item {\bf PIANI (FLOORS):} the number of floors per building
 	\item {\bf SHAPE$\_$AREA:} the area of the plane described by the building
 	\item {\bf SHAPE$\_$LENGTH:} the length of the perimeter of the building
 \end{itemize}
 The data is assimilated in \applicationName\ through the loader. A parser has been created in order to read and parse a file structured in the way described above. The parser creates a building model and an address model for every record in the xml file and sets their fields using the information stored in the xml tags. Once the data is created, the models gets stored into a database.\\
 
-Coordinates of buildings are stored in a data type called CH1903. It represents the Swiss projection coordinates system. It uses an Oblique Mercator on a 1841 Bessel ellipsoid. An Oblique Mercator is an oblique conformal cylinder projection. Together with the 1841 Bessel ellipsoid, a reference ellipsoid of geodesy with base at the old observatory in Bern, gives meaning to the projected coordinates. The transformation computations of the data from CH1903 to WGS84 is provided from the Swiss confederation. The precision with this transformation is of respectively 1 meter and 0.1". In order to derive the transformationa specific formulae has to be applied. The way these coordinates are converted can be found on the website of the Federal Office of Topography Swisstopo under the section NAVREF. 
+Coordinates of buildings are stored in a data type called CH1903. It represents the Swiss projection coordinates system. It uses an Oblique Mercator on a 1841 Bessel ellipsoid. An Oblique Mercator is an oblique conformal cylinder projection. Together with the 1841 Bessel ellipsoid, a reference ellipsoid of geodesy with base at the old observatory in Bern, gives meaning to the projected coordinates. The transformation computations of the data from CH1903 to WGS84 is provided from the Swiss confederation. The precision with this transformation is of respectively 1 meter and 0.1". In order to derive the transformation, specific formulae has to be applied. The way these coordinates are converted can be found on the website of the Federal Office of Topography Swisstopo under the section NAVREF. 
 \subsubsection{Commands}
 On the application start, the application checks if the data is already present in the database, if not it executes a command that reads the xml file and parses it using the parser described above and stores the models in the database.\\  
 At this point, the data is not ready yet, since it does not contain all the important information required from \applicationName\ to work.\\

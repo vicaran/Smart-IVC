@@ -36,12 +36,45 @@ The fields of the displayed data are denoted as follows:
 \end{itemize}
 
 \subsection{Visualize the City}
+The first tab available to the user when the side--bar is opened, is the Visualize Tab. It is divided into three main subsections: ``Show on the map'', ``Color city'' and ``Show Suburbs''.\\
+
+The first subsection contains two checkboxes: the first one, let the user show the geolocalization, i.e., the position of the device from which the user is using \applicationName. The second checkbox, if checked, shows the position of webcams located around Lugano; this webcams continuously stream videos of the city. In Figure \ref{fig:mapPins} it is possible to see the result on the map, when both checkboxes are checked.
 \begin{figure} [H]
 \centering
-\includegraphics[width=0.9\textwidth]{chapter4/images/application_bySuburb}
+\includegraphics[width=.8\textwidth]{chapter4/images/mapPins}
+\caption{When both checkboxes are checked, geolocalization and webCams positions are shown on the map}
+\label{fig:mapPins}
+\end{figure}
+Since the 3D visualization had still to allow the user to exactly locate the position of these pins, whenever the visualization is more zoomed it it, a ``stick'' is created starting from the ground and ending at the bottom of the pin, as it is shown in Figure \ref{fig:3dPins}.\\
+
+\begin{figure} [H]
+\centering
+\includegraphics[width=.8\textwidth]{chapter4/images/3dPins}
+\caption{The ``Stick'' that connects the ground to the pins}
+\label{fig:3dPins}
+\end{figure}
+In the second subsection three radio buttons can be found: the first one is used to reset the color of the entire city to the default color. The second colours the buildings in the city based on their height (Figure\ref{fig:application_byHeight}). The third one is used to colour the entire city based on its suburbs and so every suburb has a different color(Figure \ref{fig:application_showSuburb} ).\\
+
+\begin{figure} [H]
+\centering
+\includegraphics[width=.8\textwidth]{chapter4/images/application_bySuburb}
 \caption{A Visualization of the city of Lugano where every suburb is coloured differentrly}
 \label{fig:application_bySuburb}
 \end{figure}
+\begin{figure} [H]
+\centering
+\includegraphics[width=.8\textwidth]{chapter4/images/application_byHeight}
+\caption{A Visualization of the city of Lugano where every building is colorued based on its height}
+\label{fig:application_byHeight}
+\end{figure}
+The third and last subsection, contains the list of checkboxes representing all the suburbs in the city and their respective colours. By default all checkboxes are checked but uncheck them will result in hiding the desired suburb as show in Figure \ref{fig:application_showSuburb}.
+\begin{figure} [H]
+\centering
+\includegraphics[width=.8\textwidth]{chapter4/images/application_showSuburb}
+\caption{A Visualization of the city of Lugano where the suburb Viganello is hidden}
+\label{fig:application_showSuburb}
+\end{figure}
+
 \subsection{The Query System}
 \subsubsection{Building Selection}
 \subsubsection{City Gradient Map}

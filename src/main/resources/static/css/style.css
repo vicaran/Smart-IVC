@@ -452,8 +452,8 @@ body {
 }
 
 #btn.active {
-    top: 2%;
-    left: 29.5%;
+    top:2%;
+    left: 22%;
 }
 #btn.active div {
     background-color: #343838;
@@ -477,7 +477,7 @@ body {
     overflow: auto;
     top: 0px;
     left: -275px;
-    width: 33.33%;
+    width: 25%;
     opacity: 0;
     padding: 0px 0px;
     height: 100%;

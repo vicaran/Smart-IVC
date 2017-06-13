@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/jdbc">
+<head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8"/>
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"/>
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/component.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/demo.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/Cesium/Build/Cesium/Widgets/widgets.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/Cesium/Build/Cesium/Widgets/BaseLayerPicker/BaseLayerPicker.css}"/>
+
+    <link rel="apple-touch-icon" sizes="57x57" th:href="@{images/SIVC-logo/apple-icon-57x57.png}"/>
+    <link rel="apple-touch-icon" sizes="60x60" th:href="@{images/SIVC-logo/apple-icon-60x60.png}"/>
+    <link rel="apple-touch-icon" sizes="72x72" th:href="@{images/SIVC-logo/apple-icon-72x72.png}"/>
+    <link rel="apple-touch-icon" sizes="76x76" th:href="@{images/SIVC-logo/apple-icon-76x76.png}"/>
+    <link rel="apple-touch-icon" sizes="114x114" th:href="@{images/SIVC-logo/apple-icon-114x114.png}"/>
+    <link rel="apple-touch-icon" sizes="120x120" th:href="@{images/SIVC-logo/apple-icon-120x120.png}"/>
+    <link rel="apple-touch-icon" sizes="144x144" th:href="@{images/SIVC-logo/apple-icon-144x144.png}"/>
+    <link rel="apple-touch-icon" sizes="152x152" th:href="@{images/SIVC-logo/apple-icon-152x152.png}"/>
+    <link rel="apple-touch-icon" sizes="180x180" th:href="@{images/SIVC-logo/apple-icon-180x180.png}"/>
+    <link rel="icon" type="image/png" sizes="192x192" th:href="@{images/SIVC-logo/android-icon-192x192.png}"/>
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{images/SIVC-logo/favicon-32x32.png}"/>
+    <link rel="icon" type="image/png" sizes="96x96" th:href="@{images/SIVC-logo/favicon-96x96.png}"/>
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{images/SIVC-logo/favicon-16x16.png}"/>
+    <link rel="manifest" th:href="@{images/SIVC-logo//manifest.json}"/>
+    <meta name="msapplication-TileColor" content="#ffffff"/>
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png"/>
+    <meta name="theme-color" content="#ffffff"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}"/>
+
+    <script th:src="@{/js/modernizr.custom.js}" type="text/javascript"></script>
+
+    <title>SMART-IVC</title>
+</head>
+<body>
+<div id="loadingSpinnerBackground"></div>
+<div id="legend-wrapper" class="hidden-wrapper">
+    <div id="floors-legend">
+        <p class="legend-header">Floors</p>
+        <div class="legend-container">
+            <p class="legend-content" style="left: 5%;">0</p>
+            <div id="color-legend-line"></div>
+            <p id="maxHeightLegend" class="legend-content" style="left: 94%;"></p>
+        </div>
+    </div>
+</div>
+
+
+<div class="nivo-lightbox-overlay nivo-lightbox-theme-default nivo-lightbox-effect-fade nivo-lightbox-open hidden-wrapper" id="webCamDiv">
+    <div class="nivo-lightbox-wrap">
+        <div class="nivo-lightbox-content" style="text-align: center;" id="webCamWrapper">
+        </div>
+        <div class="nivo-lightbox-title-wrap"><span class="nivo-lightbox-title" id="webCamTitle"></span></div>
+    </div>
+    <i class="fa fa-times nivo-lightbox-close" aria-hidden="true" id="closeWebCamWrapper"></i>
+</div>
+
+
+<div class="container fullscreen-Cesium">
+    <ul id="gn-menu" class="gn-menu-main" style="max-width: 59px; z-index: 10;">
+        <li class="gn-trigger">
+            <a class="gn-icon gn-icon-menu" id="menu-hamburger"><span>Menu</span></a>
+            <nav class="gn-menu-wrapper" id="sidebar_menu">
+                <ul class="nav nav-tabs">
+                    <li class="icon-size" id="visualize_menu_selector"><a data-toggle="tab" id="visualize_menu_tab"><i class="fa fa-eye" aria-hidden="true"></i></a></li>
+                    <li class="icon-size" id="queryCity_menu_selector"><a data-toggle="tab" id="queryCity_menu_tab"><i class="fa fa-building" aria-hidden="true"></i></a></li>
+                    <li class="icon-size" id="queryHistory_menu_selector"><a data-toggle="tab" id="queryHistory_menu_tab"><i class="fa fa-history" aria-hidden="true"></i></a></li>
+                    <li class="icon-size" id="credits_menu_selector"><a data-toggle="tab" id="credits_menu_tab"><i class="fa fa-info" aria-hidden="true"></i></a></li>
+
+                </ul>
+                <div class="tab-content" style="height: 100%;overflow-y: auto; max-height: 510pt;">
+                    <div id="initial_menu" class="tab-pane fade">
+                        <h2>Welcome to Smart-IVC</h2>
+                        <img src="/images/logo.png" alt="Application Logo" class="logo_style"/>
+                        <p>An interactive tool of visualization for the City of Lugano</p>
+                        <h3>Start querying the city by selecting the tabs above</h3>
+                    </div>
+                    <div id="visualize_menu" class="tab-pane fade" style="height: 100%">
+                        <h3>Visualize</h3>
+                        <div class="nowrap sectionContent" id="suburbsSelection">
+                            <h4 class="subsection-menu">Show on the map</h4>
+                            <form class="nowrap subsection-border" id="geolocalization">
+                                <table class="tg visualize-table">
+                                    <tr>
+                                        <td class="tg-0ord">
+                                            <input id="geolocalizationPoint" name="coloring" value="default" type="checkbox"/>
+                                        </td>
+                                        <td class="tg-031e">
+                                            <label for="geolocalizationPoint">Geolocalization point</label><br/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tg-0ord">
+                                            <input id="webcamPoints" name="coloring" value="default" type="checkbox"/>
+                                        </td>
+                                        <td class="tg-031e">
+                                            <label for="webcamPoints">Webcams</label><br/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </form>
+
+
+                            <h4 class="subsection-menu">Color City</h4>
+                            <form class="nowrap subsection-border" id="coloring">
+                                <table class="tg visualize-table">
+                                    <tr>
+                                        <td class="tg-0ord">
+                                            <input id="colorDefault" name="coloring" value="default" type="radio" checked="checked"/>
+                                        </td>
+                                        <td class="tg-031e">
+                                            <label for="colorDefault">Default</label><br/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tg-0ord">
+                                            <input id="colorByHeight" name="coloring" value="height" type="radio"/>
+                                        </td>
+                                        <td class="tg-031e">
+                                            <label for="colorByHeight">By height</label><br/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tg-0ord">
+                                            <input id="colorBySuburb" name="coloring" value="suburb" type="radio"/>
+                                        </td>
+                                        <td class="tg-031e">
+                                            <label for="colorBySuburb">By Suburb</label>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </form>
+                            <h4 class="subsection-menu">Show Suburbs</h4>
+                            <table class="tg visualize-table" id="suburbsTable" style="width: 90%;"></table>
+                        </div>
+                    </div>
+                    <div id="queryCity_menu" class="tab-pane fade" style="height: 100%">
+                        <h3>Query City</h3>
+
+                        <div style="float: left; margin-left: 10px;">
+                            <h4 class="subsection-menu">Select buildings</h4>
+                            <table class="tg">
+                                <tr>
+                                    <td class="tg-0ord">
+                                        <form class="nowrap" id="byType">
+                                            <input id="byTypeSelection" name="byType" value="type" type="checkbox"/>
+                                        </form>
+                                    </td>
+                                    <td class="tg-031e">
+                                        <div class="querySection">
+                                            <p>Where type is: </p>
+                                            <select id="buildingTypeCity">
+                                                <option selected="" disabled="" hidden="" value="">Choose...</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-0ord">
+                                        <form class="nowrap" id="byFloors">
+                                            <input id="byFloorsSelection" name="byFloors" value="floors" type="checkbox"/>
+                                        </form>
+                                    </td>
+                                    <td class="tg-031e" style="padding-left: 10pt;">
+                                        <div class="querySection">
+                                            <p>Where number of floors is: </p>
+                                            <select id="buildingFloorsComparisonCity">
+                                                <option selected="" disabled="" hidden="" value="">Choose...</option>
+                                                <option value="greater"> &#62; </option>
+                                                <!--<option value="greaterEqual"> &#62;&#61; </option>-->
+                                                <option value="equal"> &#61;</option>
+                                                <!--<option value="lessEqual"> &#60;&#61; </option>-->
+                                                <option value="less"> &#60; </option>
+                                            </select>
+                                            <input id="floorsNumber" type="text" name="numberOfFloors" size="2" maxlength="2" style="height: 25px;"/>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-0ord">
+                                        <form class="nowrap" id="byPrimarySecondary">
+                                            <input id="byPrimarySecondarySelection" name="byPrimarySecondary" value="primarySecondary"
+                                                   type="checkbox"/>
+                                        </form>
+                                    </td>
+                                    <td class="tg-031e">
+                                        <div class="querySection">
+                                            <p>Where percentage of </p>
+                                            <select id="buildingPrimarySecondaryCity">
+                                                <option selected="" disabled="" hidden="" value="">Choose...</option>
+                                                <option value="primary"> primary</option>
+                                                <option value="secondary"> secondary</option>
+                                            </select>
+                                            <p> houses is : </p>
+                                            <input id="primarySecondaryNumber" type="text" name="primarySecondaryPercentage" size="3" maxlength="3"
+                                                   style="height: 25px;"/>
+                                            <p> &#037; </p>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-0ord">
+                                        <form class="nowrap" id="bySuburbName">
+                                            <input id="bySuburbNameSelection" name="bySuburbName" value="suburb"
+                                                   type="checkbox"/>
+                                        </form>
+                                    </td>
+                                    <td class="tg-031e">
+                                        <div class="querySection">
+                                            <p>Where Suburb is </p>
+                                            <select id="buildingSuburbNameCity">
+                                                <option selected="" disabled="" hidden="" value="">Choose...</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-0ord">
+                                        <form class="nowrap" id="byDistance">
+                                            <input id="byDistanceSelection" name="bySuburbName" value="suburb"
+                                                   type="checkbox"/>
+                                        </form>
+                                    </td>
+                                    <td class="tg-031e">
+                                        <div class="querySection">
+                                            <p>Nearest to </p>
+                                            <select id="buildingDistanceCity">
+                                                <option selected="" disabled="" hidden="" value="">Choose...</option>
+                                                <option value="myPosition"> my position </option>
+                                                <option value="selectedBuilding"> selected building </option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-0ord"></td>
+                                    <td class="tg-031e"></td>
+                                </tr>
+                                <tr>
+                                    <td class="tg-0ord"></td>
+                                    <td class="tg-031e"></td>
+                                </tr>
+                            </table>
+                            <button type="button" class="btn btn-primary btn-lg" id="queryFromBuildingCity">Search</button>
+
+                            <h4 class="subsection-menu">Coverage Map</h4>
+                            <table class="tg">
+                                <tr>
+                                    <td class="tg-0ord">
+                                        <!--<form class="nowrap" id="byTypeCover">-->
+                                            <!--<input id="byTypeCoverage" name="byType" value="type" type="checkbox"/>-->
+                                        <!--</form>-->
+                                    </td>
+                                    <td class="tg-031e">
+                                        <div class="querySection">
+                                            <p>Where type is: </p>
+                                            <select id="coverageTypeCity">
+                                                <option selected="" disabled="" hidden="" value="">Choose...</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <button type="button" class="btn btn-primary btn-lg" id="coverageCity">Show Coverage</button>
+                        </div>
+                    </div>
+                    <div id="queryHistory_menu" class="tab-pane fade" style="height: 100%">
+                        <h3>Query History</h3>
+                        <p id="historyPlaceholder">The history of your queries is going to appear here.</p>
+                        <ul id="history_list"></ul>
+                    </div>
+                    <div id="credits_menu" class="tab-pane fade">
+                        <h3>Credits</h3>
+                        <table class="credits-box" id="credits_table">
+                            <tbody style=" text-align: -webkit-left;">
+                            <tr>
+                                <td>
+                                    <div class="cesium-navigation-help-pan">Developed by</div>
+                                    <p>Andrea Vicari</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="cesium-navigation-help-pan">Under the supervision of</div>
+                                    <div class="">Prof. Dr. <a href="http://www.inf.usi.ch/faculty/lanza/"
+                                                                                             target="_blank" class="links_style">Michele Lanza</a>
+                                    </div>
+                                    <div class="">Dr. <a href="http://www.inf.usi.ch/postdoc/mocci/" target="_blank"
+                                                                                       class="links_style">Andrea Mocci</a></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="cesium-navigation-help-pan">Find it on GitHub</div>
+                                    <span class="cesium-credit-image">
+                                        <a href="https://github.com/vicaran/Smart-IVC" target="_blank">
+                                            <img src="/images/reveal/githubLogo.png" alt="GITHUB_REPO" title="GITHUB_REPO"
+                                                 style="vertical-align: bottom;"/>
+                                         </a>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="cesium-navigation-help-pan" id="powered_div">Powered by
+                                        <span class="cesium-credit-image">
+                                        <a href="http://reveal.inf.usi.ch/" target="_blank">
+                                            <img src="/images/reveal/REVEALogo-black.png" alt="Reveal" title="Reveal"
+                                                 style="vertical-align: bottom;"/>
+                                        </a>
+                                    </span>
+                                        <span class="cesium-credit-image">
+                                         <a href="http://www.inf.usi.ch/" target="_blank">
+                                             <img src="/images/reveal/logo_usi.png" alt="USI_INF" title="USI_INF" style="vertical-align: bottom;"/>
+                                         </a>
+                                    </span>
+
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </nav>
+        </li>
+    </ul>
+    <header class="fullscreen-Cesium">
+        <div id="cesiumContainer"></div>
+        <div style="visibility: hidden;" id="cesium_credits_div"></div>
+    </header>
+</div>
+
+</body>
+
+<script th:src="@{/js/classie.js}" type="text/javascript"></script>
+<script th:src="@{/js/gnmenu.js}" type="text/javascript"></script>
+<script th:src="@{/js/sidebar.js}" type="text/javascript"></script>
+
+
+<script th:src="@{/js/app.js}" type="text/javascript"></script>
+<script th:src="@{/Cesium/Build/Cesium/Cesium.js}" type="text/javascript"></script>
+<script th:src="@{/js/environment.js}" type="text/javascript"></script>
+<script th:src="@{/js/utils.js}" type="text/javascript"></script>
+<script th:src="@{/js/listeners.js}" type="text/javascript"></script>
+<script th:src="@{/js/loadObjects.js}" type="text/javascript"></script>
+
+
+<script>
+    new gnMenu(document.getElementById('gn-menu'));
+</script>
+
+<!--Import babilonjs scripts-->
+<script th:src="@{/js/miniCanvas.js}" type="text/javascript"></script>
+<script src="http://www.babylonjs.com/hand.minified-1.2.js"></script>
+<script src="http://www.babylonjs.com/cannon.js"></script>
+<script src="http://www.babylonjs.com/oimo.js"></script>
+<script src="http://www.babylonjs.com/babylon.js"></script>
+</html>

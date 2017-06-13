@@ -26,6 +26,12 @@ public class HomeController {
         return "index";
     }
 
+    @RequestMapping(value = "/oldSide", method = RequestMethod.GET)
+    public String showHomeCesiumOldSidebar() {
+
+        return "indexOldSideBar";
+    }
+
     /**
      * Show error string.
      *

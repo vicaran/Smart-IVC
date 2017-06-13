@@ -3,6 +3,32 @@
  */
 let SUBURBS_IDS = {};
 
+// Load sidebar
+let sidebarBox = document.querySelector('#box'),
+    sidebarBtn = document.querySelector('#btn'),
+    pageWrapper = document.querySelector('#page-wrapper');
+
+sidebarBtn.addEventListener('click', function (event) {
+    sidebarBtn.classList.toggle('active');
+    sidebarBox.classList.toggle('active');
+});
+
+pageWrapper.addEventListener('click', function (event) {
+
+    if (sidebarBox.classList.contains('active')) {
+        sidebarBtn.classList.remove('active');
+        sidebarBox.classList.remove('active');
+    }
+});
+
+window.addEventListener('keydown', function (event) {
+
+    if (sidebarBox.classList.contains('active') && event.keyCode === 27) {
+        sidebarBtn.classList.remove('active');
+        sidebarBox.classList.remove('active');
+    }
+});
+
 $("#menu-toggle").click(function (e) {
     e.preventDefault();
     $("#wrapper").toggleClass("toggled");
@@ -11,7 +37,6 @@ $("#menu-toggle").click(function (e) {
 window.onload = function () {
     $(".cesium-viewer-toolbar").css("display", "inline-flex");
     hideLoadingGif();
-    addCredits();
     loadCities();
     loadTypes();
     loadSuburbs();
@@ -69,27 +94,6 @@ let loadSuburbs = function () {
            })
 
 }
-
-let triggerCreditButton = function () {
-    let creditsBox = $("#credits-box");
-    $("#credits-button").click(function (e) {
-        e.stopPropagation();
-
-        if (creditsBox.hasClass("cesium-navigation-help-visible")) {
-            creditsBox.removeClass("cesium-navigation-help-visible");
-        } else {
-            creditsBox.addClass("cesium-navigation-help-visible");
-        }
-    });
-};
-
-let addCredits = function () {
-    let cesiumCredits = $("#cesium_credits_div .cesium-credit-image");
-    $("#powered_div").append(cesiumCredits.html());
-    $("#cesium_credits_div").remove();
-    // $("queryFromBuildingCity").attr("data-loading-text", '<i class="fa fa-circle-o-notch fa-spin"></i> Processing Query');
-};
-
 
 let loadTypes = function () {
     $.ajax({

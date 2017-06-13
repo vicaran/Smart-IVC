@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.10.13)  13 JUN 2017 11:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.10.13)  13 JUN 2017 19:39
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1007,11 +1007,11 @@ Package pdftex.def Info: chapter2/images/BernCitySwissTopo.png used on input lin
 ) [7 <./chapter2/images/NewYorkCityCesium3dTiles.png> <./chapter2/images/BernCitySwissTopo.png>]
 \openout2 = `chapter3/chapter3_content.aux'.
 
- (./chapter3/chapter3_content.tex <chapter3/images/project_structure.png, id=297, 1075.01625pt x 645.41125pt>
+ (./chapter3/chapter3_content.tex <chapter3/images/project_structure.png, id=297, 1075.01625pt x 654.445pt>
 File: chapter3/images/project_structure.png Graphic file (type png)
  <use chapter3/images/project_structure.png>
 Package pdftex.def Info: chapter3/images/project_structure.png used on input line 15.
-(pdftex.def)             Requested size: 483.69684pt x 290.39299pt.
+(pdftex.def)             Requested size: 483.69684pt x 294.45758pt.
  <chapter3/images/db_structure.png, id=299, 1432.35126pt x 1034.86626pt>
 File: chapter3/images/db_structure.png Graphic file (type png)
  <use chapter3/images/db_structure.png>
@@ -1179,7 +1179,7 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  60i,9n,94p,859b,658s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/ly1/texnansi.enc}{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/local/texlive/2015/texmf-dist/fonts/type1/bitstrea/charter/bchb8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/bitstrea/charter/bchr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/bitstrea/charter/bchri8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/mathdesign/mdbch/md-chr8t.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/cm-super/sfrm2074.pfb>
-Output written on "/Users/Andrea/Desktop/iCorsi/Semester6/Bachelor Thesis/Smart-IVC/Smart-IVC/Documentation/report/.texpadtmp/bachelorproject.pdf" (20 pages, 38284856 bytes).
+Output written on "/Users/Andrea/Desktop/iCorsi/Semester6/Bachelor Thesis/Smart-IVC/Smart-IVC/Documentation/report/.texpadtmp/bachelorproject.pdf" (20 pages, 38287441 bytes).
 PDF statistics:
  431 PDF objects out of 1000 (max. 8388607)
  347 compressed objects within 4 object streams

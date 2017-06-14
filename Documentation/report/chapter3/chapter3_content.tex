@@ -3,7 +3,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%
 The upcoming sections will illustrate \applicationName\ features and how they were developed. The first part proposes the \applicationName\ modelling of data. Afterwards we present a section about the parser and the cron--jobs created. It follows a description of the API provided to the user. Finally this chapter concludes with some discussions about how we developed the structure and the logic behind the Web--Application.
 
-\subsection{\applicationName\ Architecture}
+\subsection{\applicationName\ Architecture and Technologies}
 The environments selected to develop \applicationName\ are the following:
 \begin{itemize}
 	\item {\bf The Server--side} was written using the {\bf Java} Programming Language. The {\bf Spring Framework} was used, in particular using its most famous convention--over--configuration, called {\bf Spring Boot}. The database used to store the information about the city is {\bf MySQL}.
@@ -56,9 +56,8 @@ That is why some commands where create for different purposes. Again, on applica
 Once these commands are executed, the data is ready to be used and retrieved in order to be shown on the web application.
 \subsubsection{Controllers and Queries}
 Once the data was retrieved from the xml, modelled, improved with additional details and correctly stored in the database, the only part missing on the server side was the creation of the APIs and the correlated work of querying the database to get the correct information.\\
-\begin{center}
-	\cfbox{red}{SECTION WORK IN PROGRESS (how much be detailed on controllers specifications?)}
-\end{center}
+
+\todo[inline]{SECTION WORK IN PROGRESS  (how much be detailed on controllers specifications?)} 
 
 \subsection{Client Side}
 \subsubsection{The first Attempt: Babylon.js}
@@ -86,10 +85,7 @@ Therefore, this lack of both Google--API--requests and good performances, lead t
 \subsubsection{The final version: Cesium.js}
 As stated above, the Cesium Framework was finally used to build the client--side of the application.\\
 Cesium, on the contrary, provides a ready--to--use virtual globe
-\begin{center}
-	\cfbox{red}{SECTION WORK IN PROGRESS}
-\end{center}
-
+\todo[inline]{SECTION WORK IN PROGRESS}
 \subsubsection{Provided Interface}
 \applicationName\ aims to create interactive 3D cities representations accessible by everyone. In order to have interactions that may suggest interest in users, it is required to have an user--friendly system which allows interactions with the entities in the city. In order to achieve this feature in the most flexible way, a tab based interface is at disposal of the user. The proposed interface is composed as follows:
 \begin{itemize}

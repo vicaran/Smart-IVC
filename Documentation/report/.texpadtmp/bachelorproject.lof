@@ -1,18 +1,19 @@
 \contentsline {figure}{\numberline {2.1}{\ignorespaces A visualization of New York city using OSMBuildings\relax }}{4}{figure.caption.3}
 \contentsline {figure}{\numberline {2.2}{\ignorespaces A visualization of Paris using F4 Map\relax }}{5}{figure.caption.4}
 \contentsline {figure}{\numberline {2.3}{\ignorespaces A visualization of New York city using ViziCities\relax }}{5}{figure.caption.5}
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Cesium logo\relax }}{6}{figure.caption.6}
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Cesium logo and Cesium Virtual Globe\relax }}{6}{figure.caption.6}
 \contentsline {figure}{\numberline {2.5}{\ignorespaces Example of two imagery providers available on Cesium\relax }}{6}{figure.caption.7}
-\contentsline {figure}{\numberline {2.6}{\ignorespaces Example of two terrain providers available on Cesium, this shows the benefits of a 3D globe compared to a 2D map.\relax }}{6}{figure.caption.8}
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Example of two terrain providers available on Cesium, this shows the benefits of a 3D globe compared to a 2D map.\relax }}{7}{figure.caption.8}
 \contentsline {figure}{\numberline {2.7}{\ignorespaces An example showing a 3D visualization of the city of New York. Using Cesium 3D Tiles Tecnhology\relax }}{7}{figure.caption.9}
-\contentsline {figure}{\numberline {2.8}{\ignorespaces A 3D visualization of the city of Bern in the Swiss Geospatial Portal. Using Cesium 3D Tiles Tecnhology\relax }}{7}{figure.caption.10}
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Smart--IVC\ architecture scheme\relax }}{8}{figure.caption.11}
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Smart--IVC\ database structure\relax }}{9}{figure.caption.12}
-\contentsline {figure}{\numberline {3.3}{\ignorespaces The first attempt of city visualization using BabilonJS\relax }}{11}{figure.caption.13}
-\contentsline {figure}{\numberline {3.4}{\ignorespaces The Query City Tab\relax }}{12}{figure.caption.14}
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Accessing the information of buildings in Smart--IVC\relax }}{14}{figure.caption.15}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces When both checkboxes are checked, geolocalization and webCams positions are shown on the map\relax }}{15}{figure.caption.16}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces The ``Stick'' that connects the ground to the pins\relax }}{16}{figure.caption.17}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces A Visualization of the city of Lugano where every suburb is coloured differentrly\relax }}{16}{figure.caption.18}
-\contentsline {figure}{\numberline {4.5}{\ignorespaces A Visualization of the city of Lugano where every building is colorued based on its height\relax }}{17}{figure.caption.19}
-\contentsline {figure}{\numberline {4.6}{\ignorespaces A Visualization of the city of Lugano where the suburb Viganello is hidden\relax }}{17}{figure.caption.20}
+\contentsline {figure}{\numberline {2.8}{\ignorespaces A 3D visualization of the city of Bern in the Swiss Geospatial Portal. Using Cesium 3D Tiles Tecnhology\relax }}{8}{figure.caption.10}
+\contentsline {figure}{\numberline {2.9}{\ignorespaces A 3D--Model of a building provided by the Swiss Geospatial Portal and used in 3D--Tiles\relax }}{8}{figure.caption.11}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Smart--IVC\ architecture scheme\relax }}{9}{figure.caption.12}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Smart--IVC\ database structure\relax }}{10}{figure.caption.13}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces The first attempt of city visualization using BabilonJS\relax }}{12}{figure.caption.15}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces The Query City Tab\relax }}{13}{figure.caption.17}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Accessing the information of buildings in Smart--IVC\relax }}{16}{figure.caption.18}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces When both checkboxes are checked, geolocalization and webCams positions are shown on the map\relax }}{17}{figure.caption.19}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces The ``Stick'' that connects the ground to the pins\relax }}{18}{figure.caption.20}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces A Visualization of the city of Lugano where every suburb is coloured differentrly\relax }}{18}{figure.caption.21}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces A Visualization of the city of Lugano where every building is colorued based on its height\relax }}{19}{figure.caption.22}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces A Visualization of the city of Lugano where the suburb Viganello is hidden\relax }}{19}{figure.caption.23}

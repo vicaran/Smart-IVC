@@ -37,10 +37,10 @@ The third and last map that uses OSM information about buildings is ViziCities\f
 \end{figure}
 
 \subsection{Cesium}
-\begin{figure} [h]
+\begin{figure} [H]
 \centering
-\includegraphics[width=0.4\textwidth]{chapter2/images/cesium_logo}
-\caption{Cesium logo}
+\includegraphics[width=0.8\textwidth]{chapter2/images/cesium_logo}
+\caption{Cesium logo and Cesium Virtual Globe}
 \label{fig:cesium_logo}
 \end{figure}
 Cesium\footnote{Cesium: https://cesiumjs.org/} is an open-source JavaScript library for world-class 3D globes and maps that is used to create a web-based globe and map for visualizing dynamic data. This framework runs using WebGL, a JavaScript API for rendering 3D graphics within any compatible web browser that allows GPU--accelerated usage of physics and image processing and effects as part of the web page canvas.\\ 
@@ -81,25 +81,33 @@ The features that Cesium provides are the following:
 		\caption{Example of two terrain providers available on Cesium, this shows the benefits of a 3D globe compared to a 2D map.}
 	\end{figure}
 	\item {\bf Huge number of APIs provided:} since the uses of Cesium are really various, Cesium provides a very high number of APIs in order to control every aspect of the web application, i.e., draw every kind of geometry, handle animations, etc\dots\\The official website of Cesium also provides a complete documentation, various examples, and playgrounds.
-\end{itemize}
-\begin{center}
-	\cfbox{red}{SECTION WORK IN PROGRESS (talk about Cesium 3D Tiles)}
-\end{center}
+\end{itemize} 
+\subsubsection{Cesium: 3D-Tiles}
+Cesium's repository on GitHub\footnote{Cesium GitHub Repository: https://github.com/AnalyticalGraphicsInc/cesium} has an open fork called ``3D-Tiles''\footnote{Cesium 3D-Tiles Fork: https://github.com/AnalyticalGraphicsInc/3d-tiles}. As specified by the contributors of this fork:  ``In 3D Tiles, a tileset is a set of tiles organized in a spatial data structure, the tree. Each tile has a bounding volume completely enclosing its contents. The tree has spatial coherence; the content for child tiles are completely inside the parent's bounding volume. To allow flexibility, the tree can be any spatial data structure with spatial coherence, including k-d trees, quadtrees, octrees, and grids.''
 \begin{figure} [H]
 \centering
 \includegraphics[width=0.8\textwidth]{chapter2/images/NewYorkCityCesium3dTiles}
 \caption{An example showing a 3D visualization of the city of New York. Using Cesium 3D Tiles Tecnhology}
 \label{fig:NewYorkCityCesium3dTiles}
 \end{figure}
-\subsection{Swiss Geospatial Portal Using 3D Tiles}
-\begin{center}
-	\cfbox{red}{SECTION WORK IN PROGRESS}
-\end{center}
+Unfortunately, being Cesium 3D--Tiles still under development, it is not provided any kind of documentation about it. Still, in a recent post on Cesium Forum, it is possible to understand that Cesium 3D--tiles fork will be soon merged to the main branch and therefore, also a complete documentation will be provided. \\In the meantime, Cesium 3D--Tiles developers are available to help programmers interested in using this technology using their forum\footnote{Developers' help forum: http://tiny.cc/884tly}.
 
-
+\subsubsection{Swiss Geospatial Portal Using 3D Tiles}
+Swisstopo, the Swiss Federal Geoportal is a federal government platform that facilitates public access to Swiss spatial data.
+This agency produces detailed maps of Switzerland and also documents geological, geodesic, and topographical changes in the landscape.\\
+Swisstopo is one of the pioneers in implementing 3D Tiles to process its extensive data collection and Cesium to visualize it. The beta visualization of their 3D Geoportal is available, it makes their national geodata collection widely available\footnote{Swisstopo implementing 3D--Tiles: http://tiny.cc/0s5tly}.
 \begin{figure} [H]
 \centering
 \includegraphics[width=0.8\textwidth]{chapter2/images/BernCitySwissTopo}
 \caption{A 3D visualization of the city of Bern in the Swiss Geospatial Portal. Using Cesium 3D Tiles Tecnhology}
 \label{fig:BernCitySwissTopo}
 \end{figure}
+The work done by Swisstopo, so far, consists in placing the 3D--models of buildings in some of the cities in the norther part of Switzerland (e.g., Bern, Rapperswil-Jona, Winterthur, etc\dots ). It is not provided any kind of interaction with the buildings.\\
+Swisstopo provides a service in which it is possible to buy the 3D--models of the buildings, they are not highly detailed but they contain important information about the shape of the roof as can be seen in Figure\ref{fig:swisstopoBuildingModel}.
+\begin{figure} [H]
+\centering
+\includegraphics[width=0.5\textwidth]{chapter2/images/swisstopoBuildingModel}
+\caption{A 3D--Model of a building provided by the Swiss Geospatial Portal and used in 3D--Tiles}
+\label{fig:swisstopoBuildingModel}
+\end{figure}
+For this reason, during the last period of the development of \applicationName, models of the city of Lugano have been bought. The use of these models may be done as one of the future developments of this application. This will be discussed at the end of this report.

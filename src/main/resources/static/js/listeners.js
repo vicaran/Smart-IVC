@@ -336,7 +336,7 @@ let loadInfoBox = function (buildingId) {
                        }
                        miniCanvasEngine = createMiniCanvas(data, miniCanvasEngine);
                        // loadTypesForInfoBox();
-                   }, 200)
+                   }, 150);
                }
            });
 };

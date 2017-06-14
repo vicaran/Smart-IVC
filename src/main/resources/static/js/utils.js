@@ -208,7 +208,7 @@ let getCameraCoordinates = function () {
 
 // USED IN LISTENERS
 let generateTable = function (data) {
-    let miniCanvas = '<div id="miniCanvasZone" style="text-align: center;"><canvas id="renderMiniCanvas" style="margin: auto;"></canvas></div>';
+    let miniCanvas = '<div id="miniCanvasZone" style="text-align: center;"><canvas id="renderMiniCanvas" style="margin: auto;width: 225pt;"></canvas></div>';
     let table = '<div class="cesium-infoBox-description"><table class="cesium-infoBox-defaultTable"><tbody>';
     for (let field in data) {
         if (field !== undefined && field !== 'ringCoords' && field !== 'id') {

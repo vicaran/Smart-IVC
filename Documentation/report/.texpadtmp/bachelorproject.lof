@@ -18,3 +18,10 @@
 \contentsline {figure}{\numberline {4.5}{\ignorespaces A Visualization of the city of Lugano where every suburb is coloured differentrly\relax }}{17}{figure.caption.22}
 \contentsline {figure}{\numberline {4.6}{\ignorespaces A Visualization of the city of Lugano where every building is colorued based on its height\relax }}{18}{figure.caption.23}
 \contentsline {figure}{\numberline {4.7}{\ignorespaces A Visualization of the city of Lugano where the suburb Viganello is hidden\relax }}{18}{figure.caption.24}
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Result of the query: ``Get all the banks in Lugano''\relax }}{19}{figure.caption.25}
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Result of the query: ``Get all the buildings with more than 9 floors in Lugano''\relax }}{19}{figure.caption.26}
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Result of the query: ``Get all the hospitals in Viganello (Suburb of Lugano)''\relax }}{20}{figure.caption.27}
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Result of the query: ``Get nearest Supermarket near the selected building''\relax }}{20}{figure.caption.28}
+\contentsline {figure}{\numberline {4.12}{\ignorespaces Result of the query: ``Get all the buildings with less than 10 floors and where the percentage of primary houses is up to $70\%$ in the Suburb of Lugano''\relax }}{21}{figure.caption.29}
+\contentsline {figure}{\numberline {4.13}{\ignorespaces Coverage map of banks in the city of Lugano\relax }}{21}{figure.caption.30}
+\contentsline {figure}{\numberline {4.14}{\ignorespaces Coverage map of hospitals in the city of Lugano\relax }}{22}{figure.caption.31}

@@ -3,23 +3,18 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%In this chapter some of the possible actions that can be performed into \applicationName\ are presented. The aim of this chapter is to provide a practical introduction to \applicationName, through different use cases.
 \subsection{Access information}
 The first use case presented introduces the available option to access building models data.\\
-An InfoBox is shown, whenever a building is selected through a click of the mouse or a tap on the screen of a smartphone. Figure \ref{fig:infoBox} shows how these information are given to the user.
-\begin{figure} [H]
+An InfoBox is shown, whenever a building is selected through a click of the mouse or a tap on the screen of a smartphone. Figure \ref{subfig:infoBox} and Figure \ref{subfig:infoBox_city} shows how these information are given to the user.\\
+\begin{figure} [h]
 \centering
-\begin{subfigure}[b]{1\textwidth}
-	\centering
 	\includegraphics[width=0.8\textwidth]{chapter4/images/infoBox_city}
 	\caption{Selecting a building will make the InfoBox appear automatically}
 	\label{subfig:infoBox_city}
-\end{subfigure}
-\begin{subfigure}[b]{1\textwidth}
+	\end{figure}
+\begin{figure} [h]
 	\centering
-	\includegraphics[width=0.7\textwidth]{chapter4/images/infoBox}
+	\includegraphics[width=0.5\textwidth]{chapter4/images/infoBox}
 	\caption{A detailed look at the InfoBox}
 	\label{subfig:infoBox}
-\end{subfigure}
-\caption{Accessing the information of buildings in \applicationName}
-\label{fig:infoBox}
 \end{figure}
 The first field displayed is a 3D representation of the model of the building clicked without its surrounding environment. It is possible to interact with this canvas in order to rotate and zoom the building model freely.\\
 After, a list of useful information about the building follows: the length of this list changes from building to building depending on the availability of the information.\\
@@ -77,4 +72,6 @@ The third and last subsection, contains the list of checkboxes representing all 
 
 \subsection{The Query System}
 \subsubsection{Building Selection}
+This use case shows what actions can be performed using the visual query system. The interactions proposed are accessible through the apposite ``Query City'' selection tab in the provided sidebar.\\
+As it is possible to see on Figure \ref{fig:query_city_tab} in the previous chapter, \applicationName\ allows the user to perform from very single to more complex query on the entire city.
 \subsubsection{City Gradient Map}

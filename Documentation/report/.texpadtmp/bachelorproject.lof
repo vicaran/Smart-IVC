@@ -11,9 +11,10 @@
 \contentsline {figure}{\numberline {3.2}{\ignorespaces Smart--IVC\ database structure\relax }}{10}{figure.caption.13}
 \contentsline {figure}{\numberline {3.3}{\ignorespaces The first attempt of city visualization using BabilonJS\relax }}{12}{figure.caption.15}
 \contentsline {figure}{\numberline {3.4}{\ignorespaces The Query City Tab\relax }}{13}{figure.caption.17}
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Accessing the information of buildings in Smart--IVC\relax }}{16}{figure.caption.18}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces When both checkboxes are checked, geolocalization and webCams positions are shown on the map\relax }}{17}{figure.caption.19}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces The ``Stick'' that connects the ground to the pins\relax }}{18}{figure.caption.20}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces A Visualization of the city of Lugano where every suburb is coloured differentrly\relax }}{18}{figure.caption.21}
-\contentsline {figure}{\numberline {4.5}{\ignorespaces A Visualization of the city of Lugano where every building is colorued based on its height\relax }}{19}{figure.caption.22}
-\contentsline {figure}{\numberline {4.6}{\ignorespaces A Visualization of the city of Lugano where the suburb Viganello is hidden\relax }}{19}{figure.caption.23}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Selecting a building will make the InfoBox appear automatically\relax }}{15}{figure.caption.18}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces A detailed look at the InfoBox\relax }}{15}{figure.caption.19}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces When both checkboxes are checked, geolocalization and webCams positions are shown on the map\relax }}{16}{figure.caption.20}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces The ``Stick'' that connects the ground to the pins\relax }}{17}{figure.caption.21}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces A Visualization of the city of Lugano where every suburb is coloured differentrly\relax }}{17}{figure.caption.22}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces A Visualization of the city of Lugano where every building is colorued based on its height\relax }}{18}{figure.caption.23}
+\contentsline {figure}{\numberline {4.7}{\ignorespaces A Visualization of the city of Lugano where the suburb Viganello is hidden\relax }}{18}{figure.caption.24}

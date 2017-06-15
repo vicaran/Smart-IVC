@@ -64,7 +64,7 @@ let viewer = new Cesium.Viewer('cesiumContainer', {
     baseLayerPicker: false,
     fullscreenButton: false,
     vrButton: true,
-    geocoder: true,
+    geocoder: false,
     timeline: false,
     navigationInstructionsInitiallyVisible: false,
     scene3DOnly: true,

@@ -70,7 +70,7 @@ In order to test the capabilities of BabylonJS, a small portion of Lugano (i.e.,
 \caption{The first attempt of city visualization using BabilonJS}
 \label{fig:babilonJS}
 \end{figure}
-As long as the buildings showed in the scene where under the two--thousand, the browser was very fast in rendering during the loading of the page and the movement of the camera was smooth.\\
+As long as the buildings showed in the scene where under $\sim 2000$, the browser was very fast in rendering during the loading of the page and the movement of the camera was smooth.\\
 The main problems that make the idea to use BabylonJS discarded, were has been basically two:
 \begin{itemize}
 	\item The buildings to be rendered were far above the mentioned threshold, the rendering would take more than 30 seconds.
@@ -84,8 +84,13 @@ Nonetheless, this would have made the rendering slower since, in addition to the
 Therefore, this lack of both Google--API--requests and good performances, lead the idea to use BabylonJS to be discarded.
 \subsubsection{The final version: Cesium.js}
 As stated above, the Cesium Framework was finally used to build the client--side of the application.\\
-Cesium, on the contrary, provides a ready--to--use virtual globe
-\todo[inline]{SECTION WORK IN PROGRESS}
+Cesium, on the contrary, provides a ready--to--use virtual globe in which it is possible to directly create shapes and polygons using coordinates in WGS as points. As stated before, Cesium is provided with a full documentation about its APIs in which it is possible to control and modify every aspect of this framework: from the provided menu to the drawing of complex polygons of the surface.\\
+
+In addition to this, on Cesium it is also possible to select a particular terrain provider (in the case of \applicationName, we used the STK), which allows to visualize global high--resolution terrains and represent mountains, valleys and other terrain features. In addition, an API on Cesium is provided in which, given a terrain provider and a point on the map, it is possible to know the elevation of that point without a maximum limit of requests. That solved the problem presented above that was the limited number of requests provided by Google in order to get the elevation of a coordinate.\\
+
+In order to render the buildings on the map, the polygonGeometry API has been used: among all the attributes that this object takes (i.e., type of shadow, color, definition, etc\dots), it also takes an array of coordinates. These are the coordinates of the point useful to draw the geometry. Therefore, in order to draw the entire city of Lugano on the startup of the application, it makes a request to the server in order to get the coordinates (in WGS) of the buildings in the desired city, then they are rendered one at a time on the map. This operation done in Cesium is quite performing since it takes $\sim 5$ seconds to render the entire city of Lugano and then, the operation of rotating and moving the camera is very smooth (on the contrary of what was achieved using Babylon.js).\\
+
+All the issues encountered with the use of Babylon.js were solved by using the Cesium Framework. That is why we decided that \applicationName\ has to rest on this techonlogy.   
 \subsubsection{Provided Interface}
 \applicationName\ aims to create interactive 3D cities representations accessible by everyone. In order to have interactions that may suggest interest in users, it is required to have an user--friendly system which allows interactions with the entities in the city. In order to achieve this feature in the most flexible way, a tab based interface is at disposal of the user. The proposed interface is composed as follows:
 \begin{itemize}

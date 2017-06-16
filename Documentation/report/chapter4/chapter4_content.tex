@@ -106,7 +106,12 @@ As it is possible to see on Figure \ref{fig:query_city_tab} in the previous chap
 \end{figure} 
 
 \subsubsection{City Gradient Map}
+\applicationName\ also allows to visualize the coverage of a specific type--building with respect to the entire city. The coverage is grafically shown coloring the buildings differently depending on their distance from a hotspot.\\
 
+In particular, whenever a user does a coverage query, the hotspot or hotspots (in the case of multiple buildings of the same type) will be colored in red. The other buildings will be colored using an interpolation from ``Lime green'' (i.e., nearest buildings to the hotspost) to white (i.e., farthest buildings to the hotspot). 
+If a building is inside the coverage area of two hotspot, let us say hotspot$_{1}$ and hotspot$_{2}$, its color will be determined by the mean between the distance of the building from hotspot$_{1}$ and the distance of the building from hotspot$_{2}$.\\
+
+Figures \ref{fig:query6} and \ref{fig:query7} show two examples of coverage of particular hotspot in the city of Lugano. The former represents the coverage of banks, the latter the coverage of hospitals in the city.
 \begin{figure} [H]
 \centering
 \includegraphics[width=.8\textwidth]{chapter4/images/query6}

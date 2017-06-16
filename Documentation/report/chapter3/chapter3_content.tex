@@ -57,8 +57,57 @@ Once these commands are executed, the data is ready to be used and retrieved in 
 \subsubsection{Controllers and Queries}
 Once the data was retrieved from the xml, modelled, improved with additional details and correctly stored in the database, the only part missing on the server side was the creation of the APIs and the correlated work of querying the database to get the correct information.\\
 
-\todo[inline]{SECTION WORK IN PROGRESS  (how much be detailed on controllers specifications?)} 
+We created controllers in order to make the communication between the server and the client easy and fast. Here will be presented some of the most important API created in the controllers:\\
+ 
+{\bf The cityController:}\\
+It can be found under the section ``/city''. Here, we implemented the following APIs.
+\begin{itemize}
+	\item ``/\{id\}/'': get information about a city using the city id.
+	\item ``/\{name\}/'': get information about a city using the city name.
+	\item ``/allCityNames/'':  get a list of all the names of the cities stored in the database
+\end{itemize}
+These services may seem useless since in this report we always visualize the city of Lugano. Still, \applicationName\ has been created to support any city visualization. That occurs because, one of our future work idea, is consider the fact to add more cities to our database. In such a case, the APIs presented above will be more useful.\\
 
+{\bf The suburbController:}\\
+It can be found under the section ``/suburb''. Here, we implemented the following APIs.
+\begin{itemize}
+	\item ``/\{id\}/'':  get information about a suburb using the suburb id.
+	\item ``/\{name\}/'':  get information about a suburb using the suburb.
+	\item ``/fromCityId=\{id\}/'': get the list of all suburb models belonging to the city that matches the id in the input
+\end{itemize}
+
+{\bf The typeController:}\\
+It can be found under the section ``/type''. Here, we implemented the following APIs.
+\begin{itemize}
+	\item ``/\{id\}/'':  get the name of a type using the type id.
+	\item ``/\{name\}/'':  get the id of a type using the type name.
+	\item ``/getall/'': get the list of all the types id with their respective names.
+\end{itemize}
+
+{\bf The buildingController:}\\
+It can be found under the section ``/building''. This controller is the most developed since \applicationName\ bases its visual query system on the interactions between the user and the buildings shown in the city. Here, we implemented the following APIs.
+\begin{itemize}
+	\item ``/city=\{id\}/'': get the list of buildings models belonging to the city that matches the id in the input. It is the request used to render the entire city on start of the application
+	\item ``/max=\{maxLat\},\{maxLng\}\&min=\{minLat\},\{minLng\}/'': get the list of buildings models belonging to the bounding box defined by the two coordinates--points in the input. It was mainly used on our first approach on Babylon.js in order to render small portions of the city without drastically decreasing performances
+	\item ``/info/\{id\}/'': get information about the building that matches the id in the input. The information received are the following
+		\begin{itemize}
+			\item id value
+			\item Number of floors
+			\item Civic Numbers
+			\item Street Names
+			\item Types
+			\item Suburb
+			\item Primary and Secondary Houses percentage
+			\item EGID value
+			\item Shape Length
+			\item Shape Area 
+			\item Coordinates of the Ring of the building (used to draw the model of the house in the Info--Box)
+		\end{itemize}
+	\item ``/query/\{queryBody\}/'': get the id of the buildings that will be selected on the 3D--visualization, after the execution of the queryBody.\\ Since we wanted to avoid creating a different query repository for any combination of query, we created a query--builder.\\ The query builder works as follows: it parses the string ``queryBody'' in the request, it then builds a unique query and executes it. The use of a unique query was inevitable since we wanted to increase the speed of the response as much as possible.
+	\item ``/distanceQuery/\{queryBody\}/'': get the a list of tuples as result containing: the id of the building and a value in the range $[0,1]$ that represents the distance from the building specified in the request input. The largest the number, the farthest is the building is from the source building.
+	\item ``/distanceMap/byTypeId=\{typeId\}/'': this API is very similar to the previous one. It is based on the fact that there could be more than one building of the same type in the same city. Therefore a unique response is created aggregating the distance of the buildings from the various hotspots.
+\end{itemize}
+In the case of the last two APIs described, the value in the range $[0,1]$ is used as a multiplier to get the correct shade from green to white in which the building will be coloured.
 \subsection{Client Side}
 \subsubsection{The first Attempt: Babylon.js}
 Immediately after having gathered the essential data useful to draw the buildings of the city of Lugano, a first attempt of visualizing them was made using BabylonJS. It is a JavaScript framework for building 3D environments with HTML5 and WebGL. It allows the creation of a scene with customized lights, cameras, materials, meshes, animations, audio and actions. It also supports scene picking (i.e., an element on the scene is clickable and it is possible to interact with it).\\
@@ -81,7 +130,7 @@ A solution to the last problem would have been using the Google Elevation API. T
 Unfortunately, the API system of Google provides just 2,500 free requests per day. In the case of Lugano, that extends its territory for more that $25km^2$, considering one request for meter it would have been taken more than 10 days to get the entire terrain structure (for the entire city of Rome, that spans almost $46km^2$, the days taken would have been more than 20).\\
 
 Nonetheless, this would have made the rendering slower since, in addition to the visualization of the buildings, also a rendering of the terrain (i.e., lakes, mountains and rivers) would have taken place.\\
-Therefore, this lack of both Google--API--requests and good performances, lead the idea to use BabylonJS to be discarded.
+Therefore, this lack of both Google--API--requests and good performances, lead the idea to use BabylonJS to be discarded. Later, during the development of \applicationName, Babilon.js was reintroduced just to render the building model in the Info--Box about the selected building. 
 \subsubsection{The final version: Cesium.js}
 As stated above, the Cesium Framework was finally used to build the client--side of the application.\\
 Cesium, on the contrary, provides a ready--to--use virtual globe in which it is possible to directly create shapes and polygons using coordinates in WGS as points. As stated before, Cesium is provided with a full documentation about its APIs in which it is possible to control and modify every aspect of this framework: from the provided menu to the drawing of complex polygons of the surface.\\
@@ -94,7 +143,7 @@ All the issues encountered with the use of Babylon.js were solved by using the C
 \subsubsection{Provided Interface}
 \applicationName\ aims to create interactive 3D cities representations accessible by everyone. In order to have interactions that may suggest interest in users, it is required to have an user--friendly system which allows interactions with the entities in the city. In order to achieve this feature in the most flexible way, a tab based interface is at disposal of the user. The proposed interface is composed as follows:
 \begin{itemize}
-	\item An {\bf Info--Box} is shown whenever a building is selected. All the available information about it are displayed such as: street name, civic number, membership suburb, number of floors, purpose of the building, EGID value, perimeter length, area of the building and Percentace of Primary and Secondary Houses.
+	\item An {\bf Info--Box} is shown whenever a building is selected. All the available information about it are displayed such as: street name, civic number, membership suburb, number of floors, purpose of the building, EGID value, perimeter length, area of the building and Percentace of Primary and Secondary Houses. On top of the Info--Box is also possible to interact with a stand--alone model of the building rendered using Babylon.js.
 	\item A {\bf sidebar} is at user's disposal and it is divided into the following subsections:
 	\begin{itemize}
 		\item The {\bf Visualize} Tab let the user: {\bf add elements} to the city like the geolocalization and the position of the cameras distributed around the city, {\bf color} the city by height or by suburb and decide to {\bf show some suburbs} rather than others.

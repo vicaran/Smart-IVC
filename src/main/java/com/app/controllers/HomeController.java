@@ -26,6 +26,11 @@ public class HomeController {
         return "index";
     }
 
+    /**
+     * Show home cesium old sidebar string.
+     *
+     * @return the string
+     */
     @RequestMapping(value = "/oldSide", method = RequestMethod.GET)
     public String showHomeCesiumOldSidebar() {
 
@@ -43,6 +48,11 @@ public class HomeController {
         return "error";
     }
 
+    /**
+     * Show previous version string.
+     *
+     * @return the string
+     */
     @RequestMapping(value = "/oldButGold", method = RequestMethod.GET)
     public String showPreviousVersion() {
 

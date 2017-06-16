@@ -9,19 +9,19 @@
 \contentsline {figure}{\numberline {2.9}{\ignorespaces A 3D--Model of a building provided by the Swiss Geospatial Portal and used in 3D--Tiles\relax }}{8}{figure.caption.11}
 \contentsline {figure}{\numberline {3.1}{\ignorespaces Smart--IVC\ architecture scheme\relax }}{9}{figure.caption.12}
 \contentsline {figure}{\numberline {3.2}{\ignorespaces Smart--IVC\ database structure\relax }}{10}{figure.caption.13}
-\contentsline {figure}{\numberline {3.3}{\ignorespaces The first attempt of city visualization using BabilonJS\relax }}{12}{figure.caption.15}
-\contentsline {figure}{\numberline {3.4}{\ignorespaces The Query City Tab\relax }}{14}{figure.caption.16}
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Selecting a building will make the InfoBox appear automatically\relax }}{15}{figure.caption.17}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces A detailed look at the InfoBox\relax }}{15}{figure.caption.18}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces When both checkboxes are checked, geolocalization and webCams positions are shown on the map\relax }}{16}{figure.caption.19}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces The ``Stick'' that connects the ground to the pins\relax }}{17}{figure.caption.20}
-\contentsline {figure}{\numberline {4.5}{\ignorespaces A Visualization of the city of Lugano where every suburb is coloured differentrly\relax }}{17}{figure.caption.21}
-\contentsline {figure}{\numberline {4.6}{\ignorespaces A Visualization of the city of Lugano where every building is colorued based on its height\relax }}{18}{figure.caption.22}
-\contentsline {figure}{\numberline {4.7}{\ignorespaces A Visualization of the city of Lugano where the suburb Viganello is hidden\relax }}{18}{figure.caption.23}
-\contentsline {figure}{\numberline {4.8}{\ignorespaces Result of the query: ``Get all the banks in Lugano''\relax }}{19}{figure.caption.24}
-\contentsline {figure}{\numberline {4.9}{\ignorespaces Result of the query: ``Get all the buildings with more than 9 floors in Lugano''\relax }}{19}{figure.caption.25}
-\contentsline {figure}{\numberline {4.10}{\ignorespaces Result of the query: ``Get all the hospitals in Viganello (Suburb of Lugano)''\relax }}{20}{figure.caption.26}
-\contentsline {figure}{\numberline {4.11}{\ignorespaces Result of the query: ``Get nearest Supermarket near the selected building''\relax }}{20}{figure.caption.27}
-\contentsline {figure}{\numberline {4.12}{\ignorespaces Result of the query: ``Get all the buildings with less than 10 floors and where the percentage of primary houses is up to $70\%$ in the Suburb of Lugano''\relax }}{21}{figure.caption.28}
-\contentsline {figure}{\numberline {4.13}{\ignorespaces Coverage map of banks in the city of Lugano\relax }}{21}{figure.caption.29}
-\contentsline {figure}{\numberline {4.14}{\ignorespaces Coverage map of hospitals in the city of Lugano\relax }}{22}{figure.caption.30}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces The first attempt of city visualization using BabilonJS\relax }}{13}{figure.caption.14}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces The Query City Tab\relax }}{15}{figure.caption.15}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Selecting a building will make the InfoBox appear automatically\relax }}{16}{figure.caption.16}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces A detailed look at the InfoBox\relax }}{16}{figure.caption.17}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces When both checkboxes are checked, geolocalization and webCams positions are shown on the map\relax }}{17}{figure.caption.18}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces The ``Stick'' that connects the ground to the pins\relax }}{18}{figure.caption.19}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces A Visualization of the city of Lugano where every suburb is coloured differentrly\relax }}{18}{figure.caption.20}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces A Visualization of the city of Lugano where every building is colorued based on its height\relax }}{19}{figure.caption.21}
+\contentsline {figure}{\numberline {4.7}{\ignorespaces A Visualization of the city of Lugano where the suburb Viganello is hidden\relax }}{19}{figure.caption.22}
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Result of the query: ``Get all the banks in Lugano''\relax }}{20}{figure.caption.23}
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Result of the query: ``Get all the buildings with more than 9 floors in Lugano''\relax }}{20}{figure.caption.24}
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Result of the query: ``Get all the hospitals in Viganello (Suburb of Lugano)''\relax }}{21}{figure.caption.25}
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Result of the query: ``Get nearest Supermarket near the selected building''\relax }}{21}{figure.caption.26}
+\contentsline {figure}{\numberline {4.12}{\ignorespaces Result of the query: ``Get all the buildings with less than 10 floors and where the percentage of primary houses is up to $70\%$ in the Suburb of Lugano''\relax }}{22}{figure.caption.27}
+\contentsline {figure}{\numberline {4.13}{\ignorespaces Coverage map of banks in the city of Lugano\relax }}{22}{figure.caption.28}
+\contentsline {figure}{\numberline {4.14}{\ignorespaces Coverage map of hospitals in the city of Lugano\relax }}{23}{figure.caption.29}

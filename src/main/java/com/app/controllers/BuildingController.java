@@ -4,7 +4,6 @@ import com.app.exceptions.NotFoundException;
 import com.app.models.Address;
 import com.app.models.Building;
 import com.app.models.Type;
-import com.app.repositories.AddressRepository;
 import com.app.repositories.BuildingRepository;
 import com.app.utils.dataStructures.Pair;
 
@@ -36,7 +35,6 @@ import static java.lang.Double.valueOf;
 public class BuildingController {
 
     private final BuildingRepository buildingRepository;
-    private final AddressRepository addressRepository;
 
     /**
      * Instantiates a new Building controller.
@@ -44,9 +42,41 @@ public class BuildingController {
      * @param buildingRepository the building repository
      */
     @Autowired
-    public BuildingController(BuildingRepository buildingRepository, AddressRepository addressRepository) {
+    public BuildingController(BuildingRepository buildingRepository) {
         this.buildingRepository = buildingRepository;
-        this.addressRepository = addressRepository;
+    }
+
+    /**
+     * Handle buildings by coords response entity.
+     *
+     * @param id the id
+     * @return the response entity
+     */
+    @RequestMapping(value = "/city={id}/", method = RequestMethod.GET)
+    public ResponseEntity<?> getBuildingsByCityId(@PathVariable Long id) {
+
+        List<Building> buildings = this.buildingRepository.findBuildingByOwnCityId(id);
+        return new ResponseEntity<>(buildings, HttpStatus.OK);
+    }
+
+    /**
+     * Handle buildings by coords response entity.
+     *
+     * @param maxLat the max lat
+     * @param maxLng the max lng
+     * @param minLat the min lat
+     * @param minLng the min lng
+     * @return the response entity
+     */
+    @RequestMapping(value = "/max={maxLat},{maxLng}&min={minLat},{minLng}/", method = RequestMethod.GET)
+    public ResponseEntity<?> getBuildingsByCoords(@PathVariable Double maxLat,
+                                                     @PathVariable Double maxLng,
+                                                     @PathVariable Double minLat,
+                                                     @PathVariable Double minLng) {
+
+        List<Building> buildings = this.buildingRepository.findBuildingsByCentroidLatLessThanAndCentroidLngGreaterThanAndCentroidLatGreaterThanAndCentroidLngLessThan(maxLat, maxLng, minLat, minLng);
+
+        return new ResponseEntity<>(buildings, HttpStatus.OK);
     }
 
     /**
@@ -56,7 +86,7 @@ public class BuildingController {
      * @return the response entity
      */
     @RequestMapping(value = "/info/{id}", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<?> handleBuildingById(@PathVariable Long id) {
+    public ResponseEntity<?> getBuildingsInfoById(@PathVariable Long id) {
 
         Building building = this.buildingRepository.findBuildingById(id).orElseThrow(NotFoundException::new);
         List<Address> addresses = building.getAddresses();
@@ -110,40 +140,6 @@ public class BuildingController {
     }
 
     /**
-     * Handle buildings by coords response entity.
-     *
-     * @param maxLat the max lat
-     * @param maxLng the max lng
-     * @param minLat the min lat
-     * @param minLng the min lng
-     * @return the response entity
-     */
-    @RequestMapping(value = "/max={maxLat},{maxLng}&min={minLat},{minLng}/", method = RequestMethod.GET)
-    public ResponseEntity<?> handleBuildingsByCoords(@PathVariable Double maxLat,
-                                     @PathVariable Double maxLng,
-                                     @PathVariable Double minLat,
-                                     @PathVariable Double minLng) {
-
-        List<Building> buildings = this.buildingRepository.findBuildingsByCentroidLatLessThanAndCentroidLngGreaterThanAndCentroidLatGreaterThanAndCentroidLngLessThan(maxLat, maxLng, minLat, minLng);
-
-        return new ResponseEntity<>(buildings, HttpStatus.OK);
-    }
-
-
-    /**
-     * Handle buildings by coords response entity.
-     *
-     * @param id the id
-     * @return the response entity
-     */
-    @RequestMapping(value = "/city={id}/", method = RequestMethod.GET)
-    public ResponseEntity<?> handleBuildingsByCoords(@PathVariable Long id) {
-
-        List<Building> buildings = this.buildingRepository.findBuildingByOwnCityId(id);
-        return new ResponseEntity<>(buildings, HttpStatus.OK);
-    }
-
-    /**
      * Handle query response entity.
      *
      * @param queryBody the query body
@@ -172,6 +168,12 @@ public class BuildingController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    /**
+     * Distance query response entity.
+     *
+     * @param queryBody the query body
+     * @return the response entity
+     */
     @RequestMapping(value = "/distanceQuery/{queryBody}/", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<?> distanceQuery(@PathVariable String queryBody) {
         String[] queryParts = queryBody.split("&");
@@ -183,13 +185,29 @@ public class BuildingController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    /**
+     * Distance map response entity.
+     *
+     * @param typeId the type id
+     * @return the response entity
+     */
+    @RequestMapping(value = "/distanceMap/byTypeId={typeId}/", method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<?> distanceMap(@PathVariable String typeId) {
+        String queryByType = "type=" + typeId;
+        List<Building> buildings = buildingRepository.findBuildingCoordinatesByType(queryByType);
+
+        List result = new ArrayList();
+        for (Building building : buildings) {
+//           Set last argument as BuildingRepository.ALL_RESULTS in order not to limit the maximum number of result
+            result.addAll(buildingRepository.findByDistance(building.getCentroidLat(), building.getCentroidLng(), 1, BuildingRepository.ALL_RESULTS));
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     private Long computeProximity(String[] queryVal, List<Building> buildings) {
         Pair<Double, Double> buildingPos = getLatLonFromRequestBody(queryVal[1].split("=")[1].split("_"));
         Double lat = buildingPos.getL();
         Double lng = buildingPos.getR();
-        System.out.println(lat);
-        System.out.println(lng);
-        System.out.println();
         Integer R = 6371; // radius of earth in km
         Double closest = Double.POSITIVE_INFINITY;
         Long closestBuildingId = null;
@@ -236,20 +254,6 @@ public class BuildingController {
                 break;
         }
         return new Pair<>(latitude, longitude);
-    }
-
-
-    @RequestMapping(value = "/distanceMap/byTypeId={typeId}/", method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<?> distanceMap(@PathVariable String typeId) {
-        String queryByType = "type=" + typeId;
-        List<Building> buildings = buildingRepository.findBuildingCoordinatesByType(queryByType);
-
-        List result = new ArrayList();
-        for (Building building : buildings) {
-//           Set last argument as BuildingRepository.ALL_RESULTS in order not to limit the maximum number of result
-            result.addAll(buildingRepository.findByDistance(building.getCentroidLat(), building.getCentroidLng(), 1, BuildingRepository.ALL_RESULTS));
-        }
-        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
 

@@ -36,18 +36,31 @@ public class CityController {
         this.cityRepository = userRepository;
     }
 
+
     /**
-     * Handle city response entity.
+     * Gets city by id.
+     *
+     * @param id the id
+     * @return the city by id
+     */
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity getCityById (@PathVariable Long id) {
+
+        City city = this.cityRepository.findCityById(id).orElseThrow(NotFoundException::new);
+        return ResponseEntity.ok(city);
+    }
+
+    /**
+     * Gets city by name.
      *
      * @param name the name
-     * @return the response entity
+     * @return the city by name
      */
     @RequestMapping(value = "/{name}", method = RequestMethod.GET)
-    public ResponseEntity handleCity (@PathVariable String name) {
+    public ResponseEntity getCityByName (@PathVariable String name) {
 
         City city = this.cityRepository.findCityByName(name).orElseThrow(NotFoundException::new);
         return ResponseEntity.ok(city);
-
     }
 
     /**

@@ -55,7 +55,7 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
     List<Address> findAddressByAddressNameIsNull();
 
     /**
-     * Find by types id list.
+     * Find address by types id list.
      *
      * @param id the id
      * @return the list

@@ -1,0 +1,27 @@
+\contentsline {figure}{\numberline {2.1}{\ignorespaces A visualization of New York city using OSMBuildings\relax }}{4}{figure.caption.3}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces A visualization of Paris using F4 Map\relax }}{5}{figure.caption.4}
+\contentsline {figure}{\numberline {2.3}{\ignorespaces A visualization of New York city using ViziCities\relax }}{5}{figure.caption.5}
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Cesium logo and Cesium Virtual Globe\relax }}{6}{figure.caption.6}
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Example of two imagery providers available on Cesium\relax }}{6}{figure.caption.7}
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Example of two terrain providers available on Cesium, this shows the benefits of a 3D globe compared to a 2D map.\relax }}{7}{figure.caption.8}
+\contentsline {figure}{\numberline {2.7}{\ignorespaces An example showing a 3D visualization of the city of New York. Using Cesium 3D Tiles Technology\relax }}{7}{figure.caption.9}
+\contentsline {figure}{\numberline {2.8}{\ignorespaces A 3D visualization of the city of Bern in the Swiss Geospatial Portal. Using Cesium 3D Tiles Technology\relax }}{8}{figure.caption.10}
+\contentsline {figure}{\numberline {2.9}{\ignorespaces A 3D--Model of a building provided by the Swiss Geospatial Portal and used in 3D--Tiles\relax }}{8}{figure.caption.11}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Smart--IVC\ architecture scheme\relax }}{10}{figure.caption.12}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Smart--IVC\ database structure\relax }}{11}{figure.caption.13}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces The first attempt of city visualization using BabilonJS\relax }}{14}{figure.caption.14}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces The Query City Tab\relax }}{16}{figure.caption.15}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Selecting a building will make the InfoBox appear automatically\relax }}{17}{figure.caption.16}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces A detailed look at the InfoBox\relax }}{17}{figure.caption.17}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces When both checkboxes are checked, geolocalization and webCams positions are shown on the map\relax }}{18}{figure.caption.18}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces The ``Stick'' that connects the ground to the pins\relax }}{19}{figure.caption.19}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces A Visualization of the city of Lugano where every suburb is colored differently\relax }}{19}{figure.caption.20}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces A Visualization of the city of Lugano where every building is colored based on its height\relax }}{20}{figure.caption.21}
+\contentsline {figure}{\numberline {4.7}{\ignorespaces A Visualization of the city of Lugano where the suburb Viganello is hidden\relax }}{20}{figure.caption.22}
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Result of the query: ``Get all the banks in Lugano''\relax }}{21}{figure.caption.23}
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Result of the query: ``Get all the buildings with more than 9 floors in Lugano''\relax }}{21}{figure.caption.24}
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Result of the query: ``Get nearest Supermarket near the selected building''\relax }}{22}{figure.caption.25}
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Result of the query: ``Get all the buildings with less than 10 floors and where the percentage of primary houses is up to $70\%$ in the Suburb of Lugano''\relax }}{22}{figure.caption.26}
+\contentsline {figure}{\numberline {4.12}{\ignorespaces A particular of the result of a query by coverage that shows different shades of green depending on the distance of the building from the hotspot\relax }}{23}{figure.caption.27}
+\contentsline {figure}{\numberline {4.13}{\ignorespaces Coverage map of banks in the city of Lugano\relax }}{23}{figure.caption.28}
+\contentsline {figure}{\numberline {4.14}{\ignorespaces Coverage map of hospitals in the city of Lugano\relax }}{24}{figure.caption.29}

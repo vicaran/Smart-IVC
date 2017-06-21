@@ -1,10 +1,9 @@
 package com.app.utils;
 
+
 /**
  * The type Offline converter.
  */
-
-
 public class OfflineConverter {
     //The MIT License (MIT)
     //

@@ -9,19 +9,30 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Collection;
 
 /**
- * Created by Andrea on 03/06/2017.
+ * The type Address controller.
  */
 @RestController
 public class AddressController {
 
     private final AddressRepository addressRepository;
 
+    /**
+     * Instantiates a new Address controller.
+     *
+     * @param addressRepository the address repository
+     */
     @Autowired
     public AddressController(AddressRepository addressRepository) {
         this.addressRepository = addressRepository;
     }
 
 
+    /**
+     * Gets address by type id.
+     *
+     * @param typeId the type id
+     * @return the address by type id
+     */
     public Collection<Address> getAddressByTypeId(long typeId) {
         return addressRepository.findAddressByTypes_Id(typeId);
     }

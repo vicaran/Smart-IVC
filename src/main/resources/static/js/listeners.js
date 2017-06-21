@@ -391,9 +391,9 @@ let distanceMap = function (buildingId) {
                                primitive.color =
                                    Cesium.ColorGeometryInstanceAttribute.toValue(
                                        new Cesium.Color(
-                                           (prevRed + newRGB[0]) / 2 > prevRed ? prevRed : (prevRed + newRGB[0]) / 2,
+                                           prevRed < newRGB[0] ? prevRed : newRGB[0],
                                            1,
-                                           (prevBlue + newRGB[2]) / 2 > prevBlue ? prevBlue : (prevBlue + newRGB[2]) / 2,
+                                           prevBlue < newRGB[2] ?  prevBlue : newRGB[2],
                                            1.0));
                            }
                        }

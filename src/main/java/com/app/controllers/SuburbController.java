@@ -33,6 +33,32 @@ public class SuburbController {
         this.suburbRepository = suburbRepository;
     }
 
+
+    /**
+     * Gets suburb by id.
+     *
+     * @param id the id
+     * @return the suburb by id
+     */
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity getSuburbById(@PathVariable Long id) {
+        Suburb suburb = this.suburbRepository.findSuburbById(id).orElseThrow(NotFoundException::new);
+        return ResponseEntity.ok(suburb);
+    }
+
+    /**
+     * Gets suburby by name.
+     *
+     * @param name the name
+     * @return the suburby by name
+     */
+    @RequestMapping(value = "/{name}", method = RequestMethod.GET)
+    public ResponseEntity getSuburbyByName(@PathVariable String name) {
+
+        Suburb suburb = this.suburbRepository.findSuburbByName(name).orElseThrow(NotFoundException::new);
+        return ResponseEntity.ok(suburb);
+    }
+
     /**
      * Gets suburb from city id.
      *

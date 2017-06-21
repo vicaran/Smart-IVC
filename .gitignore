@@ -42,3 +42,4 @@ src/main/resources/city_data/OSM_DATA/*
 *.out
 *.pdf
 *.lof
+Documentation/report/.texpadtmp/*

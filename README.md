@@ -47,16 +47,9 @@ Since the program needs to load all the information about the city, to complete 
 
 ```bash
 cd Smart-IVC
-mkdir src/main/resources/static/Cesium
-git clone https://github.com/AnalyticalGraphicsInc/cesium.git
-cd cesium
-git checkout 3d-tiles
-npm install --only=dev
-npm install
-npm run minifyRelease
-cd ../
-mv cesium/Build src/main/resources/static/Cesium/Build
-rm -Rf cesium/
+- mkdir src/main/resources/static/Cesium
+- npm install cesium
+- mv node_modules/cesium/Build src/main/resources/static/Cesium/Build
 ```
 
 ### Run the application

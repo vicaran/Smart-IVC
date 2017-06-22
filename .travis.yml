@@ -22,16 +22,6 @@ before_install:
 - mkdir src/main/resources/static/Cesium
 - npm install cesium
 - mv node_modules/cesium/Build src/main/resources/static/Cesium/Build
-#- mkdir src/main/resources/static/Cesium
-#- git clone https://github.com/AnalyticalGraphicsInc/cesium.git
-#- cd cesium
-#- git checkout 3d-tiles
-#- npm install --only=dev
-#- npm install
-#- npm run minifyRelease
-#- cd ../
-#- mv cesium/Build src/main/resources/static/Cesium/Build
-#- rm -Rf cesium/
 
 install:
 - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V

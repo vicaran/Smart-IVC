@@ -316,17 +316,16 @@ let addResultToHistory = function (queryVal, data) {
 
     if (SEARCH_HISTORY[queryVal] === undefined) {
         SEARCH_HISTORY[queryVal] = data;
-        queryVal = queryVal.split("&");
+        let queryValSplit = queryVal.split("&");
 
         let queryParts = "";
-        console.log(queryVal);
-        for (let idx in queryVal) {
-            queryParts += "with " + queryVal[idx].split("=")[0] + " being " + queryVal[idx].split("=")[1] +"<br>";
+        for (let idx in queryValSplit) {
+            queryParts += "with " + queryValSplit[idx].split("=")[0] + " being " + queryValSplit[idx].split("=")[1] +"<br>";
         }
 
-        console.log(queryParts);
 
-        let historyCard = "<li class='orange history_item' id='"+queryVal+"'><a>Find " + queryParts
+        let historyCard = "<li class='blue history_item' id='" + queryVal + "'><a onclick='selectBuildingsFromHistory(`"+queryVal+"`)'>Find "
+                          + queryParts
                           + " Produced " + data["buildingIds"].length + " results"
                           + "</a></li>";
 

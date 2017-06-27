@@ -281,9 +281,39 @@ let renderQueryResult = function (data) {
         let primitive = getPrimitiveFromPrimitiveId("building_" + data.buildingIds[i]);
         if (primitive !== undefined) {
             primitive.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.DARKORANGE);
+            // let infoBoxCard = '<div class="building-info-content">' +
+            //                   '<div class="building-info-id">Building ' + data.buildingIds[i] + '</div>' +
+            //                   '<div class="building-info-button" onclick="zoomToBuilding(' + data.buildingIds[i]
+            //                   + ')"><i class="fa fa-video-camera" aria-hidden="true"></i></div>' +
+            //                   ' </div>';
         }
     }
 };
+
+// let findBuildingWithInformation = function (id) {
+//     for (let j = 1; j < scene.primitives.length; j++) {
+//         if (scene.primitives._primitives[j].geometryInstances !== undefined) {
+//             for (let i = 0; i < scene.primitives._primitives[j].geometryInstances.length; i++) {
+//                 if (scene.primitives._primitives[j].geometryInstances[i].id === "building_"+ id) {
+//                     return scene.primitives._primitives[j].geometryInstances[i];
+//                 }
+//             }
+//         }
+//     }
+// };
+//
+// let zoomToBuilding = function (buildingID) {
+//     let building = findBuildingWithInformation(buildingID);
+//     Cesium.flyTo(building.origin.latitude, building.origin.longitude, 50);
+//         const camera = scene.camera;
+//         camera.flyTo({
+//                          destination : Cesium.Cartesian3.fromDegrees(longitude, latitude, high),
+//                          duration: 2,
+//                      });
+//     }
+//
+// };
+
 
 let queryBuilder = function () {
     let query = '';
@@ -358,6 +388,11 @@ let loadTypesForInfoBox = function () {
                    }
                }
            });
+};
+
+let selectBuildingsFromHistory = function (data) {
+    setDefaultColors();
+    renderQueryResult(SEARCH_HISTORY[data]);
 };
 
 $('#coverageCity').click(function () {

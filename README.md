@@ -24,7 +24,7 @@ Smart-IVC provides an interactive 3D-visualization  model of cities,  integratin
 </p>
 
 # Just use it #
-If you just want to try and play with Smart-IVC, you can find it [here](http://rio.inf.usi.ch:38080).
+If you just want to try and play with Smart-IVC, you can find it [here](http://rio.inf.usi.ch:38080) (<-- SORRY! This website is currently unavailabe).
 
 
 # Run it on your machine #

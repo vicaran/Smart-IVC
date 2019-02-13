@@ -10,18 +10,18 @@ let buildingsHeight = [];
 let loadObjs = function (cityID) {
     showLoadingGif();
     $.ajax({
-               url: SERVER_URL + "/building/city=" + cityID + "/",
-               type: "GET",
-               success: function (data) {
-                   for (let i = 0; i < data.length; i++) {
-                       if (data[i].floors > $("#maxHeightLegend").html()) {
-                           $("#maxHeightLegend").html(data[i].floors);
-                       }
-                       generateGeometry(data[i]);
-                   }
-                   updateGeometryHeights();
-               }
-           });
+        url: SERVER_URL + "building/city=" + cityID + "/",
+        type: "GET",
+        success: function (data) {
+            for (let i = 0; i < data.length; i++) {
+                if (data[i].floors > $("#maxHeightLegend").html()) {
+                    $("#maxHeightLegend").html(data[i].floors);
+                }
+                generateGeometry(data[i]);
+            }
+            updateGeometryHeights();
+        }
+    });
 };
 
 let generateGeometry = function (data) {
@@ -39,20 +39,20 @@ let generateGeometry = function (data) {
     positions.push(Cesium.Cartographic.fromDegrees(data.centroidLng, data.centroidLat));
 
     let buildingGeometry = new Cesium.PolygonGeometry({
-                                                          polygonHierarchy: new Cesium.PolygonHierarchy(
-                                                              Cesium.Cartesian3.fromDegreesArray(list)
-                                                          ),
-                                                          extrudedHeight: buildingHeight,
-                                                          closeBottom: false
-                                                      });
+        polygonHierarchy: new Cesium.PolygonHierarchy(
+            Cesium.Cartesian3.fromDegreesArray(list)
+        ),
+        extrudedHeight: buildingHeight,
+        closeBottom: false
+    });
     let building = new Cesium.GeometryInstance({
-                                                   geometry: buildingGeometry,
-                                                   id: buildingID,
-                                                   attributes : {
-                                                       color: Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.WHITE),
-                                                       show: new Cesium.ShowGeometryInstanceAttribute(true)
-                                                   },
-                                               });
+        geometry: buildingGeometry,
+        id: buildingID,
+        attributes: {
+            color: Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.WHITE),
+            show: new Cesium.ShowGeometryInstanceAttribute(true)
+        },
+    });
     buildingsArray.push(building);
 };
 
@@ -70,16 +70,16 @@ let updateGeometryHeights = function () {
 
 let addGeometriesToPrimitives = function () {
     let primitivesArray = scene.primitives.add(new Cesium.Primitive({
-                                                  geometryInstances: buildingsArray,
-                                                  appearance: new Cesium.PerInstanceColorAppearance({
-                                                                                                        translucent: false,
-                                                                                                    }),
-                                                  vertexCacheOptimize: true,
-                                                  compressVertices: false,
-                                                  interleave: true,
-                                                  releaseGeometryInstances: false,
-                                                                        shadows: Cesium.ShadowMode.ENABLED,
-                                              }));
+        geometryInstances: buildingsArray,
+        appearance: new Cesium.PerInstanceColorAppearance({
+            translucent: false,
+        }),
+        vertexCacheOptimize: true,
+        compressVertices: false,
+        interleave: true,
+        releaseGeometryInstances: false,
+        shadows: Cesium.ShadowMode.ENABLED,
+    }));
     primitivesArray.readyPromise.then(function () {
         hideLoadingGif();
         initializePins();
@@ -88,7 +88,7 @@ let addGeometriesToPrimitives = function () {
 
 let loadNewYork = function () {
     var tileset = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
-                                                                             url: 'http://cesiumjs.org/NewYork/3DTiles'
-                                                                         }));
+        url: 'http://cesiumjs.org/NewYork/3DTiles'
+    }));
     return tileset;
 };

@@ -3,7 +3,7 @@
  */
 
 Cesium.BingMapsApi.defaultKey = "AibFjJSh0jKod09GGPlExgM-mBd5DEah5hPAeIVTDHQhEuUHi0PAhYKS3vmFi-i9";
-Cesium.MapboxApi.defaultAccessToken = "pk.eyJ1IjoidmljYXJhIiwiYSI6ImNqMmYxbWx0NjA3cHgzNnF5eDB2M2p3ZHoifQ.T97LWm5-1lUxOKfz048CNg";
+Cesium.MapboxApi.defaultAccessToken = "pk.eyJ1IjoidmljYXJhIiwiYSI6ImNqczNlY25jNzBmbDc0NHQ5bmtsdzY5azMifQ.JOwq9_KBoQLIexCz7w99pA";
 
 
 // Cesium.Camera.DEFAULT_OFFSET = new Cesium.HeadingPitchRange(0.0, Cesium.Math.toRadians(-70.0), Cesium.Math.toRadians(-70.0));
@@ -58,7 +58,6 @@ Cesium.MapboxApi.defaultAccessToken = "pk.eyJ1IjoidmljYXJhIiwiYSI6ImNqMmYxbWx0Nj
 // viewer.scene.backgroundColor = Cesium.Color.WHITE;
 
 
-
 let viewer = new Cesium.Viewer('cesiumContainer', {
     animation: false,
     baseLayerPicker: false,
@@ -69,7 +68,7 @@ let viewer = new Cesium.Viewer('cesiumContainer', {
     navigationInstructionsInitiallyVisible: false,
     scene3DOnly: true,
     imageryProvider: false,
-    creditContainer : "cesium_credits_div",
+    creditContainer: "cesium_credits_div",
     terrainShadows: Cesium.ShadowMode.ENABLED,
     projectionPicker: false,
 
@@ -90,13 +89,13 @@ viewer.infoBox.frame.removeAttribute('sandbox');
 viewer.scene.globe.depthTestAgainstTerrain = true;
 
 viewer.camera.setView({
-                          destination : Cesium.Rectangle.fromDegrees(8.941063, 45.993499, 8.977996, 45.980138),
-                          orientation: {
-                              heading : 0.0,
-                              pitch : Cesium.Math.toRadians(-35),
-                              roll : viewer.camera.roll
-                          }
-                      });
+    destination: Cesium.Rectangle.fromDegrees(8.941063, 45.993499, 8.977996, 45.980138),
+    orientation: {
+        heading: 0.0,
+        pitch: Cesium.Math.toRadians(-35),
+        roll: viewer.camera.roll
+    }
+});
 
 //
 let scene = viewer.scene;
@@ -129,44 +128,39 @@ let terrainViewModels = [];
 
 
 imageryViewModels.push(new Cesium.ProviderViewModel({
-                                                        name : 'Bing\u00adMaps\u00a0Aerial',
-                                                        iconUrl : Cesium.buildModuleUrl('Widgets/Images/ImageryProviders/bingAerial.png'),
-                                                        tooltip : 'Bing Maps aerial Imagery',
-                                                        creationFunction : function() {
-                                                            return new Cesium.BingMapsImageryProvider({
-                                                                                                          url : 'https://dev.virtualearth.net',
-                                                                                                          key : 'AibFjJSh0jKod09GGPlExgM-mBd5DEah5hPAeIVTDHQhEuUHi0PAhYKS3vmFi-i9',
-                                                                                                          mapStyle : Cesium.BingMapsStyle.AERIAL
-                                                                                                      });
-                                                        }
-                                                    }));
+    name: 'Bing\u00adMaps\u00a0Aerial',
+    iconUrl: Cesium.buildModuleUrl('Widgets/Images/ImageryProviders/bingAerial.png'),
+    tooltip: 'Bing Maps aerial Imagery',
+    creationFunction: function () {
+        return new Cesium.BingMapsImageryProvider({
+            url: 'https://dev.virtualearth.net',
+            key: 'AibFjJSh0jKod09GGPlExgM-mBd5DEah5hPAeIVTDHQhEuUHi0PAhYKS3vmFi-i9',
+            mapStyle: Cesium.BingMapsStyle.AERIAL
+        });
+    }
+}));
 
 imageryViewModels.push(new Cesium.ProviderViewModel({
-                                                        name : 'Mapbox\u00adStreet\u00a0Classic',
-                                                        iconUrl : Cesium.buildModuleUrl('Widgets/Images/ImageryProviders/mapboxStreets.png'),
-                                                        tooltip : 'Mapbox streets basic imagery',
-                                                        creationFunction : function() {
-                                                            return new Cesium.MapboxImageryProvider({
-                                                                                                        url: 'https://api.mapbox.com/v4/',
-                                                                                                        mapId: 'mapbox.streets'
-                                                                                                    });
-                                                        }
-                                                    }));
-
-
-
+    name: 'Mapbox\u00adStreet\u00a0Classic',
+    iconUrl: Cesium.buildModuleUrl('Widgets/Images/ImageryProviders/mapboxStreets.png'),
+    tooltip: 'Mapbox streets basic imagery',
+    creationFunction: function () {
+        return new Cesium.MapboxImageryProvider({
+            url: 'https://api.mapbox.com/v4/',
+            mapId: 'mapbox.streets'
+        });
+    }
+}));
 
 
 terrainViewModels.push(new Cesium.ProviderViewModel({
-                                                        name : 'STK\u00a0World\u00a0Terrain\u00a0meshes',
-                                                        iconUrl : Cesium.buildModuleUrl('Widgets/Images/TerrainProviders/STK.png'),
-                                                        tooltip: 'High-resolution, mesh-based terrain for the entire globe. Free for use on the Internet. Closed-network options are available.http://www.agi.com',
-                                                        creationFunction : function() {
-                                                            return new Cesium.CesiumTerrainProvider({
-                                                                                                        url : 'https://assets.agi.com/stk-terrain/world'
-                                                                                                    });
-                                                        }
-                                                    }));
+    name: 'STK\u00a0World\u00a0Terrain\u00a0meshes',
+    iconUrl: Cesium.buildModuleUrl('Widgets/Images/TerrainProviders/CesiumWorldTerrain.png'),
+    tooltip: 'High-resolution, mesh-based terrain for the entire globe. Free for use on the Internet. Closed-network options are available.http://www.agi.com',
+    creationFunction: function () {
+        return Cesium.createWorldTerrain();
+    }
+}));
 // terrainViewModels.push(new Cesium.ProviderViewModel({
 //                                                         name: 'WGS84\u00a0Ellipsoid',
 //                                                         iconUrl: Cesium.buildModuleUrl('Widgets/Images/TerrainProviders/Ellipsoid.png'),
@@ -177,10 +171,9 @@ terrainViewModels.push(new Cesium.ProviderViewModel({
 //                                                     }));
 
 
-
 let layers = viewer.imageryLayers;
 let baseLayerPicker = new Cesium.BaseLayerPicker('baseLayerPickerContainer', {
-    globe : viewer.scene.globe,
-    imageryProviderViewModels : imageryViewModels,
+    globe: viewer.scene.globe,
+    imageryProviderViewModels: imageryViewModels,
     terrainProviderViewModels: terrainViewModels
 });

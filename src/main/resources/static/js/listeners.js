@@ -58,8 +58,8 @@ handler.setInputAction(function (movement) {
 let getPrimitiveFromPrimitiveId = function (primitiveId) {
     let selectedPrimitive = undefined;
     if (typeof primitiveId === "string") {
-        for (let i = 1; i < scene.primitives.length; i++) {
-            let foundPrimitive = scene.primitives.get(1).getGeometryInstanceAttributes(primitiveId);
+        for (let i = 0; i < scene.primitives.length; i++) {
+            let foundPrimitive = scene.primitives.get(i).getGeometryInstanceAttributes(primitiveId);
             if (foundPrimitive !== undefined) {
                 selectedPrimitive = foundPrimitive;
                 break;
@@ -190,7 +190,7 @@ let setSuburbColors = function () {
 };
 
 let setColorByHeight = function () {
-    for (let j = 1; j < scene.primitives.length; j++) {
+    for (let j = 0; j < scene.primitives.length; j++) {
         if (viewer.scene.primitives.get(j).geometryInstances !== undefined) {
             for (let i = 0; i < viewer.scene.primitives.get(j).geometryInstances.length; i++) {
                 let buildingID = viewer.scene.primitives.get(j).geometryInstances[i].id;
@@ -215,7 +215,7 @@ let setColorByHeight = function () {
 };
 
 let setDefaultColors = function () {
-    for (let j = 1; j < scene.primitives.length; j++) {
+    for (let j = 0; j < scene.primitives.length; j++) {
         if (viewer.scene.primitives.get(j).geometryInstances !== undefined) {
             for (let i = 0; i < viewer.scene.primitives.get(j).geometryInstances.length; i++) {
                 let primitive = getPrimitiveFromPrimitiveId(viewer.scene.primitives.get(j).geometryInstances[i].id);
